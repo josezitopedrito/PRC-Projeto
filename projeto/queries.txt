@@ -1,0 +1,125 @@
+Artistas:
+select ?artistName (sample (?artistBirthName) as ?artistBirthName) (sample (?artistBirthDate) as ?artistBirthDate) (sample (?artistDeathDate) as ?artistDeathDate) (sample (?artistGender) as ?artistGender) (sample (?artistBirthPlaceName) as ?artistBirthPlaceName) (sample (?artistAbstract) as ?artistAbstract) where {
+	?artists a dbo:MusicalArtist.
+	OPTIONAL{
+		?artists dbo:birthName ?artistBirthName.
+		filter langMatches(lang(?artistBirthName),'en')
+	}
+	OPTIONAL{
+		?artists dbo:abstract ?artistAbstract.
+		filter langMatches(lang(?artistAbstract),'en')
+	}
+	?artists rdfs:label ?artistName.
+	filter langMatches(lang(?artistName),'en')
+	OPTIONAL{
+		?artists dbo:birthPlace ?artistBirthPlace.
+		?artistBirthPlace rdfs:label ?artistBirthPlaceName.
+		filter langMatches(lang(?artistBirthPlaceName),'en')
+	}
+	OPTIONAL{
+		?artists dbo:birthDate ?artistBirthDate
+	}
+	OPTIONAL{
+		?artists dbo:deathDate ?artistDeathDate
+	}
+	OPTIONAL{
+		?artists foaf:gender ?artistGender.
+		filter langMatches(lang(?artistGender),'en')
+	}
+} GROUP BY ?artistName
+
+Bandas:
+
+select ?bandName (sample (?bandStartDate) as ?bandStartDate) (sample (?bandEndDate) as ?bandEndDate) (sample (?bandHometownName) as ?bandFormationPlaceName) (sample (?bandHomepage) as (?bandHomepage)) (sample (?bandAbstract) as ?bandAbstract) where {
+	?bands a dbo:Band.
+	?bands rdfs:label ?bandName.
+	filter langMatches(lang(?bandName),'en')
+	OPTIONAL{
+		?bands dbo:abstract ?bandAbstract.
+		filter langMatches(lang(?bandAbstract),'en')
+	}
+	OPTIONAL{
+		?bands foaf:homepage ?bandHomepage.
+	}
+	?bands dbo:activeYearsStartYear ?bandStartDate.
+	OPTIONAL{
+		?bands dbo:activeYearsEndYear ?bandEndDate.
+	}
+	OPTIONAL{
+		?bands dbo:hometown ?bandHometown.
+		?bandHometown rdfs:label ?bandHometownName
+	}
+} GROUP BY ?bandName
+
+Géneros:
+
+select ?genreName ?genreAbstract where{
+	?genre a dbo:Genre.
+	?genre rdfs:label ?genreName.
+	filter langMatches(lang(?genreName),'en')
+	?genre dbo:abstract ?genreAbstract.
+	filter langMatches(lang(?genreAbstract),'en')
+}
+
+Band-Artist conection:
+
+select ?artistName ?bandName where{
+	?band a dbo:Band.
+	?artist a dbo:MusicalArtist.
+	?band dbo:bandMember ?artist.
+	?band rdfs:label ?bandName.
+	filter langMatches(lang(?bandName),'en')
+	?artist rdfs:label ?artistName.
+	filter langMatches(lang(?artistName),'en')
+}
+
+Band-Genre conection:
+
+select ?bandName ?genreName where{
+	?band a dbo:Band.
+	?genre a dbo:Genre.
+	?band dbo:genre ?genre.
+	?band rdfs:label ?bandName.
+	filter langMatches(lang(?bandName),'en')
+	?genre rdfs:label ?genreName.
+	filter langMatches(lang(?genreName),'en')
+}
+
+Genre-Genre derived conection
+
+select ?genreName ?derivedGenreName where{
+	?genre a dbo:Genre.
+	?genre rdfs:label ?genreName.
+	filter langMatches(lang(?genreName),'en')
+	OPTIONAL{
+		?genre dbo:derivative ?derivedGenre.
+		?derivedGenre rdfs:label ?derivedGenreName.
+		filter langMatches(lang(?derivedGenreName),'en')
+	}
+}
+
+Genre-Genre origin conection
+
+select ?genreName ?originGenreName where{
+	?genre a dbo:Genre.
+	?genre rdfs:label ?genreName.
+	filter langMatches(lang(?genreName),'en')
+	OPTIONAL{
+		?genre dbo:stylisticOrigin ?originGenre.
+		?originGenre rdfs:label ?originGenreName.
+		filter langMatches(lang(?originGenreName),'en')
+	}
+}
+
+Genre-Genre fusion conection
+
+select ?genreName ?fusionGenreName where{
+	?genre a dbo:Genre.
+	?genre rdfs:label ?genreName.
+	filter langMatches(lang(?genreName),'en')
+	OPTIONAL{
+		?genre dbo:musicFusionGenre ?fusionGenre.
+		?fusionGenre rdfs:label ?fusionGenreName.
+		filter langMatches(lang(?fusionGenreName),'en')
+	}
+}
