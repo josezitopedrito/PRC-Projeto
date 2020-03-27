@@ -170,3 +170,31 @@ select ?nomeAlbum ?nomeProdutor where{
     ?idprod rdfs:label ?nomeProdutor.
     filter langMatches(lang(?nomeProdutor),'en').
 }
+
+RecordLables:
+
+select ?nome (sample(?abs) as ?abstract) (sample(?country) as ?country) (sample(?founderName) as ?founderName) (sample(?foundingYear) as ?foundingYear) (sample(?sede) as ?sede) where {
+	?id a dbo:RecordLabel.
+	?id rdfs:label ?nome.
+	filter langMatches(lang(?nome),'en')
+	OPTIONAL{
+		?id dbo:abstract ?abs.
+		filter langMatches(lang(?abs),'en')
+	}
+	OPTIONAL{
+		?id dbp:country ?country.
+	}
+	OPTIONAL{
+		?id dbo:foundedBy ?founder.
+		?founder rdfs:label ?founderName.
+		filter langMatches(lang(?founderName),'en')
+	}
+	OPTIONAL{
+		?id dbo:foundingYear ?foundingYear.
+	}
+	OPTIONAL{
+		?id dbo:location ?location.
+		?location rdfs:label ?sede.
+		filter langMatches(lang(?sede),'en')
+	}
+} GROUP BY ?nome
