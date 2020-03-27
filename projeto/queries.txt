@@ -126,16 +126,13 @@ select ?genreName ?fusionGenreName where{
 
 Álbuns:
 
-select distinct ?id ?nome ?abs ?releaseDate ?recordDate ?albumType xsd:double(?runtime)/xsd:double(60) where {
+select ?nome (sample(?abs) as ?abstract) (sample(?releaseDate) as ?releaseDate) (sample(?albumType) as ?albumType) (sample(xsd:double(?runtime)/xsd:double(60)) as ?runtime) where {
 	?id a dbo:Album.
 	?id rdfs:label ?nome.
 	filter langMatches(lang(?nome),'en')
 	OPTIONAL{
 		?id dbo:abstract ?abs.
 		filter langMatches(lang(?abs),'en')
-	}
-	OPTIONAL{
-		?id dbo:recordDate ?recordDate.
 	}
 	OPTIONAL{
 		?id dbo:releaseDate ?releaseDate.
@@ -146,4 +143,4 @@ select distinct ?id ?nome ?abs ?releaseDate ?recordDate ?albumType xsd:double(?r
 	OPTIONAL{
 		?id dbo:runtime ?runtime.
 	}
-}
+} GROUP BY ?nome
