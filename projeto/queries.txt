@@ -144,3 +144,18 @@ select ?nome (sample(?abs) as ?abstract) (sample(?releaseDate) as ?releaseDate) 
 		?id dbo:runtime ?runtime.
 	}
 } GROUP BY ?nome
+
+
+
+Produtores:
+select ?name ?begindate ?abstract where{
+    ?idalbum a dbo:Album.
+    ?idalbum dbo:producer ?idprod.
+    ?idprod rdfs:label ?name.
+    filter langMatches(lang(?name),'en').
+    ?idprod dbo:activeYearsStartYear ?begindate
+    optional {
+         ?idprod dbo:abstract ?abstract
+         filter langMatches(lang(?abstract),'en').
+    }
+}
