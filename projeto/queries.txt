@@ -198,3 +198,14 @@ select ?nome (sample(?abs) as ?abstract) (sample(?country) as ?country) (sample(
 		filter langMatches(lang(?sede),'en')
 	}
 } GROUP BY ?nome
+
+
+album-recordlabel connection
+select ?album ?label where{
+    ?idalbum a dbo:Album.
+    ?idalbum rdfs:label ?album.
+    filter langMatches(lang(?album),'en').
+    ?idalbum dbo:recordLabel ?idlabel.
+    ?idlabel rdfs:label ?label.
+    filter langMatches(lang(?label),'en').
+}
