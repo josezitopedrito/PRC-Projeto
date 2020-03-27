@@ -159,3 +159,14 @@ select ?name ?begindate ?abstract where{
          filter langMatches(lang(?abstract),'en').
     }
 }
+
+
+Album-Produtor connection:
+select ?nomeAlbum ?nomeProdutor where{
+    ?idalbum a dbo:Album.
+    ?idalbum rdfs:label ?nomeAlbum.
+    filter langMatches(lang(?nomeAlbum),'en').
+    ?idalbum dbo:producer ?idprod.
+    ?idprod rdfs:label ?nomeProdutor.
+    filter langMatches(lang(?nomeProdutor),'en').
+}
