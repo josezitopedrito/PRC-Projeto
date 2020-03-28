@@ -209,3 +209,14 @@ select ?album ?label where{
     ?idlabel rdfs:label ?label.
     filter langMatches(lang(?label),'en').
 }
+
+album-band connection
+select ?albumName ?bandName where{
+	?band a dbo:Band.
+	?album a dbo:Album.
+	?album dbo:artist ?band.
+	?band rdfs:label ?bandName.
+	filter langMatches(lang(?bandName),'en')
+	?album rdfs:label ?albumName.
+	filter langMatches(lang(?albumName),'en')
+}
