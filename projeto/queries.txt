@@ -38,8 +38,9 @@ LIMIT 10000
 
 Bandas:
 
-select ?bandName (sample (?bandStartDate) as ?bandStartDate) (sample (?bandEndDate) as ?bandEndDate) (sample (?bandHometownName) as ?bandFormationPlaceName) (sample (?bandHomepage) as (?bandHomepage)) (sample (?bandAbstract) as ?bandAbstract) where {
+select ?bandName (sample (?bandStartDate) as ?bandStartDate) (sample (?bandEndDate) as ?bandEndDate) (sample (?bandHometownName) as ?bandFormationPlaceName) (sample (?bandHomepage) as ?bandHomepage) (sample (?bandAbstract) as ?bandAbstract) where {
 	?bands a dbo:Band.
+        ?bands dbo:formerBandMember|dbp:pastMembers|dbo:bandMember|dbp:currentMembers [].
 	?bands rdfs:label ?bandName.
 	filter langMatches(lang(?bandName),'en')
 	OPTIONAL{
@@ -55,9 +56,12 @@ select ?bandName (sample (?bandStartDate) as ?bandStartDate) (sample (?bandEndDa
 	}
 	OPTIONAL{
 		?bands dbo:hometown ?bandHometown.
-		?bandHometown rdfs:label ?bandHometownName
+		?bandHometown rdfs:label ?bandHometownName.
+                filter langMatches(lang(?bandHometownName),'en')
 	}
 } GROUP BY ?bandName
+ORDER BY ASC(?bandName)
+OFFSET 20000
 
 Géneros:
 
