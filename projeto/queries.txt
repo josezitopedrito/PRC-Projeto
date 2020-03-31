@@ -1,32 +1,40 @@
-Artistas:
-select ?artistName (sample (?artistBirthName) as ?artistBirthName) (sample (?artistBirthDate) as ?artistBirthDate) (sample (?artistDeathDate) as ?artistDeathDate) (sample (?artistGender) as ?artistGender) (sample (?artistBirthPlaceName) as ?artistBirthPlaceName) (sample (?artistAbstract) as ?artistAbstract) where {
-	?artists a dbo:MusicalArtist.
-	OPTIONAL{
-		?artists dbo:birthName ?artistBirthName.
-		filter langMatches(lang(?artistBirthName),'en')
+Artistas: (o select exterior só é necessário a partir dos 40000 devido ao limite de ordenações do Virtuoso)
+select ?artistName ?artistBirthName ?artistBirthDate ?artistDeathDate ?artistGender ?artistBirthPlaceName ?artistAbstract where {
+	{
+		select ?artistName (sample (?artistBirthName) as ?artistBirthName) (sample (?artistBirthDate) as ?artistBirthDate) (sample (?artistDeathDate) as ?artistDeathDate) (sample (?artistGender) as ?artistGender) (sample (?artistBirthPlaceName) as ?artistBirthPlaceName) (sample (?artistAbstract) as ?artistAbstract) where {
+			?artists rdf:type dbo:MusicalArtist.
+			?artists rdf:type dbo:Person.
+			OPTIONAL{
+				?artists dbo:birthName ?artistBirthName.
+				filter langMatches(lang(?artistBirthName),'en')
+			}
+			OPTIONAL{
+				?artists dbo:abstract ?artistAbstract.
+				filter langMatches(lang(?artistAbstract),'en')
+			}
+			?artists rdfs:label ?artistName.
+			filter langMatches(lang(?artistName),'en')
+			OPTIONAL{
+				?artists dbo:birthPlace ?artistBirthPlace.
+				?artistBirthPlace rdfs:label ?artistBirthPlaceName.
+				filter langMatches(lang(?artistBirthPlaceName),'en')
+			}
+			OPTIONAL{
+				?artists dbo:birthDate ?artistBirthDate
+			}
+			OPTIONAL{
+				?artists dbo:deathDate ?artistDeathDate
+			}
+			OPTIONAL{
+				?artists foaf:gender ?artistGender.
+				filter langMatches(lang(?artistGender),'en')
+			}
+		} GROUP BY ?artistName
+		ORDER BY ?artistName
 	}
-	OPTIONAL{
-		?artists dbo:abstract ?artistAbstract.
-		filter langMatches(lang(?artistAbstract),'en')
-	}
-	?artists rdfs:label ?artistName.
-	filter langMatches(lang(?artistName),'en')
-	OPTIONAL{
-		?artists dbo:birthPlace ?artistBirthPlace.
-		?artistBirthPlace rdfs:label ?artistBirthPlaceName.
-		filter langMatches(lang(?artistBirthPlaceName),'en')
-	}
-	OPTIONAL{
-		?artists dbo:birthDate ?artistBirthDate
-	}
-	OPTIONAL{
-		?artists dbo:deathDate ?artistDeathDate
-	}
-	OPTIONAL{
-		?artists foaf:gender ?artistGender.
-		filter langMatches(lang(?artistGender),'en')
-	}
-} GROUP BY ?artistName
+      }
+OFFSET 40000
+LIMIT 10000
 
 Bandas:
 
