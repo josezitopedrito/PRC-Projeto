@@ -171,6 +171,8 @@ select distinct ?name ?begindate ?abstract where{
          filter langMatches(lang(?abstract),'en').
     }
 } group by ?name
+ORDER BY ASC(?name)
+OFFSET 10000
 
 
 Album-Produtor connection:
