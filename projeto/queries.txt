@@ -148,7 +148,7 @@ select ?nome (sample(?abs) as ?abstract) (sample(?releaseDate) as ?releaseDate) 
 
 
 Produtores:
-select ?name ?begindate ?abstract where{
+select distinct ?name ?begindate ?abstract where{
     ?idalbum a dbo:Album.
     ?idalbum dbo:producer ?idprod.
     ?idprod rdfs:label ?name.
@@ -158,7 +158,7 @@ select ?name ?begindate ?abstract where{
          ?idprod dbo:abstract ?abstract
          filter langMatches(lang(?abstract),'en').
     }
-}
+} group by ?name
 
 
 Album-Produtor connection:
