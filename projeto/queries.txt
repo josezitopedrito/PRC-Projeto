@@ -232,15 +232,23 @@ select ?nome (sample(?abs) as ?abstract) (sample(?country) as ?country) (sample(
 } GROUP BY ?nome
 
 
-album-recordlabel connection
+album-recordlabel connection: (o select exterior só é necessário a partir dos 40000 devido ao limite de ordenações do Virtuoso)
+
 select ?album ?label where{
-    ?idalbum a dbo:Album.
-    ?idalbum rdfs:label ?album.
-    filter langMatches(lang(?album),'en').
-    ?idalbum dbo:recordLabel ?idlabel.
-    ?idlabel rdfs:label ?label.
-    filter langMatches(lang(?label),'en').
+	{
+		select ?album ?label where{
+		    ?idalbum a dbo:Album.
+		    ?idalbum rdfs:label ?album.
+		    filter langMatches(lang(?album),'en').
+		    ?idalbum dbo:recordLabel ?idlabel.
+		    ?idlabel rdfs:label ?label.
+		    filter langMatches(lang(?label),'en').
+		} GROUP BY ?album
+		ORDER BY ASC(?album)
+	}
 }
+OFFSET 40000
+LIMIT 10000
 
 album-band connection: (o select exterior só é necessário a partir dos 40000 devido ao limite de ordenações do Virtuoso)
 select ?albumName ?bandName where{
