@@ -78,12 +78,15 @@ Band-Artist conection:
 select ?artistName ?bandName where{
 	?band a dbo:Band.
 	?artist a dbo:MusicalArtist.
-	?band dbo:bandMember ?artist.
+        ?artist a dbo:Person.
+	?band dbo:formerBandMember|dbp:pastMembers|dbo:bandMember|dbp:currentMembers ?artist.
 	?band rdfs:label ?bandName.
 	filter langMatches(lang(?bandName),'en')
 	?artist rdfs:label ?artistName.
 	filter langMatches(lang(?artistName),'en')
-}
+} GROUP BY ?artistName
+ORDER BY ASC(?artistName)
+OFFSET 20000
 
 Band-Genre conection:
 
