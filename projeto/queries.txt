@@ -236,11 +236,19 @@ select ?album ?label where{
 
 album-band connection
 select ?albumName ?bandName where{
-	?band a dbo:Band.
-	?album a dbo:Album.
-	?album dbo:artist ?band.
-	?band rdfs:label ?bandName.
-	filter langMatches(lang(?bandName),'en')
-	?album rdfs:label ?albumName.
-	filter langMatches(lang(?albumName),'en')
+	{
+		select ?albumName ?bandName where{
+			?band a dbo:Band.
+			?band dbo:formerBandMember|dbp:pastMembers|dbo:bandMember|dbp:currentMembers [].
+			?album a dbo:Album.
+			?album dbo:artist ?band.
+			?band rdfs:label ?bandName.
+			filter langMatches(lang(?bandName),'en')
+			?album rdfs:label ?albumName.
+			filter langMatches(lang(?albumName),'en')
+		}GROUP BY ?albumName
+		ORDER BY ASC(?albumName)
+	}
 }
+OFFSET 40000
+LIMIT 10000
