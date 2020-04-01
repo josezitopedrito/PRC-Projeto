@@ -194,6 +194,7 @@ OFFSET 10000
 
 
 Album-Produtor connection:
+select ?nomeAlbum ?nomeProdutor where{{
 select ?nomeAlbum ?nomeProdutor where{
     ?idalbum a dbo:Album.
     ?idalbum rdfs:label ?nomeAlbum.
@@ -202,7 +203,12 @@ select ?nomeAlbum ?nomeProdutor where{
     ?idprod rdfs:label ?nomeProdutor.
     filter langMatches(lang(?nomeProdutor),'en').
 }
-
+group by ?nomeAlbum
+ORDER BY ASC(?nomeAlbum)
+}} OFFSET 0
+   LIMIT 10000
+   
+   
 RecordLables:
 
 select ?nome (sample(?abs) as ?abstract) (sample(?country) as ?country) (sample(?founderName) as ?founderName) (sample(?foundingYear) as ?foundingYear) (sample(?sede) as ?sede) where {
