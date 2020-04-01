@@ -88,17 +88,25 @@ select ?artistName ?bandName where{
 ORDER BY ASC(?artistName)
 OFFSET 20000
 
-Band-Genre conection:
+Band-Genre conection:(o select exterior só é necessário a partir dos 40000 devido ao limite de ordenações do Virtuoso)
 
 select ?bandName ?genreName where{
-	?band a dbo:Band.
-	?genre a dbo:Genre.
-	?band dbo:genre ?genre.
-	?band rdfs:label ?bandName.
-	filter langMatches(lang(?bandName),'en')
-	?genre rdfs:label ?genreName.
-	filter langMatches(lang(?genreName),'en')
+	{
+		select ?bandName ?genreName where{
+			?band a dbo:Band.
+			?genre a dbo:Genre.
+			?band dbo:genre ?genre.
+			?band dbo:formerBandMember|dbp:pastMembers|dbo:bandMember|dbp:currentMembers [].
+			?band rdfs:label ?bandName.
+			filter langMatches(lang(?bandName),'en')
+			?genre rdfs:label ?genreName.
+			filter langMatches(lang(?genreName),'en')
+		} GROUP BY ?bandName
+		ORDER BY ASC(?bandName)
+	}
 }
+OFFSET 40000
+LIMIT 10000
 
 Genre-Genre derived conection
 
@@ -234,7 +242,7 @@ select ?album ?label where{
     filter langMatches(lang(?label),'en').
 }
 
-album-band connection
+album-band connection: (o select exterior só é necessário a partir dos 40000 devido ao limite de ordenações do Virtuoso)
 select ?albumName ?bandName where{
 	{
 		select ?albumName ?bandName where{
