@@ -136,26 +136,33 @@ select ?genreName ?fusionGenreName where{
 	}
 }
 
-Álbuns:
-
-select ?nome (sample(?abs) as ?abstract) (sample(?releaseDate) as ?releaseDate) (sample(?albumType) as ?albumType) (sample(xsd:double(?runtime)/xsd:double(60)) as ?runtime) where {
-	?id a dbo:Album.
-	?id rdfs:label ?nome.
-	filter langMatches(lang(?nome),'en')
-	OPTIONAL{
-		?id dbo:abstract ?abs.
-		filter langMatches(lang(?abs),'en')
+Álbuns:(o select exterior só é necessário a partir dos 40000 devido ao limite de ordenações do Virtuoso)
+select ?nome ?abstract ?releaseDate ?albumType ?runtime where {
+	{
+		select ?nome (sample(?abs) as ?abstract) (sample(?releaseDate) as ?releaseDate) (sample(?albumType) as ?albumType) (sample(xsd:double(?runtime)/xsd:double(60)) as ?runtime) where {
+			?id a dbo:Album.
+			?id rdfs:label ?nome.
+			filter langMatches(lang(?nome),'en')
+			OPTIONAL{
+				?id dbo:abstract ?abs.
+				filter langMatches(lang(?abs),'en')
+			}
+			OPTIONAL{
+				?id dbo:releaseDate ?releaseDate.
+			}
+			OPTIONAL{
+				?id dbp:type ?albumType.
+			}
+			OPTIONAL{
+				?id dbo:runtime ?runtime.
+			}
+		} GROUP BY ?nome
+		ORDER BY ASC(?nome)
+		}
 	}
-	OPTIONAL{
-		?id dbo:releaseDate ?releaseDate.
-	}
-	OPTIONAL{
-		?id dbp:type ?albumType.
-	}
-	OPTIONAL{
-		?id dbo:runtime ?runtime.
-	}
-} GROUP BY ?nome
+	OFFSET 40000
+	LIMIT 10000
+}
 
 
 
