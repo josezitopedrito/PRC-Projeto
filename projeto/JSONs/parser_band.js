@@ -29,39 +29,39 @@ bands.map(bd => {
 function print(){
     let data = ""
     bands.map(bn =>{
-        let string = `###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#${bn.bandName.replace(/\s/g,"_")}
-    :${bn.bandName.replace(/\s/g,"_")} rdf:type owl:NamedIndividual ,
+        let string = `###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#${bn.bandName.replace(/\s/g,"_").replace(/\"/g,"\\\"")}
+    <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#${bn.bandName.replace(/\s/g,"_").replace(/\"/g,"\\\"")}> rdf:type owl:NamedIndividual ,
     <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Group> ;
     `
     for(let i=0;i<bn.albuns.length;i++){
-        string = string +`:created :${bn.albuns[i].replace(/\s/g,"_")} ;
+        string = string +`<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#created> <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#${bn.albuns[i].replace(/\s/g,"_").replace(/\"/g,"\\\"")}> ;
     `
     }
     for(let i=0;i<bn.genres.length;i++){
-        string = string +`<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#performs> :${bn.genres[i].replace(/\s/g,"_")} ;
+        string = string +`<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#performs> <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#${bn.genres[i].replace(/\s/g,"_").replace(/\"/g,"\\\"")}> ;
     `
     }
     if(typeof bn.bandEndDate != 'undefined'){
-        string = string +`:endDate "${bn.bandEndDate}"^^xsd:string ;
+        string = string +`<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#endDate> "${bn.bandEndDate.replace(/\n/g,"\\n").replace(/\"/g,"\\\"")}"^^xsd:string ;
     `    
     }
     if(typeof bn.bandHomepage != 'undefined'){
-        string = string +`:homepage "${bn.bandHomepage}"^^xsd:string ;
+        string = string +`<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#homepage> "${bn.bandHomepage.replace(/\n/g,"\\n").replace(/\"/g,"\\\"")}"^^xsd:string ;
     `
     }
     if(typeof bn.bandFormationPlaceName != 'undefined'){
-        string = string +`:hometown "${bn.bandFormationPlaceName}"^^xsd:string ;
+        string = string +`<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#hometown> "${bn.bandFormationPlaceName.replace(/\n/g,"\\n").replace(/\"/g,"\\\"")}"^^xsd:string ;
     `
     }
     if(typeof bn.bandStartDate != 'undefined'){
-        string = string +`:startDate "${bn.bandStartDate}"^^xsd:string ;
+        string = string +`<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#:startDate> "${bn.bandStartDate.replace(/\n/g,"\\n").replace(/\"/g,"\\\"")}"^^xsd:string ;
     `
     }
     if(typeof bn.bandAbstract != 'undefined'){
-        string = string +`<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#abstract> "${bn.bandAbstract}"^^xsd:string ;
+        string = string +`<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#abstract> "${bn.bandAbstract.replace(/\n/g,"\\n").replace(/\"/g,"\\\"")}"^^xsd:string ;
     `
     }
-    data = data + string +`<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#name> "${bn.bandName}"^^xsd:string .
+    data = data + string +`<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#name> "${bn.bandName.replace(/\n/g,"\\n").replace(/\"/g,"\\\"")}"^^xsd:string .
 
 `
     })

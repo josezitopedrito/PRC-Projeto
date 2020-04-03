@@ -1,0 +1,334 @@
+@prefix : <http://www.semanticweb.org/orc/ontologies/2020/2/PRC_Project#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/orc/ontologies/2020/2/PRC_Project> .
+
+<http://www.semanticweb.org/orc/ontologies/2020/2/PRC_Project> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#created
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#created> rdf:type owl:ObjectProperty ;
+                                                                       owl:inverseOf <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#wasCreatedBy> ;
+                                                                       rdfs:domain [ rdf:type owl:Class ;
+                                                                                     owl:unionOf ( <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Artist>
+                                                                                                   <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Group>
+                                                                                                 )
+                                                                                   ] ;
+                                                                       rdfs:range <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Album> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#produced
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#produced> rdf:type owl:ObjectProperty ;
+                                                                        owl:inverseOf <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#wasProducedBy> ;
+                                                                        rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Producer> ;
+                                                                        rdfs:range <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Album> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#recorded
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#recorded> rdf:type owl:ObjectProperty ;
+                                                                        owl:inverseOf <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#wasRecordedBy> ;
+                                                                        rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#RecordLabel> ;
+                                                                        rdfs:range <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Album> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#wasCreatedBy
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#wasCreatedBy> rdf:type owl:ObjectProperty ;
+                                                                            rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Album> ;
+                                                                            rdfs:range [ rdf:type owl:Class ;
+                                                                                         owl:unionOf ( <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Artist>
+                                                                                                       <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Group>
+                                                                                                     )
+                                                                                       ] .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#wasCreatedFrom
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#wasCreatedFrom> rdf:type owl:ObjectProperty ;
+                                                                              owl:inverseOf <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#wasFusedToCreate> ;
+                                                                              rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Genre> ;
+                                                                              rdfs:range <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Genre> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#wasFusedToCreate
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#wasFusedToCreate> rdf:type owl:ObjectProperty ;
+                                                                                rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Genre> ;
+                                                                                rdfs:range <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Genre> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#wasProducedBy
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#wasProducedBy> rdf:type owl:ObjectProperty ;
+                                                                             rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Album> ;
+                                                                             rdfs:range <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Producer> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#wasRecordedBy
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#wasRecordedBy> rdf:type owl:ObjectProperty ;
+                                                                             rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Album> ;
+                                                                             rdfs:range <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#RecordLabel> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#isSubGenreOf
+<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#isSubGenreOf> rdf:type owl:ObjectProperty ;
+                                                                          owl:inverseOf <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#isSupraGenreOf> ;
+                                                                          rdf:type owl:TransitiveProperty ;
+                                                                          rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Genre> ;
+                                                                          rdfs:range <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Genre> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#isSupraGenreOf
+<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#isSupraGenreOf> rdf:type owl:ObjectProperty ,
+                                                                                     owl:TransitiveProperty ;
+                                                                            rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Genre> ;
+                                                                            rdfs:range <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Genre> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#lineupMember
+<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#lineupMember> rdf:type owl:ObjectProperty ;
+                                                                          owl:inverseOf <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#memberOf> ;
+                                                                          rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Group> ;
+                                                                          rdfs:range <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Artist> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#memberOf
+<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#memberOf> rdf:type owl:ObjectProperty ;
+                                                                      rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Artist> ;
+                                                                      rdfs:range <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Group> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#performedBy
+<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#performedBy> rdf:type owl:ObjectProperty ;
+                                                                         owl:inverseOf <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#performs> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#performs
+<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#performs> rdf:type owl:ObjectProperty ;
+                                                                      rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Group> ;
+                                                                      rdfs:range <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Genre> .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#albumType
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#albumType> rdf:type owl:DatatypeProperty ;
+                                                                         rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Album> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#birthDate
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#birthDate> rdf:type owl:DatatypeProperty ;
+                                                                         rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Artist> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#birthName
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#birthName> rdf:type owl:DatatypeProperty ;
+                                                                         rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Artist> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#birthPlaceName
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#birthPlaceName> rdf:type owl:DatatypeProperty ;
+                                                                              rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Artist> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#country
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#country> rdf:type owl:DatatypeProperty ;
+                                                                       rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#RecordLabel> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#deathDate
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#deathDate> rdf:type owl:DatatypeProperty ;
+                                                                         rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Artist> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#endDate
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#endDate> rdf:type owl:DatatypeProperty ;
+                                                                       rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Group> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#founderName
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#founderName> rdf:type owl:DatatypeProperty ;
+                                                                           rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#RecordLabel> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#foundingYear
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#foundingYear> rdf:type owl:DatatypeProperty ;
+                                                                            rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#RecordLabel> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#gender
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#gender> rdf:type owl:DatatypeProperty ;
+                                                                      rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Artist> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#headquarters
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#headquarters> rdf:type owl:DatatypeProperty ;
+                                                                            rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#RecordLabel> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#homepage
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#homepage> rdf:type owl:DatatypeProperty ;
+                                                                        rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Group> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#hometown
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#hometown> rdf:type owl:DatatypeProperty ;
+                                                                        rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Group> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#releaseDate
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#releaseDate> rdf:type owl:DatatypeProperty ;
+                                                                           rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Album> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#runtime
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#runtime> rdf:type owl:DatatypeProperty ;
+                                                                       rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Album> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#startDate
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#startDate> rdf:type owl:DatatypeProperty ;
+                                                                         rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Group> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#startingYear
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#startingYear> rdf:type owl:DatatypeProperty ;
+                                                                            rdfs:domain <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Producer> .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#abstract
+<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#abstract> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#name
+<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#name> rdf:type owl:DatatypeProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Album
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Album> rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Producer
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Producer> rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#RecordLabel
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#RecordLabel> rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Artist
+<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Artist> rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Genre
+<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Genre> rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Group
+<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Group> rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#A
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#A> rdf:type owl:NamedIndividual ,
+                                                                          <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Genre> ;
+                                                                 <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#isSupraGenreOf> <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#B> ,
+                                                                                                                                             <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#C> ;
+                                                                 <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#abstract> "A"^^xsd:string ;
+                                                                 <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#name> "A"^^xsd:string .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#B
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#B> rdf:type owl:NamedIndividual ,
+                                                                          <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Genre> ;
+                                                                 <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#wasFusedToCreate> <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#C> ;
+                                                                 <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#isSubGenreOf> <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#A> ;
+                                                                 <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#isSupraGenreOf> <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#C> ;
+                                                                 <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#abstract> "B"^^xsd:string ;
+                                                                 <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#name> "B"^^xsd:string .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#C
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#C> rdf:type owl:NamedIndividual ,
+                                                                          <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Genre> ;
+                                                                 <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#wasCreatedFrom> <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#B> ;
+                                                                 <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#isSubGenreOf> <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#A> ,
+                                                                                                                                           <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#B> ;
+                                                                 <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#performedBy> <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#The_Jaquins> ;
+                                                                 <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#abstract> "C"^^xsd:string ;
+                                                                 <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#name> "C"^^xsd:string .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Jackie_Chan
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Jackie_Chan> rdf:type owl:NamedIndividual ,
+                                                                                    <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Producer> ;
+                                                                           <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#produced> <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#SelfTitled> ;
+                                                                           <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#startingYear> "Since ever"^^xsd:string ;
+                                                                           <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#abstract> "Mano do kung fu"^^xsd:string ;
+                                                                           <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#name> "Jackie Chan"^^xsd:string .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Joaquim_de_Almeida
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Joaquim_de_Almeida> rdf:type owl:NamedIndividual ,
+                                                                                           <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Artist> ;
+                                                                                  <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#memberOf> <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#The_Jaquins> ;
+                                                                                  <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#birthDate> "22 de Abril de 1963"^^xsd:string ;
+                                                                                  <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#birthName> "Joaquinácio de Almeiraço"^^xsd:string ;
+                                                                                  <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#birthPlaceName> "Sesimbra"^^xsd:string ;
+                                                                                  <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#deathDate> "Nunca"^^xsd:string ;
+                                                                                  <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#gender> "MACHO"^^xsd:string ;
+                                                                                  <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#abstract> "Belo Artista sim senhor"^^xsd:string ;
+                                                                                  <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#name> "Joaquim de Almeida"^^xsd:string .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#RecordLabel_S.A.
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#RecordLabel_S.A.> rdf:type owl:NamedIndividual ,
+                                                                                         <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#RecordLabel> ;
+                                                                                <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#recorded> <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#SelfTitled> ;
+                                                                                <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#country> "Angola"^^xsd:string ;
+                                                                                <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#founderName> "Augusto Inácio"^^xsd:string ;
+                                                                                <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#foundingYear> "1969"^^xsd:string ;
+                                                                                <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#headquarters> "Cabinda"^^xsd:string ;
+                                                                                <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#abstract> "Bela record label"^^xsd:string ;
+                                                                                <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#name> "RecordLabel S.A."^^xsd:string .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#SelfTitled
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#SelfTitled> rdf:type owl:NamedIndividual ,
+                                                                                   <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Album> ;
+                                                                          <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#wasCreatedBy> <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#The_Jaquins> ;
+                                                                          <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#wasProducedBy> <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Jackie_Chan> ;
+                                                                          <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#wasRecordedBy> <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#RecordLabel_S.A.> ;
+                                                                          <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#albumType> "Brutal"^^xsd:string ;
+                                                                          <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#releaseDate> "13 de Abril de 1998"^^xsd:string ;
+                                                                          <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#runtime> "muito tempo"^^xsd:string ;
+                                                                          <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#abstract> "9/10 do caraças"^^xsd:string ;
+                                                                          <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#name> "SelfTitled"^^xsd:string .
+
+
+###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#The_Jaquins
+<http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#The_Jaquins> rdf:type owl:NamedIndividual ,
+                                                                                    <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Group> ;
+                                                                           <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#created> <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#SelfTitled> ;
+                                                                           <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#lineupMember> <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#Joaquim_de_Almeida> ;
+                                                                           <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#performs> <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#C> ;
+                                                                           <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#endDate> "13 de Abril de 2020"^^xsd:string ;
+                                                                           <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#homepage> "www.thejaquins.com"^^xsd:string ;
+                                                                           <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#hometown> "Braga"^^xsd:string ;
+                                                                           <http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#startDate> "13 de Abril de 1998"^^xsd:string ;
+                                                                           <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#abstract> "Bela banda portuguesa"^^xsd:string ;
+                                                                           <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#name> "The Jaquins"^^xsd:string .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

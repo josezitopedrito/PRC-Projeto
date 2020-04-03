@@ -50,26 +50,26 @@ genres.map(gr =>{
 function print(){
     let data = ""
     genres.map(gn =>{
-        let string = `###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#${gn.genreName.replace(/\s/g,"_")}
-    :B rdf:type owl:NamedIndividual ,
+        let string = `###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#${gn.genreName.replace(/\s/g,"_").replace(/\"/g,"\\\"")}
+    <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#${gn.genreName.replace(/\s/g,"_").replace(/\"/g,"\\\"")}> rdf:type owl:NamedIndividual ,
     <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Genre> ;
     `
     for(let i=0;i<gn.fusion.length;i++){
-        string = string +  `:wasFusedToCreate :${gn.fusion[i].replace(/\s/g,"_")} ;
+        string = string +  `<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#wasFusedToCreate> <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#${gn.fusion[i].replace(/\s/g,"_").replace(/\"/g,"\\\"")}> ;
     `
     }
     for(let i=0;i<gn.predecessor.length;i++){
-        string = string +  `<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#isSupraGenreOf> :${gn.predecessor[i].replace(/\s/g,"_")}  ;
+        string = string +  `<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#isSupraGenreOf> <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#${gn.predecessor[i].replace(/\s/g,"_").replace(/\"/g,"\\\"")}>  ;
     `
     }
     for(let i=0;i<gn.antecessor.length;i++){
-        string = string +  `<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#isSubGenreOf> :${gn.antecessor[i].replace(/\s/g,"_")}  ;
+        string = string +  `<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#isSubGenreOf> <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#${gn.antecessor[i].replace(/\s/g,"_").replace(/\"/g,"\\\"")}>  ;
     `
     }
     if(typeof gn.genreAbstract != 'undefined')
-        string = string +  `<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#abstract> "${gn.genreAbstract}"^^xsd:string ;
+        string = string +  `<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#abstract> "${gn.genreAbstract.replace(/\n/g,"\\n").replace(/\"/g,"\\\"")}"^^xsd:string ;
     `
-    data = data + string + `<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#name> "${gn.genreName}"^^xsd:string .
+    data = data + string + `<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#name> "${gn.genreName.replace(/\n/g,"\\n").replace(/\"/g,"\\\"")}"^^xsd:string .
 
 `
     })

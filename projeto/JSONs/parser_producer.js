@@ -11,17 +11,17 @@ console.log(producers)
 function print(){
     let data = ""
     producers.map(pr =>{
-        let string = `###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#${pr.name.replace(/\s/g,"_")}
-    :${pr.name.replace(/\s/g,"_")} rdf:type owl:NamedIndividual ,
-    :Producer ;
+        let string = `###  http://www.semanticweb.org/prc/ontologies/2020/2/PRC_Project#${pr.name.replace(/\s/g,"_").replace(/\"/g,"\\\"")}}
+    <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#${pr.name.replace(/\s/g,"_").replace(/\"/g,"\\\"")}> rdf:type owl:NamedIndividual ,
+    <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#Producer> ;
     `
     if(typeof pr.begindate != 'undefined')
-        string = string + `:startingYear "${pr.begindate}"^^xsd:string ;
+        string = string + `<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#startingYear> "${pr.begindate.replace(/\n/g,"\\n").replace(/\"/g,"\\\"")}"^^xsd:string ;
     `
     if(typeof pr.abstract != 'undefined')
-        string = string + `<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#abstract> "${pr.abstract}"^^xsd:string ;
+        string = string + `<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#abstract> "${pr.abstract.replace(/\n/g,"\\n").replace(/\"/g,"\\\"")}"^^xsd:string ;
     `
-    data = data + string + `<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#name> "${pr.name}"^^xsd:string .
+    data = data + string + `<http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#name> "${pr.name.replace(/\n/g,"\\n").replace(/\"/g,"\\\"")}"^^xsd:string .
 
 `
     })
