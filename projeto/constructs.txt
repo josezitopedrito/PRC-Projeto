@@ -1,0 +1,63 @@
+PREFIX : <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+construct {
+	?g2 :wasFusedToCreate ?g.
+}where{
+	?g a :Genre.
+    ?gg a :Genre.
+    ?g :wasCreatedByTheFusionOf ?g2.
+}
+
+
+PREFIX : <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+construct {
+    ?b :produced ?a
+}where{
+	?a :wasProducedBy ?b
+}
+
+
+
+PREFIX : <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+construct {
+    ?b :recorded ?a
+}where{
+	?a :wasRecordedBy ?b
+}
+
+
+
+
+PREFIX : <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+construct {
+    ?b :wasCreatedBy ?a
+}where{
+	?a :created ?b
+}
+
+
+
+PREFIX : <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+construct {
+    ?b :performedBy ?a
+}where{
+	?a :performs ?b
+}
+
+
+
+
+PREFIX : <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+construct {
+    ?b :lineupMember ?a
+}where{
+	?a :memberOf ?b
+}
+
+
+
