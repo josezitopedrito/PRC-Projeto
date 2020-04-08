@@ -10,7 +10,7 @@ var prefixes = `
     PREFIX c: <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#>
 `
 
-var getLink = "http://localhost:7200/repositories/PRC-Project" + "?query=" 
+var getLink = "http://localhost:7200/repositories/PRC-PROJECT" + "?query=" 
 
 function normalize(response) {
     return response.results.bindings.map(obj =>
