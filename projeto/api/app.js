@@ -27,7 +27,7 @@ app.use('/api/artists', artistsRouter);
 app.use('/api/producers', producersRouter);
 app.use('/api/recordLabels', rlabelsRouter);
 app.use('/api/genres', genresRouter);
-app.use('/api/bands', bandsRouter);
+app.use('/api/groups', bandsRouter);
 app.use('/api/albums', albunsRouter);
 
 // catch 404 and forward to error handler
