@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
+var cors = require('cors');
 
 var artistsRouter = require('./routes/artists');
 var producersRouter = require('./routes/producers');
@@ -16,6 +17,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.use(cors())
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -26,7 +28,7 @@ app.use('/api/producers', producersRouter);
 app.use('/api/recordLabels', rlabelsRouter);
 app.use('/api/genres', genresRouter);
 app.use('/api/bands', bandsRouter);
-app.use('/api/albuns', albunsRouter);
+app.use('/api/albums', albunsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

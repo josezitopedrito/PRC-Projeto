@@ -20,9 +20,10 @@ function normalize(response) {
 };
 
 Albuns.getLista = async function(){
-    var query = ` select ?id ?name where {
+    var query = ` select ?id ?name ?creator where {
         ?id rdf:type c:Album.
         ?id c:name ?name.
+        ?creator c:created ?id
     }` 
     var encoded = encodeURIComponent(prefixes + query)
 
