@@ -92,6 +92,22 @@ Vue.use(VueRouter)
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/SingleGenre.vue')
+  },
+  {
+    path: '/recordLabels/:id',
+    name: 'RecordLabels',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/SingleLabel.vue')
+  },
+  {
+    path: '/producers/:id',
+    name: 'Producers',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/SingleProducer.vue')
   }
 ]
 

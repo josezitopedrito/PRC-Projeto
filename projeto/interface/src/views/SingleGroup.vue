@@ -48,7 +48,9 @@
                             <td class="text-left">Membros</td>
                             <td>
                                 <v-layout justify-center>
-                                    <ul v-for="artist in group.artist" :key="artist"><li>{{ artist.artistName }}</li></ul>
+                                    <v-list v-for="artist in group.artist" :key="artist">
+                                        <v-list-item link :to="'/artists/' + artist.artist.split('#')[1]">{{ artist.artistName }}</v-list-item>
+                                    </v-list>
                                 </v-layout>
                             </td>
                         </tr>
@@ -56,7 +58,9 @@
                             <td class="text-left">Álbuns</td>
                             <td>
                                 <v-layout justify-center>
-                                    <ul v-for="album in group.album" :key="album"><li>{{ album.albumName }}</li></ul>
+                                    <v-list v-for="album in group.album" :key="album">
+                                        <v-list-item link :to="'/albums/' + album.album.split('#')[1]">{{ album.albumName }}</v-list-item>
+                                    </v-list>
                                 </v-layout>
                             </td>
                         </tr>
@@ -64,7 +68,9 @@
                             <td class="text-left">Géneros</td>
                             <td>
                                 <v-layout justify-center>
-                                    <ul v-for="genre in group.genre" :key="genre"><li>{{ genre.genreName }}</li></ul>
+                                    <v-list v-for="genre in group.genre" :key="genre">
+                                        <v-list-item link :to="'/genres/' + genre.genre.split('#')[1]">{{ genre.genreName }}</v-list-item>
+                                    </v-list>
                                 </v-layout>
                             </td>
                         </tr>

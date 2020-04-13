@@ -42,19 +42,33 @@
                                     </v-layout>
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="text-left">Grupo/Artista Musical</td>
+                            <tr v-if="creator.bandName">
+                                <td class="text-left">Grupo Musical</td>
                                 <td>
                                     <v-layout justify-center>
-                                        {{ creator }}
+                                        <v-list v-for="band in album.band" :key="band">
+                                            <v-list-item link :to="'/groups/' + band.band.split('#')[1]">{{ band.bandName }}</v-list-item>
+                                        </v-list>
                                     </v-layout>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr v-if="creator.artistName">
+                                <td class="text-left">Artista Musical</td>
+                                <td>
+                                    <v-layout justify-center>
+                                        <v-list v-for="artist in album.artist" :key="artist">
+                                            <v-list-item link :to="'/artists/' + artist.artist.split('#')[1]">{{ artist.artistName }}</v-list-item>
+                                        </v-list>
+                                    </v-layout>
+                                </td>
+                            </tr>
+                            <tr v-if="album.label">
                                 <td class="text-left">Empresa de gravação</td>
                                 <td>
                                     <v-layout justify-center>
-                                        <v-label v-for="label in album.recordLabel" :key="label">{{ label.rlabelname }}</v-label>
+                                        <v-list v-for="label in album.recordLabel" :key="label">
+                                            <v-list-item link :to="'/labels/' + label.label.split('#')[1]">{{ label.rlabelname }}</v-list-item>
+                                        </v-list>
                                     </v-layout>
                                 </td>
                             </tr>
@@ -62,7 +76,9 @@
                                 <td class="text-left">Produzido por</td>
                                 <td>
                                     <v-layout justify-center>
-                                        <v-label v-for="producer in album.producer" :key="producer">{{ producer.producerName }}</v-label>
+                                        <v-list v-for="producer in album.producer" :key="producer">
+                                            <v-list-item link :to="'/producers/' + producer.producer.split('#')[1]">{{ producer.producerName }}</v-list-item>
+                                        </v-list>
                                     </v-layout>
                                 </td>
                             </tr>
@@ -97,10 +113,11 @@ export default {
     try{
       let response = await axios.get(this.lhost + this.$route.path)
       this.album = response.data
+      console.log(this.album)
       if(response.data.band[0].bandName){
-          this.creator = response.data.band[0].bandName
+          this.creator = response.data.band[0]
       } else {
-          this.creator = response.data.artist[0].artistName
+          this.creator = response.data.artist[0]
       }
     }catch(e){
       return e

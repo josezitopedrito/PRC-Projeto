@@ -1,5 +1,5 @@
 <template>
-    <div id="singleGroup">
+    <div id="singleGenre">
         <v-container fluid>
             <v-simple-table dense>
                 <template v-slot:default>
@@ -16,7 +16,9 @@
                             <td class="text-left">Subgéneros</td>
                             <td>
                                 <v-layout justify-center>
-                                    <ul v-for="SubGenre in genre.SubGenre" :key="SubGenre"><li>{{ SubGenre.genreName }}</li></ul>
+                                    <v-list v-for="SubGenre in genre.SubGenre" :key="SubGenre">
+                                        <v-list-item link :to="'/genres/' + SubGenre.genre.split('#')[1]">{{ SubGenre.genreName }}</v-list-item>
+                                    </v-list>
                                 </v-layout>
                             </td>
                         </tr>
@@ -24,7 +26,9 @@
                             <td class="text-left">Supragéneros</td>
                             <td>
                                 <v-layout justify-center>
-                                    <ul v-for="SupraGenre in genre.SupraGenre" :key="SupraGenre"><li>{{ SupraGenre.genreName }}</li></ul>
+                                    <v-list v-for="SupraGenre in genre.SupraGenre" :key="SupraGenre">
+                                        <v-list-item link :to="'/genres/' + SupraGenre.genre.split('#')[1]">{{ SupraGenre.genreName }}</v-list-item>
+                                    </v-list>
                                 </v-layout>
                             </td>
                         </tr>
@@ -32,7 +36,9 @@
                             <td class="text-left">Géneros originados a partir da fusão com outro género</td>
                             <td>
                                 <v-layout justify-center>
-                                    <ul v-for="FusionGenre in genre.FusionGenre" :key="FusionGenre"><li>{{ FusionGenre.genreName }}</li></ul>
+                                    <v-list v-for="FusionGenre in genre.FusionGenre" :key="FusionGenre">
+                                        <v-list-item link :to="'/genres/' + FusionGenre.genre.split('#')[1]">{{ FusionGenre.genreName }}</v-list-item>
+                                    </v-list>
                                 </v-layout>
                             </td>
                         </tr>
@@ -40,7 +46,9 @@
                             <td class="text-left">Musical Group</td>
                             <td>
                                 <v-layout justify-center>
-                                    <ul v-for="Band in genre.Band" :key="Band"><li>{{ Band.bandName }}</li></ul>
+                                    <v-list v-for="Band in genre.Band" :key="Band">
+                                        <v-list-item link :to="'/groups/' + band.band.split('#')[1]">{{ Band.bandName }}</v-list-item>
+                                    </v-list>
                                 </v-layout>
                             </td>
                         </tr>

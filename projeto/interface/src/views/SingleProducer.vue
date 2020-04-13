@@ -24,7 +24,9 @@
                             <td class="text-left">Álbuns</td>
                             <td>
                                 <v-layout justify-center>
-                                    <ul v-for="album in label.album" :key="album"><li>{{ album.albumName }}</li></ul>
+                                    <v-list v-for="album in label.album" :key="album">
+                                        <v-list-item link :to="'/albums/' + album.album.split('#')[1]">{{ album.albumName }}</v-list-item>
+                                    </v-list>
                                 </v-layout>
                             </td>
                         </tr>
