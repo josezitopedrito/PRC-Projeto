@@ -37,7 +37,7 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "about" */ '../views/Albums.vue')
   },
   {
-    path: '/Labels',
+    path: '/recordLabels',
     name: 'Record Labels',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -103,7 +103,7 @@ Vue.use(VueRouter)
   },
   {
     path: '/producers/:id',
-    name: 'Producers',
+    name: 'Producer',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.

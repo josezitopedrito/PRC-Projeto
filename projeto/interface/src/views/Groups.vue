@@ -16,8 +16,8 @@
         :headers="hgroups"
         :items="groups"
         :search="search"
-        :sort-by="['Id','Nome']"
-        :sort-desc="[true,true]"
+        :sort-by="['Id','Nome','Options']"
+        :sort-desc="[true,true,false]"
         multi-sort
         :footer-props="{
           showFirstLastPage: true,
@@ -27,6 +27,17 @@
           nextIcon: 'mdi-plus'
         }"  
       >
+        <template v-slot:item.options="{ item }">
+          <v-btn icon :to="'/groups/' + item.id.split('#')[1]">
+            <v-icon
+              small
+              class="mr-2"
+            >
+              mdi-eye
+            </v-icon>
+            Consultar grupo musical
+          </v-btn>
+        </template>
         <template v-slot:no-data>
           <v-alert :value="true" color = "warning" icon = "warning">
             Ainda nao foi possivel apresentar a lista dos grupos musicais
@@ -46,7 +57,8 @@ export default {
       search:'',
       hgroups:[
         {text:"Id",sortable:true, value:'id',filterable: false,class:'subtitle-1'},
-        {text:"Nome",sortable:true, value:'name',class:'subtitle-1'}
+        {text:"Nome",sortable:true, value:'name',class:'subtitle-1'},
+        {text:'Options',value:'options',sortable: false}
       ],
       groups:[],
       lhost:'http://localhost:5001/api'
@@ -54,8 +66,9 @@ export default {
   },
   created: async function(){
     try{
-      let response = await axios.get(this.lhost + "/bands")
+      let response = await axios.get(this.lhost + "/groups")
       this.groups = response.data
+      console.log(this.groups)
     }catch(e){
       return e
     }

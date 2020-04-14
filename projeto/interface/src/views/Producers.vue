@@ -16,8 +16,8 @@
         :headers="hprodutores"
         :items="produtores"
         :search="search"
-        :sort-by="['Id','Nome']"
-        :sort-desc="[true,true]"
+        :sort-by="['Id','Nome','Options']"
+        :sort-desc="[true,true,false]"
         multi-sort
         :footer-props="{
           showFirstLastPage: true,
@@ -27,6 +27,17 @@
           nextIcon: 'mdi-plus'
         }"
       >
+        <template v-slot:item.options="{ item }">
+          <v-btn icon :to="'/producers/' + item.id.split('#')[1]">
+            <v-icon
+              small
+              class="mr-2"
+            >
+              mdi-eye
+            </v-icon>
+            Consultar produtor
+          </v-btn>
+        </template>
         <template v-slot:no-data>
           <v-alert :value="true" color = "warning" icon = "warning">
             Ainda nao foi possivel apresentar a lista dos produtores
@@ -46,7 +57,8 @@ export default {
       search:'',
       hprodutores:[
         {text:"Id",sortable:true, value:'id',filterable: false,class:'subtitle-1'},
-        {text:"Nome",sortable:true, value:'name',class:'subtitle-1'}
+        {text:"Nome",sortable:true, value:'name',class:'subtitle-1'},
+        {text:'Options',value:'options',sortable: false}
       ],
       produtores:[],
       lhost:'http://localhost:5001/api'

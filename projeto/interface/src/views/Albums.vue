@@ -16,8 +16,8 @@
         :headers="halbuns"
         :items="albuns"
         :search="search"
-        :sort-by="['Nome','Artist/Group']"
-        :sort-desc="[true,true]"
+        :sort-by="['Nome','Artist/Group','Options']"
+        :sort-desc="[true,true,false]"
         multi-sort
         :footer-props="{
           showFirstLastPage: true,
@@ -27,6 +27,17 @@
           nextIcon: 'mdi-plus'
         }"
       >
+        <template v-slot:item.options="{ item }">
+          <v-btn icon :to="'/albums/' + item.id.split('#')[1]">
+            <v-icon
+              small
+              class="mr-2"
+            >
+              mdi-eye
+            </v-icon>
+            Consultar album
+          </v-btn>
+        </template>
         <template v-slot:no-data>
           <v-alert :value="true" color = "warning" icon = "warning">
             Ainda nao foi possivel apresentar a lista dos álbuns
@@ -46,7 +57,8 @@ export default {
       search:'',
       halbuns:[
        {text:"Nome",sortable:true, value:'name',class:'subtitle-1'},
-       {text:"Artist/Group",sortable:true, value:'creator',class:'subtitle-1'}
+       {text:"Artist/Group",sortable:true, value:'creator',class:'subtitle-1'},
+       {text:'Options',value:'options',sortable: false}
       ],
       albuns:[],
       lhost:'http://localhost:5001/api'
