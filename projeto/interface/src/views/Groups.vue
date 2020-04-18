@@ -1,7 +1,8 @@
 <template>
-  <v-card class="ma-2">
-    <v-card-title>
-      Lista de Grupos
+  <div id="Groups">
+  <v-card flat class="card">
+    <v-card-title class="title">
+      Group list
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
@@ -13,6 +14,7 @@
     </v-card-title>
     <v-card-text>
       <v-data-table
+        class="table"
         :headers="hgroups"
         :items="groups"
         :search="search"
@@ -27,7 +29,7 @@
           nextIcon: 'mdi-plus'
         }"  
       >
-        <template v-slot:item.options="{ item }">
+        <template class="tile" v-slot:item.options="{ item }">
           <v-btn icon :to="'/groups/' + item.id.split('#')[1]">
             <v-icon
               small
@@ -35,17 +37,18 @@
             >
               mdi-eye
             </v-icon>
-            Consultar grupo musical
+            Individual page
           </v-btn>
         </template>
         <template v-slot:no-data>
           <v-alert :value="true" color = "warning" icon = "warning">
-            Ainda nao foi possivel apresentar a lista dos grupos musicais
+            The group list is still loading. Wait a second
           </v-alert> 
         </template>
       </v-data-table>
     </v-card-text>
   </v-card>
+  </div>
 </template>
 
 <script>
@@ -57,7 +60,7 @@ export default {
       search:'',
       hgroups:[
         {text:"Id",sortable:true, value:'id',filterable: false,class:'subtitle-1'},
-        {text:"Nome",sortable:true, value:'name',class:'subtitle-1'},
+        {text:"Name",sortable:true, value:'name',class:'subtitle-1'},
         {text:'Options',value:'options',sortable: false}
       ],
       groups:[],
@@ -92,4 +95,30 @@ li {
 a {
   color: #42b983;
 }
+  #Groups {
+        background-image: url("../assets/people-at-concert-1105666.jpg");
+        background-color: #cccccc;
+        min-height: 100%;
+        background-size: cover;
+        background-position:50% 50%;
+    }
+    .tile{
+        background-color:transparent;
+    }
+    .tile:hover{
+        background-color: burlywood;
+    }
+    .tile:active{
+        background-color: aliceblue;
+    }
+    .table{
+        background-color: rgba(255,255,255,0.5);
+    }
+    .title{
+        color:aliceblue;
+    }
+    .card {
+      background-color: transparent!important;
+      opacity: 1;
+    }
 </style>

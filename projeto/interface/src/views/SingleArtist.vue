@@ -1,80 +1,88 @@
 <template>
     <div id="singleArtist">
         <v-container fluid>
-            <v-simple-table dense>
-                <template v-slot:default>
-                    <tbody>
-                        <tr>
-                            <td class="text-left">Name</td>
-                            <td>
-                                <v-layout justify-center>
-                                    {{ artista.artist[0].name }}
-                                </v-layout>
-                            </td>
-                        </tr>
-                        <tr v-if="artista.artist[0].bd">
-                            <td class="text-left">Data de Nascimento</td>
-                            <td>
-                                <v-layout justify-center>
-                                    {{ artista.artist[0].bd}}
-                                </v-layout>
-                            </td>
-                        </tr>
-                        <tr v-if="artista.artist[0].bpn">
-                            <td class="text-left">Local de Nascimento</td>
-                            <td>
-                                <v-layout justify-center>
-                                    {{ artista.artist[0].bpn }}
-                                </v-layout>
-                            </td>
-                        </tr>
-                        <tr v-if="artista.artist[0].dd">
-                            <td class="text-left">Data da Morte</td>
-                            <td>
-                                <v-layout justify-center>
-                                    {{ artista.artist[0].dd }}
-                                </v-layout>
-                            </td>
-                        </tr>
-                        <tr v-if="artista.artist[0].g">
-                            <td class="text-left">Género</td>
-                            <td>
-                                <v-layout justify-center>
-                                    {{ artista.artist[0].g }}
-                                </v-layout>
-                            </td>
-                        </tr>
-                        <tr v-if="artista.band[0]">
-                            <td class="text-left">Grupo Musical</td>
-                            <td>
-                                <v-layout justify-center>
-                                    <v-list v-for="band in artista.band" :key="band">
-                                        <v-list-item link :to="'/groups/' + band.band.split('#')[1]">{{ band.bandName }}</v-list-item>
-                                    </v-list>
-                                </v-layout>
-                            </td>
-                        </tr>
-                        <tr v-if="artista.album[0]">
-                            <td class="text-left">Álbuns</td>
-                            <td>
-                                <v-layout justify-center>
-                                    <v-list v-for="album in artista.album" :key="album">
-                                        <v-list-item link :to="'/albums/' + album.album.split('#')[1]">{{ album.albumName }}</v-list-item>
-                                    </v-list>
-                                </v-layout>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Informações acerca do artista</td>
-                            <td>
-                                <v-layout justify-center>
-                                    {{ artista.artist[0].abs }}
-                                </v-layout>
-                            </td>
-                        </tr>
-                    </tbody>
-                </template>
-            </v-simple-table>
+            <v-row justify="space-around">
+            <v-col cols="5">
+                <h2 class="title">{{ artista.artist[0].name }}</h2>
+                <v-img v-bind:src="imagem" contain aspect-ratio="1.7" max-width="700px" />
+            </v-col>
+            <v-col cols="5">
+                <v-simple-table class="table" dense>
+                    <template v-slot:default>
+                        <tbody>
+                            <tr>
+                                <td class="text-left">Name</td>
+                                <td>
+                                    <v-layout justify-center>
+                                        {{ artista.artist[0].name }}
+                                    </v-layout>
+                                </td>
+                            </tr>
+                            <tr v-if="artista.artist[0].bd">
+                                <td class="text-left">Birth Date</td>
+                                <td>
+                                    <v-layout justify-center>
+                                        {{ artista.artist[0].bd}}
+                                    </v-layout>
+                                </td>
+                            </tr>
+                            <tr v-if="artista.artist[0].bpn">
+                                <td class="text-left">Birth Place</td>
+                                <td>
+                                    <v-layout justify-center>
+                                        {{ artista.artist[0].bpn }}
+                                    </v-layout>
+                                </td>
+                            </tr>
+                            <tr v-if="artista.artist[0].dd">
+                                <td class="text-left">Date of Passing</td>
+                                <td>
+                                    <v-layout justify-center>
+                                        {{ artista.artist[0].dd }}
+                                    </v-layout>
+                                </td>
+                            </tr>
+                            <tr v-if="artista.artist[0].g">
+                                <td class="text-left">Gender</td>
+                                <td>
+                                    <v-layout justify-center>
+                                        {{ artista.artist[0].g }}
+                                    </v-layout>
+                                </td>
+                            </tr>
+                            <tr v-if="artista.band[0]">
+                                <td class="text-left">Musical Group belonged to</td>
+                                <td>
+                                    <v-layout justify-center>
+                                        <v-list class="tile" v-for="band in artista.band" :key="band">
+                                            <v-list-item link :to="'/groups/' + band.band.split('#')[1]">{{ band.bandName }}</v-list-item>
+                                        </v-list>
+                                    </v-layout>
+                                </td>
+                            </tr>
+                            <tr v-if="artista.album[0]">
+                                <td class="text-left">Solo Albums</td>
+                                <td>
+                                    <v-layout justify-center>
+                                        <v-list class="tile" v-for="album in artista.album" :key="album">
+                                            <v-list-item link :to="'/albums/' + album.album.split('#')[1]">{{ album.albumName }}</v-list-item>
+                                        </v-list>
+                                    </v-layout>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Artist Information</td>
+                                <td>
+                                    <v-layout justify-center>
+                                        {{ artista.artist[0].abs }}
+                                    </v-layout>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </template>
+                </v-simple-table>
+            </v-col>
+            </v-row>
         </v-container>
     </div>
 </template>
@@ -85,9 +93,22 @@ export default {
   data(){
     return{
       artista:{},
-      lhost:'http://localhost:5001/api'
+      lhost:'http://localhost:5001/api',
+      url:'',
+      imagem:''
     }
   },
+  methods:{
+    fileName: function(str){
+        if(str.substring(0,5) == 'File:' && (str.substring(str.length - 4,str.length) == '.jpg'||str.substring(str.length - 5,str.length) == '.jpeg'||str.substring(str.length - 4,str.length) == '.png'||str.substring(str.length - 4,str.length) == '.gif')){
+            console.log('PRINT DECISIVO: ' + str)
+            return str.substring(5,str.length)
+        }else{
+            return 'nothing'
+        }
+    }
+
+},
   created: async function(){
     try{
       let response = await axios.get(this.lhost + this.$route.path)
@@ -96,6 +117,76 @@ export default {
     }catch(e){
       return e
     }
+    this.url = "https://en.wikipedia.org/w/api.php"; 
+
+    this.url = this.url + "?origin=*";
+    this.url += "&action=query";
+    this.url += "&prop=images";
+
+    var replaced = this.artista.artist[0].name;
+    replaced = replaced.split("&").join("%26")
+
+    this.url += "&titles=" + replaced;
+    this.url += "&format=json";
+
+    this.url = this.url.split(" ").join("_")
+
+    console.log(this.url)
+    try{
+      let response2 = await axios.get(this.url)
+      var pages = response2.data.query.pages;
+        for (var page in pages) {
+            for (var img of pages[page].images) {
+                console.log(img.title)
+                var str = this.fileName(img.title)
+                if(str!='nothing'){
+                    str = str.split(" ").join("_")
+                    console.log(str)
+                    try{
+                        let schyper = await axios.get('http://api.hashify.net/hash/md5/hex?value=' + str)
+                        console.log(schyper)
+                        var schipheredStr = schyper.data['Digest']
+                        console.log(schipheredStr)
+                        var url2 = 'https://upload.wikimedia.org/wikipedia/commons/thumb/' + schipheredStr.charAt(0) + '/' + schipheredStr.charAt(0) + schipheredStr.charAt(1) + '/' + str + '/800px-' + str
+                        console.log(url2)         
+                        let finalresponse = await axios.get(url2,{responseType:'arraybuffer'})
+                        var image = new Buffer(finalresponse.data, 'binary').toString('base64')                 
+                        this.imagem = `data:${finalresponse.headers['content-type'].toLowerCase()};base64,${image}`
+                        break
+                    }catch(e){
+                        console.log('wrongFile')
+                    }
+                }
+            }
+        }
+    }catch(e){
+      console.log(e)
+      return e
+    }
   }
 }
 </script>
+<style scoped>
+    #singleArtist {
+        background-image: url("../assets/brown-and-black-cut-away-acoustic-guitar-1010519.jpg");
+        background-color: #cccccc;
+        min-height: 100%;
+        background-size: cover;
+        background-position:50% 50%;
+    }
+    .tile{
+        background-color:transparent;
+    }
+    .tile:hover{
+        background-color: burlywood;
+    }
+    .tile:active{
+        background-color: aliceblue;
+    }
+    .title{
+        color:aliceblue;
+    }
+    .table{
+        background-color: rgba(255,255,255,0.5);
+    }
+</style>

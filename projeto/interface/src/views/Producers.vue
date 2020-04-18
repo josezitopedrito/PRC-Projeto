@@ -1,7 +1,8 @@
 <template>
-  <v-card class="ma-2">
-    <v-card-title>
-      Lista de Produtores
+  <div id="Producers">
+  <v-card flat class="card">
+    <v-card-title class="title">
+      List of Producers
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
@@ -13,6 +14,7 @@
     </v-card-title>
     <v-card-text>
       <v-data-table
+        class="table"
         :headers="hprodutores"
         :items="produtores"
         :search="search"
@@ -27,7 +29,7 @@
           nextIcon: 'mdi-plus'
         }"
       >
-        <template v-slot:item.options="{ item }">
+        <template class="tile" v-slot:item.options="{ item }">
           <v-btn icon :to="'/producers/' + item.id.split('#')[1]">
             <v-icon
               small
@@ -35,17 +37,18 @@
             >
               mdi-eye
             </v-icon>
-            Consultar produtor
+            Individual page
           </v-btn>
         </template>
         <template v-slot:no-data>
           <v-alert :value="true" color = "warning" icon = "warning">
-            Ainda nao foi possivel apresentar a lista dos produtores
+            The producer list is still loading. Wait a second
           </v-alert> 
         </template>
       </v-data-table>
     </v-card-text>
   </v-card>
+  </div>
 </template>
 
 <script>
@@ -57,7 +60,7 @@ export default {
       search:'',
       hprodutores:[
         {text:"Id",sortable:true, value:'id',filterable: false,class:'subtitle-1'},
-        {text:"Nome",sortable:true, value:'name',class:'subtitle-1'},
+        {text:"Name",sortable:true, value:'name',class:'subtitle-1'},
         {text:'Options',value:'options',sortable: false}
       ],
       produtores:[],
@@ -90,5 +93,31 @@ li {
 }
 a {
   color: #42b983;
+}
+#Producers {
+    background-image: url("../assets/person-adjusting-audio-of-a-sound-mixer-3531867.jpg");
+    background-color: #cccccc;
+    min-height: 100%;
+    background-size: cover;
+    background-position:50% 50%;
+}
+.tile{
+    background-color:transparent;
+}
+.tile:hover{
+    background-color: burlywood;
+}
+.tile:active{
+    background-color: aliceblue;
+}
+.table{
+    background-color: rgba(255,255,255,0.5);
+}
+.title{
+    color:aliceblue;
+}
+.card {
+  background-color: transparent!important;
+  opacity: 1;
 }
 </style>

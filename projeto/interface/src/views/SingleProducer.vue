@@ -1,7 +1,7 @@
 <template>
     <div id="singleProducer">
         <v-container fluid>
-            <v-simple-table dense>
+            <v-simple-table class="table" dense>
                 <template v-slot:default>
                     <tbody>
                         <tr>
@@ -13,7 +13,7 @@
                             </td>
                         </tr>
                         <tr v-if="label.Producer[0].hq">
-                            <td class="text-left">Ano de Começo</td>
+                            <td class="text-left">Active since</td>
                             <td>
                                 <v-layout justify-center>
                                     {{ label.Producer[0].hq}}
@@ -21,17 +21,17 @@
                             </td>
                         </tr>
                         <tr v-if="label.album[0]">
-                            <td class="text-left">Álbuns</td>
+                            <td class="text-left">Albums produced</td>
                             <td>
                                 <v-layout justify-center>
-                                    <v-list v-for="album in label.album" :key="album">
+                                    <v-list class="tile" v-for="album in label.album" :key="album">
                                         <v-list-item link :to="'/albums/' + album.album.split('#')[1]">{{ album.albumName }}</v-list-item>
                                     </v-list>
                                 </v-layout>
                             </td>
                         </tr>
                         <tr>
-                            <td class="text-left">Informações acerca do produtor</td>
+                            <td class="text-left">Producer information</td>
                             <td>
                                 <v-layout justify-center>
                                     {{ label.Producer[0].abs }}
@@ -66,3 +66,24 @@ export default {
   }
 }
 </script>
+<style scoped>
+    #singleProducer {
+        background-image: url("../assets/person-adjusting-audio-of-a-sound-mixer-3531867.jpg");
+        background-color: #cccccc;
+        min-height: 100%;
+        background-size: cover;
+        background-position:50% 50%;
+    }
+    .tile{
+        background-color:transparent;
+    }
+    .tile:hover{
+        background-color: burlywood;
+    }
+    .tile:active{
+        background-color: aliceblue;
+    }
+    .table{
+        background-color: rgba(255,255,255,0.5);
+    }
+</style>

@@ -3,11 +3,11 @@
         <v-container fluid>
             <v-row justify="space-around">
             <v-col cols="5">
-                <div class="title mb-1">Foto de álbum</div>
-                <v-img v-bind:src="imagem" aspect-ratio="1" max-width="600px"/>
+                <h2 class="title">{{ album.album[0].name }}</h2>
+                <v-img contain v-bind:src="imagem" aspect-ratio="1" max-width="600px"/>
             </v-col>
             <v-col cols="5">
-                <v-simple-table dense>
+                <v-simple-table class="table" dense>
                     <template v-slot:default>
                         <tbody>
                             <tr>
@@ -19,7 +19,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="text-left">Tipo de álbum</td>
+                                <td class="text-left">Album Type</td>
                                 <td>
                                     <v-layout justify-center>
                                         {{ album.album[0].at}}
@@ -27,7 +27,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="text-left">Data de lançamento</td>
+                                <td class="text-left">Release Date</td>
                                 <td>
                                     <v-layout justify-center>
                                         {{ album.album[0].rd }}
@@ -35,7 +35,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="text-left">Duração do álbum</td>
+                                <td class="text-left">Duration of the album</td>
                                 <td>
                                     <v-layout justify-center>
                                         {{ album.album[0].rt }}
@@ -43,47 +43,48 @@
                                 </td>
                             </tr>
                             <tr v-if="bandas.length>0">
-                                <td class="text-left">Grupo Musical</td>
+                                <td class="text-left">Musical Group</td>
                                 <td>
                                     <v-layout justify-center>
-                                        <v-list v-for="band in album.band" :key="band">
-                                            <v-list-item link :to="'/groups/' + band.band.split('#')[1]">{{ band.bandName }}</v-list-item>
+                                        <v-list class="tile" v-for="band in album.band" :key="band">
+                                            <v-list-item link :to="'/groups/' + band.band.split('#')[1]"
+                                            >{{ band.bandName }}</v-list-item>
                                         </v-list>
                                     </v-layout>
                                 </td>
                             </tr>
                             <tr v-if="artistas.length>0">
-                                <td class="text-left">Artista Musical</td>
+                                <td class="text-left">Musical Artist</td>
                                 <td>
                                     <v-layout justify-center>
-                                        <v-list v-for="artist in album.artist" :key="artist">
+                                        <v-list class="tile" v-for="artist in album.artist" :key="artist">
                                             <v-list-item link :to="'/artists/' + artist.artist.split('#')[1]">{{ artist.artistName }}</v-list-item>
                                         </v-list>
                                     </v-layout>
                                 </td>
                             </tr>
-                            <tr v-if="album.label">
-                                <td class="text-left">Empresa de gravação</td>
+                            <tr v-if="album.recordLabel.length>0">
+                                <td class="text-left">Record Label</td>
                                 <td>
                                     <v-layout justify-center>
-                                        <v-list v-for="label in album.recordLabel" :key="label">
-                                            <v-list-item link :to="'/labels/' + label.label.split('#')[1]">{{ label.rlabelname }}</v-list-item>
+                                        <v-list class="tile" v-for="label in album.recordLabel" :key="label">
+                                            <v-list-item link :to="'/labels/' + label.rlabel.split('#')[1]">{{ label.rlabelname }}</v-list-item>
                                         </v-list>
                                     </v-layout>
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="text-left">Produzido por</td>
+                            <tr v-if="album.producer.length > 0" >
+                                <td class="text-left">Produced by</td>
                                 <td>
                                     <v-layout justify-center>
-                                        <v-list v-for="producer in album.producer" :key="producer">
+                                        <v-list class="tile" v-for="producer in album.producer" :key="producer">
                                             <v-list-item link :to="'/producers/' + producer.producer.split('#')[1]">{{ producer.producerName }}</v-list-item>
                                         </v-list>
                                     </v-layout>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="text-left">Informações acerca do álbum</td>
+                                <td class="text-left">Album information</td>
                                 <td>
                                     <v-layout justify-center>
                                         {{ album.album[0].abs }}
@@ -120,17 +121,6 @@ export default {
         }else{
             return 'nothing'
         }
-    },
-    decodeUTF16LE: function( binaryStr ) {
-        var cp = [];
-        for( var i = 0; i < binaryStr.length; i+=2) {
-            cp.push( 
-                binaryStr.charCodeAt(i) |
-                ( binaryStr.charCodeAt(i+1) << 8 )
-            );
-        }
-
-        return String.fromCharCode.apply( String, cp );
     }
 
 },
@@ -197,3 +187,27 @@ created: async function(){
   }
 }
 </script>
+<style scoped>
+    #singleAlbum {
+        background-image: url("../assets/black-vinyl-player-145707.jpg");
+        background-color: #cccccc;
+        min-height: 100%;
+        background-size: cover;
+        background-position:50% 50%;
+    }
+    .tile{
+        background-color:transparent;
+    }
+    .tile:hover{
+        background-color: burlywood;
+    }
+    .tile:active{
+        background-color: aliceblue;
+    }
+    .title{
+        color:aliceblue;
+    }
+    .table{
+        background-color: rgba(255,255,255,0.5);
+    }
+</style>
