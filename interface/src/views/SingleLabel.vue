@@ -1,7 +1,7 @@
 <template>
     <div id="singleLabel">
         <v-container fluid>
-            <v-simple-table dense>
+            <v-simple-table class="table" dense>
                 <template v-slot:default>
                     <tbody>
                         <tr>
@@ -13,7 +13,7 @@
                             </td>
                         </tr>
                         <tr v-if="label.RecordLabel[0].hq">
-                            <td class="text-left">Sede</td>
+                            <td class="text-left">Headquarters</td>
                             <td>
                                 <v-layout justify-center>
                                     {{ label.RecordLabel[0].hq}}
@@ -21,7 +21,7 @@
                             </td>
                         </tr>
                         <tr v-if="label.RecordLabel[0].fy">
-                            <td class="text-left">Ano de Fundação</td>
+                            <td class="text-left">Founding year</td>
                             <td>
                                 <v-layout justify-center>
                                     {{ label.RecordLabel[0].fy }}
@@ -29,7 +29,7 @@
                             </td>
                         </tr>
                         <tr v-if="label.RecordLabel[0].fn">
-                            <td class="text-left">Fundador</td>
+                            <td class="text-left">Founder</td>
                             <td>
                                 <v-layout justify-center>
                                     {{ label.RecordLabel[0].fn }}
@@ -37,17 +37,17 @@
                             </td>
                         </tr>
                         <tr v-if="label.album[0]">
-                            <td class="text-left">Álbuns</td>
+                            <td class="text-left">Albums</td>
                             <td>
                                 <v-layout justify-center>
-                                    <v-list v-for="album in label.album" :key="album">
+                                    <v-list class="tile" v-for="album in label.album" :key="album">
                                         <v-list-item link :to="'/albums/' + album.album.split('#')[1]">{{ album.albumName }}</v-list-item>
                                     </v-list>
                                 </v-layout>
                             </td>
                         </tr>
                         <tr>
-                            <td class="text-left">Informações acerca do label</td>
+                            <td class="text-left">Label information</td>
                             <td>
                                 <v-layout justify-center>
                                     {{ label.RecordLabel[0].abs }}
@@ -82,3 +82,24 @@ export default {
   }
 }
 </script>
+<style scoped>
+    #singleLabel {
+        background-image: url("../assets/man-in-a-recording-studio-3925032.jpg");
+        background-color: #cccccc;
+        min-height: 100%;
+        background-size: cover;
+        background-position:50% 50%;
+    }
+    .tile{
+        background-color:transparent;
+    }
+    .tile:hover{
+        background-color: burlywood;
+    }
+    .tile:active{
+        background-color: aliceblue;
+    }
+    .table{
+        background-color: rgba(255,255,255,0.5);
+    }
+</style>

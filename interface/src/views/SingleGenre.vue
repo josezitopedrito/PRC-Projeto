@@ -1,7 +1,7 @@
 <template>
     <div id="singleGenre">
         <v-container fluid>
-            <v-simple-table dense>
+            <v-simple-table class="table" dense>
                 <template v-slot:default>
                     <tbody>
                         <tr>
@@ -13,30 +13,30 @@
                             </td>
                         </tr>
                         <tr v-if="genre.SubGenre[0]">
-                            <td class="text-left">Subgéneros</td>
+                            <td class="text-left">Subgenres</td>
                             <td>
                                 <v-layout justify-center>
-                                    <v-list v-for="SubGenre in genre.SubGenre" :key="SubGenre">
+                                    <v-list class="tile" v-for="SubGenre in genre.SubGenre" :key="SubGenre">
                                         <v-list-item link :to="'/genres/' + SubGenre.genre.split('#')[1]">{{ SubGenre.genreName }}</v-list-item>
                                     </v-list>
                                 </v-layout>
                             </td>
                         </tr>
                         <tr v-if="genre.SupraGenre[0]">
-                            <td class="text-left">Supragéneros</td>
+                            <td class="text-left">Supragenres</td>
                             <td>
                                 <v-layout justify-center>
-                                    <v-list v-for="SupraGenre in genre.SupraGenre" :key="SupraGenre">
+                                    <v-list class="tile" v-for="SupraGenre in genre.SupraGenre" :key="SupraGenre">
                                         <v-list-item link :to="'/genres/' + SupraGenre.genre.split('#')[1]">{{ SupraGenre.genreName }}</v-list-item>
                                     </v-list>
                                 </v-layout>
                             </td>
                         </tr>
                         <tr v-if="genre.FusionGenre[0]">
-                            <td class="text-left">Géneros originados a partir da fusão com outro género</td>
+                            <td class="text-left">Fusion Genres</td>
                             <td>
                                 <v-layout justify-center>
-                                    <v-list v-for="FusionGenre in genre.FusionGenre" :key="FusionGenre">
+                                    <v-list class="tile" v-for="FusionGenre in genre.FusionGenre" :key="FusionGenre">
                                         <v-list-item link :to="'/genres/' + FusionGenre.genre.split('#')[1]">{{ FusionGenre.genreName }}</v-list-item>
                                     </v-list>
                                 </v-layout>
@@ -46,14 +46,14 @@
                             <td class="text-left">Musical Group</td>
                             <td>
                                 <v-layout justify-center>
-                                    <v-list v-for="Band in genre.Band" :key="Band">
+                                    <v-list class="tile" v-for="Band in genre.Band" :key="Band">
                                         <v-list-item link :to="'/groups/' + band.band.split('#')[1]">{{ Band.bandName }}</v-list-item>
                                     </v-list>
                                 </v-layout>
                             </td>
                         </tr>
                         <tr>
-                            <td class="text-left">Informações acerca do genre</td>
+                            <td class="text-left">Genre information</td>
                             <td>
                                 <v-layout justify-center>
                                     {{ genre.Genre[0].abs }}
@@ -88,3 +88,24 @@ export default {
   }
 }
 </script>
+<style scoped>
+    #singleGenre {
+        background-image: url("../assets/group-of-men-holding-drums-performing-on-stage-2888802.jpg");
+        background-color: #cccccc;
+        min-height: 100%;
+        background-size: cover;
+        background-position:50% 50%;
+    }
+    .tile{
+        background-color:transparent;
+    }
+    .tile:hover{
+        background-color: burlywood;
+    }
+    .tile:active{
+        background-color: aliceblue;
+    }
+    .table{
+        background-color: rgba(255,255,255,0.5);
+    }
+</style>
