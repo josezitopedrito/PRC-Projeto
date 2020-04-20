@@ -47,6 +47,10 @@
         </template>
       </v-data-table>
     </v-card-text>
+    <v-toolbar class="card" flat>
+      <div class="spacer"></div>
+      <v-btn to="/" style="background-color:darkgrey;">Main Menu</v-btn>
+    </v-toolbar>
   </v-card>
   </div>
 </template>
@@ -98,7 +102,7 @@ a {
   #Groups {
         background-image: url("../assets/people-at-concert-1105666.jpg");
         background-color: #cccccc;
-        min-height: 100%;
+        min-height: 94%;
         background-size: cover;
         background-position:50% 50%;
     }

@@ -47,6 +47,10 @@
         </template>
       </v-data-table>
     </v-card-text>
+    <v-toolbar class="card" flat>
+      <div class="spacer"></div>
+      <v-btn to="/" style="background-color:darkgrey;">Main Menu</v-btn>
+    </v-toolbar>
   </v-card>
   </div>
 </template>
@@ -97,7 +101,7 @@ a {
     #Artists {
         background-image: url("../assets/brown-and-black-cut-away-acoustic-guitar-1010519.jpg");
         background-color: #cccccc;
-        min-height: 100%;
+        min-height: 94%;
         background-size: cover;
         background-position:50% 50%;
     }

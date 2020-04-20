@@ -94,6 +94,11 @@
             </v-col>
             </v-row>
         </v-container>
+        <v-toolbar class="card" flat>
+            <v-btn to="/groups" style="background-color:darkgrey;">Group List</v-btn>
+            <div class="spacer"></div>
+            <v-btn to="/" style="background-color:darkgrey;">Main Menu</v-btn>
+        </v-toolbar>
     </div>
 </template>
 <script>
@@ -192,7 +197,7 @@ export default {
     #singleGroup {
         background-image: url("../assets/people-at-concert-1105666.jpg");
         background-color: #cccccc;
-        min-height: 100%;
+        min-height: 94%;
         background-size: cover;
         background-position:50% 50%;
     }
@@ -210,5 +215,9 @@ export default {
     }
     .table{
         background-color: rgba(255,255,255,0.5);
+    }
+    .card {
+      background-color: transparent!important;
+      opacity: 1;
     }
 </style>
