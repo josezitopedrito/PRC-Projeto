@@ -295,3 +295,23 @@ select ?album ?artistaSolo where{
 }
 OFFSET 50000
 LIMIT 10000
+
+artista-genero connection: (o select exterior só é necessário a partir dos 40000 devido ao limite de ordenações do Virtuoso)
+
+select ?artistName ?genreName where{
+	{
+		select ?artistName ?genreName where{
+			?artist a dbo:MusicalArtist.
+            ?artist a dbo:Person.
+			?genre a dbo:Genre.
+			?artist dbo:genre ?genre.
+			?artist rdfs:label ?artistName.
+			filter langMatches(lang(?artistName),'en')
+			?genre rdfs:label ?genreName.
+			filter langMatches(lang(?genreName),'en')
+		} GROUP BY ?artistName
+		ORDER BY ASC(?artistName)
+	}
+}
+OFFSET 40000
+LIMIT 10000
