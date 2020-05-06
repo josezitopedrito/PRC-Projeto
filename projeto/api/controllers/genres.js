@@ -45,7 +45,7 @@ Genres.getGenre = async function(idGenre){
     }`
 
     var querySupraGenre = `select ?genre ?genreName where { 
-        c:${idGenre} c:isSupraGenreOf ?genre.
+        c:${idGenre} c:isSubGenreOf ?genre.
         OPTIONAL{
             ?genre c:name ?genreName.
         }
@@ -53,7 +53,7 @@ Genres.getGenre = async function(idGenre){
     } `
 
     var querySubGenre = `select ?genre ?genreName where { 
-        c:${idGenre} c:isSubGenreOf ?genre.
+        c:${idGenre} c:isSupraGenreOf ?genre.
         OPTIONAL{
             ?genre c:name ?genreName.
         }
