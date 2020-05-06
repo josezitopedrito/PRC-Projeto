@@ -23,7 +23,7 @@
           <v-list-item link to="/producers">
             <v-list-item-title>Producers</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="/labels">
+          <v-list-item link to="/recordLabels">
             <v-list-item-title>Record Labels</v-list-item-title>
           </v-list-item>
         </v-list>
