@@ -1,6 +1,8 @@
 <template>
   <v-app>
     <v-content>
+      <!-- A navDraw é so para ser permitida a users registados -->
+      <navDraw></navDraw>
       <router-view></router-view>
       <appFooter></appFooter>
     </v-content>
@@ -10,10 +12,12 @@
 <script>
 
 import Footer from './components/footer.vue'
+import NavDraw from './components/navDraw.vue'
 export default {
 
   components: {
-    'appFooter':Footer
+    'appFooter':Footer,
+    'navDraw': NavDraw
   },
 
   data: () => ({

@@ -1,5 +1,42 @@
 <template>
   <div id="Home" class="home">
+    <v-app-bar app fixed color="black">
+        <v-toolbar color="black">
+            <div class="spacer"></div>
+            <v-menu>
+                <template v-slot:activator="{ on: menu }">
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on: tooltip }">
+                            <v-btn
+                            color="primary"
+                            dark
+                            v-on="{ ...tooltip, ...menu }"
+                            >
+                                <v-icon>mdi-acount</v-icon>
+                            </v-btn>
+                        </template>
+                    <span>Im A ToolTip</span>
+                    </v-tooltip>
+                </template>
+                <v-list>
+                    <!-- Para ver enquanto logged out -->
+                    <v-list-item link to="/registo">
+                        <v-list-item-title>Register</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item link to="/login">
+                        <v-list-item-title>Login</v-list-item-title>
+                    </v-list-item>
+                    <!-- Para ver enquanto logged in -->
+                    <v-list-item link to="/perfil">
+                        <v-list-item-title>Ver Perfil</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item>
+                        <v-list-item-title>Sair</v-list-item-title>
+                    </v-list-item>
+                </v-list>
+            </v-menu>
+        </v-toolbar>
+    </v-app-bar>
     <v-card flat class="table">
       <v-card-title>What do you wish to see?</v-card-title>
       <v-card-actions>
