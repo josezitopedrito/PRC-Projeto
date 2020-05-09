@@ -54,7 +54,7 @@
                                 <td class="text-left">Musical Group belonged to</td>
                                 <td>
                                     <v-layout justify-center>
-                                        <v-list class="tile" v-for="band in artista.band" :key="band">
+                                        <v-list class="tile" v-for="band in artista.band" :key="band.band">
                                             <v-list-item link :to="'/groups/' + band.band.split('#')[1]">{{ band.bandName }}</v-list-item>
                                         </v-list>
                                     </v-layout>
@@ -64,7 +64,7 @@
                                 <td class="text-left">Solo Albums</td>
                                 <td>
                                     <v-layout justify-center>
-                                        <v-list class="tile" v-for="album in artista.album" :key="album">
+                                        <v-list class="tile" v-for="album in artista.album" :key="album.album">
                                             <v-list-item link :to="'/albums/' + album.album.split('#')[1]">{{ album.albumName }}</v-list-item>
                                         </v-list>
                                     </v-layout>
@@ -97,7 +97,7 @@ export default {
   name: 'Album',
   data(){
     return{
-      artista:{},
+      artista:{artist:[{}],band:[{band:""}],album:{}},
       lhost:'http://localhost:5001/api',
       url:'',
       imagem:''

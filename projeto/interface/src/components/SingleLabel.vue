@@ -40,7 +40,7 @@
                             <td class="text-left">Albums</td>
                             <td>
                                 <v-layout justify-center>
-                                    <v-list class="tile" v-for="album in label.album" :key="album">
+                                    <v-list class="tile" v-for="album in label.album" :key="album.album">
                                         <v-list-item link :to="'/albums/' + album.album.split('#')[1]">{{ album.albumName }}</v-list-item>
                                     </v-list>
                                 </v-layout>
@@ -71,7 +71,7 @@ export default {
   name: 'RecordLabel',
   data(){
     return{
-      label:{},
+      label:{RecordLabel:[{}],Producer:[{producer:""}],album:[{album:""}]},
       lhost:'http://localhost:5001/api'
     }
   },

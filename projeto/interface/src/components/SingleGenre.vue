@@ -16,7 +16,7 @@
                             <td class="text-left">Subgenres</td>
                             <td>
                                 <v-layout justify-center>
-                                    <v-list class="tile" v-for="SubGenre in genre.SubGenre" :key="SubGenre">
+                                    <v-list class="tile" v-for="SubGenre in genre.SubGenre" :key="SubGenre.genre">
                                         <v-list-item link :to="'/genres/' + SubGenre.genre.split('#')[1]">{{ SubGenre.genreName }}</v-list-item>
                                     </v-list>
                                 </v-layout>
@@ -26,7 +26,7 @@
                             <td class="text-left">Supragenres</td>
                             <td>
                                 <v-layout justify-center>
-                                    <v-list class="tile" v-for="SupraGenre in genre.SupraGenre" :key="SupraGenre">
+                                    <v-list class="tile" v-for="SupraGenre in genre.SupraGenre" :key="SupraGenre.genre">
                                         <v-list-item link :to="'/genres/' + SupraGenre.genre.split('#')[1]">{{ SupraGenre.genreName }}</v-list-item>
                                     </v-list>
                                 </v-layout>
@@ -36,7 +36,7 @@
                             <td class="text-left">Fusion Genres</td>
                             <td>
                                 <v-layout justify-center>
-                                    <v-list class="tile" v-for="FusionGenre in genre.FusionGenre" :key="FusionGenre">
+                                    <v-list class="tile" v-for="FusionGenre in genre.FusionGenre" :key="FusionGenre.genre">
                                         <v-list-item link :to="'/genres/' + FusionGenre.genre.split('#')[1]">{{ FusionGenre.genreName }}</v-list-item>
                                     </v-list>
                                 </v-layout>
@@ -44,9 +44,10 @@
                         </tr>
                         <tr v-if="genre.Band[0]">
                             <td class="text-left">Musical Group</td>
+                            {{genre.Band}}
                             <td>
                                 <v-layout justify-center>
-                                    <v-list class="tile" v-for="Band in genre.Band" :key="Band">
+                                    <v-list class="tile" v-for="Band in genre.Band" :key="Band.band">
                                         <v-list-item link :to="'/groups/' + band.band.split('#')[1]">{{ Band.bandName }}</v-list-item>
                                     </v-list>
                                 </v-layout>
@@ -77,7 +78,8 @@ export default {
   name: 'Género',
   data(){
     return{
-      genre:{},
+      genre:{Genre:[{}],SubGenre:[{genre:""}],SupraGenre:[{genre:""}],FusionGenre:[{genre:""}],Band:[{band:""}]},
+      band:{band:""},
       lhost:'http://localhost:5001/api'
     }
   },

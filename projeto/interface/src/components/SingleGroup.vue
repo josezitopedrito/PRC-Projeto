@@ -54,7 +54,7 @@
                                 <td class="text-left">Members</td>
                                 <td>
                                     <v-layout justify-center>
-                                        <v-list class="tile" v-for="artist in group.artist" :key="artist">
+                                        <v-list class="tile" v-for="artist in group.artist" :key="artist.artist">
                                             <v-list-item link :to="'/artists/' + artist.artist.split('#')[1]">{{ artist.artistName }}</v-list-item>
                                         </v-list>
                                     </v-layout>
@@ -64,7 +64,7 @@
                                 <td class="text-left">Albums</td>
                                 <td>
                                     <v-layout justify-center>
-                                        <v-list class="tile" v-for="album in group.album" :key="album">
+                                        <v-list class="tile" v-for="album in group.album" :key="album.album">
                                             <v-list-item link :to="'/albums/' + album.album.split('#')[1]">{{ album.albumName }}</v-list-item>
                                         </v-list>
                                     </v-layout>
@@ -74,7 +74,7 @@
                                 <td class="text-left">Genres</td>
                                 <td>
                                     <v-layout justify-center>
-                                        <v-list class="tile" v-for="genre in group.genre" :key="genre">
+                                        <v-list class="tile" v-for="genre in group.genre" :key="genre.genre">
                                             <v-list-item link :to="'/genres/' + genre.genre.split('#')[1]">{{ genre.genreName }}</v-list-item>
                                         </v-list>
                                     </v-layout>
@@ -107,7 +107,7 @@ export default {
   name: 'Group',
   data(){
     return{
-      group:{},
+      group:{band:[{}],artist:[{artist:""}],album:[{album:""}],genre:[{genre:""}]},
       lhost:'http://localhost:5001/api',
       url:'',
       imagem:''
