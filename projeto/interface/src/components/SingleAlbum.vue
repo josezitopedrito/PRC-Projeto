@@ -68,7 +68,7 @@
                                 <td>
                                     <v-layout justify-center>
                                         <v-list class="tile" v-for="label in album.recordLabel" :key="label">
-                                            <v-list-item link :to="'/labels/' + label.rlabel.split('#')[1]">{{ label.rlabelname }}</v-list-item>
+                                            <v-list-item link :to="'/recordLabels/' + label.rlabel.split('#')[1]">{{ label.rlabelname }}</v-list-item>
                                         </v-list>
                                     </v-layout>
                                 </td>
