@@ -156,7 +156,7 @@
     import passoGenre from '../components/passoGenre.vue'
     import passoLabel from '../components/passoLabel.vue'
     import passoProducer from '../components/passoProducer.vue'
-    //import axios from 'axios'
+    import axios from 'axios'
     export default {
         data: () => ({
             value: null,
@@ -177,6 +177,7 @@
             typeArray:['Album','Artist','Group','Genre','Label','Producer'],
             type:"",
             ajuda:'imports',
+            lhost:'http://localhost:5001/api',
             group:{
                 idGroup:"",
                 groupName:"",
@@ -346,7 +347,7 @@
                 this.producer.producerInfo = ""
 
             },*/
-            atualizaAlbum(album){
+            atualizaAlbum: async function(album){
                 console.log(album)
                 this.album.albumName=album.albumName
                 this.album.type=album.type
@@ -358,9 +359,16 @@
                 this.album.groups=album.albumGroup
                 this.album.artists=album.albumArtist
                 this.album.producers=album.albumProducer
-                this.next()
+                if(this.total == this.model + 1){
+                    let response = await axios.post(this.lhost + '/albums/inserir',{
+                        album:this.album
+                    })
+                    console.log('Resposta: ' + response)
+                }else{
+                    this.next()
+                }
             },
-            atualizaArtist(artist){
+            atualizaArtist: async function(artist){
                 //console.log(folio)
                 this.artist.artistName=artist.artistName
                 this.artist.gender=artist.gender
@@ -372,9 +380,16 @@
                 this.artist.albums=artist.albumArtist
                 this.artist.groups=artist.groupArtist
                 this.artist.genres=artist.genreArtist
-                this.next()
+                if(this.total == this.model + 1){
+                    let response = await axios.post(this.lhost + '/artists/inserir',{
+                        artist:this.artist
+                    })
+                    console.log('Resposta: ' + response)
+                }else{
+                    this.next()
+                }
             },
-            atualizaGroup(group){
+            atualizaGroup: async function(group){
                 //console.log(folio)
                 this.group.groupName=group.groupName
                 this.group.formationDate=group.formationDate
@@ -386,9 +401,16 @@
                 this.group.members=group.groupArtist
                 this.group.genres=group.groupGenre
                 this.group.albums=group.albumGroup
-                this.next()
+                if(this.total == this.model + 1){
+                    let response = await axios.post(this.lhost + '/groups/inserir',{
+                        group:this.group
+                    })
+                    console.log('Resposta: ' + response)
+                }else{
+                    this.next()
+                }
             },
-            atualizaGenre(genre){
+            atualizaGenre: async function(genre){
                 //console.log(folio)
                 this.genre.genreName=genre.genreName
                 this.genre.genreInfo=genre.genreInfo
@@ -397,24 +419,45 @@
                 this.genre.superGenres=genre.supergenreGenre
                 this.genre.subGenres=genre.subgenreGenre
                 this.genre.fusionGenres=genre.fusiongenreGenre
-                this.next()
+                if(this.total == this.model + 1){
+                    let response = await axios.post(this.lhost + '/genres/inserir',{
+                        genre:this.genre
+                    })
+                    console.log('Resposta: ' + response)
+                }else{
+                    this.next()
+                }
             },
-            atualizaLabel(label){
+            atualizaLabel: async function(label){
                 //console.log(folio)
                 this.label.labelName=label.labelName
                 this.label.foundingYear=label.foundingYear
                 this.label.founder=label.founder
                 this.label.labelInfo=label.labelInfo
                 this.label.albums=label.albumLabel
-                this.next()
+                if(this.total == this.model + 1){
+                    let response = await axios.post(this.lhost + '/labels/inserir',{
+                        label:this.label
+                    })
+                    console.log('Resposta: ' + response)
+                }else{
+                    this.next()
+                }
             },
-            atualizaProducer(producer){
+            atualizaProducer: async function(producer){
                 //console.log(folio)
                 this.producer.producerName=producer.producerName
                 this.producer.firstActiveYear=producer.firstActiveYear
                 this.producer.producerInfo=producer.producerInfo
                 this.producer.albums=producer.albumProducer
-                this.next()
+                if(this.total == this.model + 1){
+                    let response = await axios.post(this.lhost + '/producers/inserir',{
+                        producer:this.producer
+                    })
+                    console.log('Resposta: ' + response)
+                }else{
+                    this.next()
+                }
             },/*
             submeterFolio(){
                 let formData = new FormData()
