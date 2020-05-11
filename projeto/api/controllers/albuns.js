@@ -9,8 +9,9 @@ var prefixes = `
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
     PREFIX c: <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#>
 `
-
 var getLink = "http://localhost:7200/repositories/PRC-PROJECT" + "?query=" 
+
+var postLink = "http://localhost:7200/repositories/PRC-PROJECT/statements" + "?update=" 
 
 function normalize(response) {
     return response.results.bindings.map(obj =>
@@ -104,6 +105,130 @@ Albuns.getAlbum = async function(idAlbum){
         var artist = normalize(responseArtist.data)
         var resposta = {"album":album,"band":band,"recordLabel":recordLabel,"producer":producer,"artist":artist}
         return resposta
+    }
+    catch(e){
+        throw(e)
+    } 
+}
+
+Albuns.inserir = async function(album){
+    var queryGetTotal = `select ((count(?albuns)) as ?count) where{
+        ?albuns a c:Album.
+    }`
+    var encodedGetTotal = encodeURIComponent(prefixes + queryGetTotal)
+    try{
+        var response = await axios.get(getLink + encodedGetTotal)
+        console.log(JSON.stringify(response.data))
+        var totalAlbuns = normalize(response.data)
+        console.log('Album: ' + JSON.stringify(totalAlbuns))
+        var idAlbum = parseInt(totalAlbuns[0].count,10)
+        console.log('Id: ' + idAlbum)
+        var albumNome = album.album.albumName
+        var albumType = album.album.type
+        var releaseDate = album.album.releaseDate
+        var runtime = album.album.runtime
+        var abstract = album.album.albumInfo
+        var artists = album.album.artists
+        var groups = album.album.groups
+        var labels = album.album.labels
+        var producers = album.album.producers
+        var queryInsertion = `INSERT DATA {
+            c:album_${idAlbum} rdf:type c:Album.
+            c:album_${idAlbum} c:name \"${albumNome}\".
+            c:album_${idAlbum} c:albumType \"${albumType}\".
+            c:album_${idAlbum} c:releaseDate \"${releaseDate}\".
+            c:album_${idAlbum} c:runtime \"${runtime}\".
+            c:album_${idAlbum} c:abstract \"${abstract}\".
+        }`
+        var encodedAlbum = encodeURIComponent(prefixes + queryInsertion) 
+        console.log(queryInsertion)      
+        try{
+            await axios.post(postLink + encodedAlbum, null).then(response => {
+                //resolve(response.data.content)
+                console.log(response.data)
+                console.log('pila4')
+              }).catch(e => {
+                console.log(e)
+            })
+            console.log('pila')
+            //console.log('Response Album: ' + responseAlbum)
+        }catch(e){
+            console.log('pila2')
+            throw(e)
+        }
+        console.log('pila3')
+        for(let i = 0; i <artists.length;i++){
+            let queryArtists = `INSERT DATA{
+                c:album_${idAlbum} c:wasCreatedBy c:${artists[i]}.
+                c:${artists[i]} c:created c:album_${idAlbum}.
+            }`
+            let encodedArtist = encodeURIComponent(prefixes + queryArtists)
+            try{
+                axios.post(postLink + encodedArtist,null)
+                .then(function(response) {
+                    console.log(response.data.content)
+                })
+                .catch(function(response) {
+                    console.log(response)
+                })
+            }catch(e){
+                throw(e)
+            }
+        }
+        for(let i = 0; i <groups.length;i++){
+            let queryGroups = `INSERT DATA{
+                c:album_${idAlbum} c:wasCreatedBy c:${groups[i]}.
+                c:${groups[i]} c:created c:album_${idAlbum}.
+            }`
+            let encodedGroup = encodeURIComponent(prefixes + queryGroups)
+            try{
+                axios.post(postLink + encodedGroup,null)
+                .then(function(response) {
+                    console.log(response.data.content)
+                })
+                .catch(function(response) {
+                    console.log(response)
+                })
+            }catch(e){
+                throw(e)
+            }
+        }
+        for(let i = 0; i <labels.length;i++){
+            let queryLabels = `INSERT DATA{
+                c:album_${idAlbum} c:wasRecordedBy c:${labels[i]}.
+                c:${labels[i]} c:recorded c:album_${idAlbum}.
+            }`
+            let encodedLabel = encodeURIComponent(prefixes + queryLabels)
+            try{
+                axios.post(postLink + encodedLabel,null)
+                .then(function(response) {
+                    console.log(response.data.content)
+                })
+                .catch(function(response) {
+                    console.log(response)
+                })
+            }catch(e){
+                throw(e)
+            }
+        }
+        for(let i = 0; i <producers.length;i++){
+            let queryProducers = `INSERT DATA{
+                c:album_${idAlbum} c:wasCreatedBy c:${producers[i]}.
+                c:${producers[i]} c:created c:album_${idAlbum}.
+            }`
+            let encodedProducers = encodeURIComponent(prefixes + queryProducers)
+            try{
+                axios.post(postLink + encodedProducers,null)
+                .then(function(response) {
+                    console.log(response.data.content)
+                })
+                .catch(function(response) {
+                    console.log(response)
+                })
+            }catch(e){
+                throw(e)
+            }
+        }
     }
     catch(e){
         throw(e)
