@@ -170,7 +170,11 @@ export default {
       genre:{
         genreName:"",
         genreInfo:"",
+        supergenreGenre:[],
+        subgenreGenre:[],
+        fusiongenreGenre:[],
         genreArtist:[],
+        groupGenre:[],
         skip:0
       },
       group:{
@@ -190,7 +194,7 @@ export default {
       hartistas:[
         {text:"Id",sortable:true, value:'id',filterable: false,class:'subtitle-1'},
         {text:"Name",sortable:true, value:'name',class:'subtitle-1'},
-       {text:'Options',value:'options',sortable: false}
+        {text:'Options',value:'options',sortable: false}
       ],
       artistas:[],
       lhost:'http://localhost:5001/api',
@@ -245,7 +249,6 @@ export default {
         this.artist.genreArtist=this.obj.genres
       }
       else if(this.position == 'albumArtist'){
-        this.album.idAlbum=this.obj.idAlbum
         this.album.albumName=this.obj.albumName
         this.album.type=this.obj.type
         this.album.releaseDate=this.obj.releaseDate
@@ -258,7 +261,6 @@ export default {
         this.album.albumProducer=this.obj.producers
       }
       else if(this.position == 'groupArtist'){
-        this.group.idGroup=this.obj.idGroup
         this.group.groupName=this.obj.groupName
         this.group.formationDate=this.obj.formationDate
         this.group.disbandingDate=this.obj.disbandingDate
@@ -271,14 +273,13 @@ export default {
         this.group.albumGroup=this.obj.albums
       }
       else if(this.position == 'genreArtist'){
-        this.genre.idGenre=this.obj.idGenre
         this.genre.genreName=this.obj.genreName
         this.genre.genreInfo=this.obj.genreInfo
-        this.genre.groupGenre=this.obj.groupGenre
-        this.genre.genreArtist=this.obj.genreArtist
-        this.genre.supergenreGenre=this.obj.supergenreGenre
-        this.genre.subgenreGenre=this.obj.subgenreGenre
-        this.genre.fusiongenreGenre=this.obj.fusiongenreGenre
+        this.genre.groupGenre=this.obj.groups
+        this.genre.genreArtist=this.obj.artists
+        this.genre.supergenreGenre=this.obj.superGenres
+        this.genre.subgenreGenre=this.obj.subGenres
+        this.genre.fusiongenreGenre=this.obj.fusionGenres
       }
     },
     deleteItem(n){
@@ -328,7 +329,9 @@ export default {
     addArtist(id){
       console.log('ID: ' + id)
       if(this.position == 'genreArtist'){
+        console.log(this.genre)
         this.genre.genreArtist.push(id)
+        console.log(this.genre.genreArtist)
       }
       else if(this.position == 'groupArtist'){
         this.group.groupArtist.push(id)

@@ -313,8 +313,9 @@ export default {
         this.genre.fusiongenreGenre.push(id)
       }
       else if(this.position == 'groupGenre'){
-        this.genre.groupGenre.push(id)
+        this.group.groupGenre.push(id)
       }
+
     },
     saveArtist (){
       this.$emit('atualizaArtist', this.artist)

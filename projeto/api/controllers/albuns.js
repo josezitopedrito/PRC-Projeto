@@ -153,7 +153,6 @@ Albuns.inserir = async function(album){
         }catch(e){
             throw(e)
         }
-        console.log('pila3')
         for(let i = 0; i <artists.length;i++){
             let queryArtists = `INSERT DATA{
                 c:album_${idAlbum} c:wasCreatedBy c:${artists[i]}.

@@ -12,6 +12,8 @@ var prefixes = `
 
 var getLink = "http://localhost:7200/repositories/PRC-PROJECT" + "?query=" 
 
+var postLink = "http://localhost:7200/repositories/PRC-PROJECT/statements" + "?update=" 
+
 function normalize(response) {
     return response.results.bindings.map(obj =>
         Object.entries(obj)
@@ -114,15 +116,16 @@ Bands.inserir = async function(band){
         console.log('Band: ' + JSON.stringify(totalBands))
         var idBand = parseInt(totalBands[0].count,10)
         console.log('Id: ' + idBand)
-        var groupNome = band.band.groupName
-        var formationDate = band.band.formationDate
-        var disbandingDate = band.band.disbandingDate
-        var homepage = band.band.homepage
-        var hometown = band.band.hometown
-        var abstract = band.band.groupInfo
-        var artists = band.band.members
-        var albums = band.band.albums
-        var genres = band.band.genres
+        console.log(JSON.stringify(band))
+        var groupNome = band.group.groupName
+        var formationDate = band.group.formationDate
+        var disbandingDate = band.group.disbandingDate
+        var homepage = band.group.homepage
+        var hometown = band.group.hometown
+        var abstract = band.group.groupInfo
+        var artists = band.group.members
+        var albums = band.group.albums
+        var genres = band.group.genres
         var queryInsertion = `INSERT DATA {
             c:group_${idBand} rdf:type c:Group.
             c:group_${idBand} c:name \"${groupNome}\".

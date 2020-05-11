@@ -12,6 +12,8 @@ var prefixes = `
 
 var getLink = "http://localhost:7200/repositories/PRC-PROJECT" + "?query=" 
 
+var postLink = "http://localhost:7200/repositories/PRC-PROJECT/statements" + "?update=" 
+
 function normalize(response) {
     return response.results.bindings.map(obj =>
         Object.entries(obj)

@@ -113,7 +113,7 @@ Artists.inserir = async function(artist){
         var deathDate = artist.artist.deathDate
         var gender = artist.artist.gender
         var abstract = artist.artist.artistInfo
-        var artists = artist.artist.albums
+        var albums = artist.artist.albums
         var groups = artist.artist.groups
         var genres = artist.artist.genres
         var queryInsertion = `INSERT DATA {
@@ -131,17 +131,13 @@ Artists.inserir = async function(artist){
             await axios.post(postLink + encodedArtist, null).then(response => {
                 //resolve(response.data.content)
                 console.log(response.data)
-                console.log('pila4')
               }).catch(e => {
                 console.log(e)
             })
-            console.log('pila')
             //console.log('Response Artist: ' + responseArtist)
         }catch(e){
-            console.log('pila2')
             throw(e)
         }
-        console.log('pila3')
         for(let i = 0; i <albums.length;i++){
             let queryAlbums = `INSERT DATA{
                 c:${albums[i]} c:wasCreatedBy c:artist_${idArtist}.
