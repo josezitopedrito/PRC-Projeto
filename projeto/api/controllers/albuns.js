@@ -146,14 +146,11 @@ Albuns.inserir = async function(album){
             await axios.post(postLink + encodedAlbum, null).then(response => {
                 //resolve(response.data.content)
                 console.log(response.data)
-                console.log('pila4')
               }).catch(e => {
                 console.log(e)
             })
-            console.log('pila')
             //console.log('Response Album: ' + responseAlbum)
         }catch(e){
-            console.log('pila2')
             throw(e)
         }
         console.log('pila3')

@@ -12,6 +12,8 @@ var prefixes = `
 
 var getLink = "http://localhost:7200/repositories/PRC-PROJECT" + "?query=" 
 
+var postLink = "http://localhost:7200/repositories/PRC-PROJECT/statements" + "?update=" 
+
 function normalize(response) {
     return response.results.bindings.map(obj =>
         Object.entries(obj)
@@ -87,6 +89,113 @@ Artists.getArtist = async function(idArtist){
         var album = normalize(responseAlbum.data)
         var resposta = {"artist":artist,"band":band,"album":album}
         return resposta
+    }
+    catch(e){
+        throw(e)
+    } 
+}
+
+Artists.inserir = async function(artist){
+    var queryGetTotal = `select ((count(?artists)) as ?count) where{
+        ?artists a c:Artist.
+    }`
+    var encodedGetTotal = encodeURIComponent(prefixes + queryGetTotal)
+    try{
+        var response = await axios.get(getLink + encodedGetTotal)
+        console.log(JSON.stringify(response.data))
+        var totalArtists = normalize(response.data)
+        console.log('Artist: ' + JSON.stringify(totalArtists))
+        var idArtist = parseInt(totalArtists[0].count,10)
+        console.log('Id: ' + idArtist)
+        var artistNome = artist.artist.artistName
+        var birthPlace = artist.artist.birthPlace
+        var birthDate = artist.artist.birthDate
+        var deathDate = artist.artist.deathDate
+        var gender = artist.artist.gender
+        var abstract = artist.artist.artistInfo
+        var artists = artist.artist.albums
+        var groups = artist.artist.groups
+        var genres = artist.artist.genres
+        var queryInsertion = `INSERT DATA {
+            c:artist_${idArtist} rdf:type c:Artist.
+            c:artist_${idArtist} c:name \"${artistNome}\".
+            c:artist_${idArtist} c:birthPlaceName \"${birthPlace}\".
+            c:artist_${idArtist} c:birthDate \"${birthDate}\".
+            c:artist_${idArtist} c:deathDate \"${deathDate}\".
+            c:artist_${idArtist} c:gender \"${gender}\".
+            c:artist_${idArtist} c:abstract \"${abstract}\".
+        }`
+        var encodedArtist = encodeURIComponent(prefixes + queryInsertion) 
+        console.log(queryInsertion)      
+        try{
+            await axios.post(postLink + encodedArtist, null).then(response => {
+                //resolve(response.data.content)
+                console.log(response.data)
+                console.log('pila4')
+              }).catch(e => {
+                console.log(e)
+            })
+            console.log('pila')
+            //console.log('Response Artist: ' + responseArtist)
+        }catch(e){
+            console.log('pila2')
+            throw(e)
+        }
+        console.log('pila3')
+        for(let i = 0; i <albums.length;i++){
+            let queryAlbums = `INSERT DATA{
+                c:${albums[i]} c:wasCreatedBy c:artist_${idArtist}.
+                c:artist_${idArtist} c:created c:${albums[i]}.
+            }`
+            let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
+            try{
+                axios.post(postLink + encodedAlbum,null)
+                .then(function(response) {
+                    console.log(response.data.content)
+                })
+                .catch(function(response) {
+                    console.log(response)
+                })
+            }catch(e){
+                throw(e)
+            }
+        }
+        for(let i = 0; i <groups.length;i++){
+            let queryGroups = `INSERT DATA{
+                c:artist_${idArtist} c:memberOf c:${groups[i]}.
+                c:${groups[i]} c:lineupMember c:artist_${idArtist}.
+            }`
+            let encodedGroup = encodeURIComponent(prefixes + queryGroups)
+            try{
+                axios.post(postLink + encodedGroup,null)
+                .then(function(response) {
+                    console.log(response.data.content)
+                })
+                .catch(function(response) {
+                    console.log(response)
+                })
+            }catch(e){
+                throw(e)
+            }
+        }
+        for(let i = 0; i <genres.length;i++){
+            let queryGenres = `INSERT DATA{
+                c:artist_${idArtist} c:performs c:${genres[i]}.
+                c:${genres[i]} c:wasPerformedBy c:artist_${idArtist}.
+            }`
+            let encodedGenre = encodeURIComponent(prefixes + queryGenres)
+            try{
+                axios.post(postLink + encodedGenre,null)
+                .then(function(response) {
+                    console.log(response.data.content)
+                })
+                .catch(function(response) {
+                    console.log(response)
+                })
+            }catch(e){
+                throw(e)
+            }
+        }
     }
     catch(e){
         throw(e)

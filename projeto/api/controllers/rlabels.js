@@ -75,3 +75,70 @@ RecordLabels.getRecordLabel = async function(idRecordLabel){
         throw(e)
     } 
 }
+
+RecordLabel.inserir = async function(label){
+    var queryGetTotal = `select ((count(?recordLabel)) as ?count) where{
+        ?recordLabel a c:RecordLabel.
+    }`
+    var encodedGetTotal = encodeURIComponent(prefixes + queryGetTotal)
+    try{
+        var response = await axios.get(getLink + encodedGetTotal)
+        console.log(JSON.stringify(response.data))
+        var totalRecordLabel = normalize(response.data)
+        console.log('Label: ' + JSON.stringify(totalRecordLabel))
+        var idLabel = parseInt(totalRecordLabel[0].count,10)
+        console.log('Id: ' + idLabel)
+        var labelNome = label.label.labelName
+        var headquarters = label.label.headquarters
+        var foundingYear = label.label.foundingYear
+        var founder = label.label.founder
+        var abstract = label.label.labelInfo
+        var albums = label.label.albums
+        var queryInsertion = `INSERT DATA {
+            c:label_${idLabel} rdf:type c:RecordLabel.
+            c:label_${idLabel} c:name \"${labelNome}\".
+            c:label_${idLabel} c:headquarters \"${headquarters}\".
+            c:label_${idLabel} c:foundingYear \"${foundingYear}\".
+            c:label_${idLabel} c:founderName \"${founder}\".
+            c:label_${idLabel} c:abstract \"${abstract}\".
+        }`
+        var encodedLabel = encodeURIComponent(prefixes + queryInsertion) 
+        console.log(queryInsertion)      
+        try{
+            await axios.post(postLink + encodedLabel, null).then(response => {
+                //resolve(response.data.content)
+                console.log(response.data)
+                console.log('pila4')
+              }).catch(e => {
+                console.log(e)
+            })
+            console.log('pila')
+            //console.log('Response Label: ' + responseLabel)
+        }catch(e){
+            console.log('pila2')
+            throw(e)
+        }
+        console.log('pila3')
+        for(let i = 0; i <albums.length;i++){
+            let queryAlbums = `INSERT DATA{
+                c:${albums[i]} c:wasRecordedBy c:label_${idLabel}.
+                c:label_${idLabel} c:recorded c:${albums[i]}.
+            }`
+            let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
+            try{
+                axios.post(postLink + encodedAlbum,null)
+                .then(function(response) {
+                    console.log(response.data.content)
+                })
+                .catch(function(response) {
+                    console.log(response)
+                })
+            }catch(e){
+                throw(e)
+            }
+        }
+    }
+    catch(e){
+        throw(e)
+    } 
+}
