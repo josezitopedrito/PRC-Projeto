@@ -92,17 +92,17 @@
                 </v-data-table>
                 <div v-if="position == 'genreArtist'">
                   <ul v-for="n in genre.genreArtist" :key="n">
-                      <li>{{n}}</li>
+                      <li>{{n}} <v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
                 <div v-if="position == 'groupArtist'">
                   <ul v-for="n in group.groupArtist" :key="n">
-                      <li>{{n}}</li>
+                      <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
                 <div v-if="position == 'albumArtist'">
                   <ul v-for="n in album.albumArtist" :key="n">
-                      <li>{{n}}</li>
+                      <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
               <v-btn class="blue white--text" @click.prevent="reset">Reset</v-btn>
@@ -197,6 +197,7 @@ export default {
   created: async function(){
     try{
       let response = await axios.get(this.lhost + "/artists")
+      console.log(response.data)
       this.artistas = response.data
     }catch(e){
       return e
@@ -268,6 +269,26 @@ export default {
         this.genre.supergenreGenre=this.obj.supergenreGenre
         this.genre.subgenreGenre=this.obj.subgenreGenre
         this.genre.fusiongenreGenre=this.obj.fusiongenreGenre
+      }
+    },
+    deleteItem(n){
+      if(this.position == 'genreArtist'){
+        var index1 = this.genre.genreArtist.indexOf(n);
+        if (index1 > -1) {
+          this.genre.genreArtist.splice(index1, 1);
+        }
+      }
+      else if(this.position == 'groupArtist'){
+        var index2 = this.group.groupArtist.indexOf(n);
+        if (index2 > -1) {
+          this.group.groupArtist.splice(index2, 1);
+        }
+      }
+      else if(this.position == 'albumArtist'){
+        var index3 = this.album.albumArtist.indexOf(n);
+        if (index3 > -1) {
+          this.album.albumArtist.splice(index3, 1);
+        }
       }
     },
     reset () {

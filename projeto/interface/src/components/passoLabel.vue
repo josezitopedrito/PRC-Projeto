@@ -79,7 +79,7 @@
                     </template>
                 </v-data-table>
                 <ul v-for="n in album.albumLabel" :key="n">
-                    <li>{{n}}</li>
+                    <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                 </ul>
               <v-btn class="blue white--text" @click.prevent="reset">Reset</v-btn>
               <v-btn ref="submit" class="green white--text" @click="saveAlbum();">Submit</v-btn>
@@ -188,6 +188,14 @@ export default {
         this.album.albumGroup=this.obj.groups
         this.album.albumArtist=this.obj.artists
         this.album.albumProducer=this.obj.producers
+      }
+    },
+    deleteItem(n){
+      if(this.position == 'albumLabel'){
+        var index = this.album.albumLabel.indexOf(n);
+        if (index > -1) {
+          this.album.albumLabel.splice(index, 1);
+        }
       }
     },
     reset () {

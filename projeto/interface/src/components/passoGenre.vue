@@ -65,27 +65,27 @@
                 </v-data-table>
                 <div v-if="position == 'genreArtist'">
                   <ul v-for="n in artist.genreArtist" :key="n">
-                      <li>{{n}}</li>
+                      <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
                 <div v-if="position == 'groupGenre'">
                   <ul v-for="n in group.groupGenre" :key="n">
-                      <li>{{n}}</li>
+                      <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
                 <div v-if="position == 'supergenreGenre'">
                   <ul v-for="n in genre.subgenreGenre" :key="n">
-                      <li>{{n}}</li>
+                      <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
                 <div v-if="position == 'subgenreGenre'">
                   <ul v-for="n in genre.subgenreGenre" :key="n">
-                      <li>{{n}}</li>
+                      <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
                 <div v-if="position == 'fusiongenreGenre'">
                   <ul v-for="n in genre.fusiongenreGenre" :key="n">
-                      <li>{{n}}</li>
+                      <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
               <v-btn class="blue white--text" @click.prevent="reset">Reset</v-btn>
@@ -234,6 +234,38 @@ export default {
         this.artist.albumArtist=this.obj.albums
         this.artist.groupArtist=this.obj.groups
         this.artist.genreArtist=this.obj.genres
+      }
+    },
+    deleteItem(n){
+      if(this.position == 'genreArtist'){
+        var index1 = this.artist.genreArtist.indexOf(n);
+        if (index1 > -1) {
+          this.artist.genreArtist.splice(index1, 1);
+        }
+      }
+      else if(this.position == 'groupGenre'){
+        var index2 = this.group.groupGenre.indexOf(n);
+        if (index2 > -1) {
+          this.group.groupGenre.splice(index2, 1);
+        }
+      }
+      else if(this.position == 'supergenreGenre'){
+        var index3 = this.genre.supergenreGenre.indexOf(n);
+        if (index3 > -1) {
+          this.genre.supergenreGenre.splice(index3, 1);
+        }
+      }
+      else if(this.position == 'subgenreGenre'){
+        var index4 = this.genre.subgenreGenre.indexOf(n);
+        if (index4 > -1) {
+          this.genre.subgenreGenre.splice(index4, 1);
+        }
+      }
+      else if(this.position == 'fusiongenreGenre'){
+        var index5 = this.genre.fusiongenreGenre.indexOf(n);
+        if (index5 > -1) {
+          this.genre.fusiongenreGenre.splice(index5, 1);
+        }
       }
     },
     reset () {

@@ -89,22 +89,22 @@
                 </v-data-table>
                 <div v-if="position == 'albumGroup'">
                   <ul v-for="n in group.albumGroup" :key="n">
-                      <li>{{n}}</li>
+                      <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
                 <div v-if="position == 'albumLabel'">
                   <ul v-for="n in label.albumLabel" :key="n">
-                      <li>{{n}}</li>
+                      <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
                 <div v-if="position == 'albumArtist'">
                   <ul v-for="n in artist.albumArtist" :key="n">
-                      <li>{{n}}</li>
+                      <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
                 <div v-if="position == 'albumProducer'">
                   <ul v-for="n in producer.albumProducer" :key="n">
-                      <li>{{n}}</li>
+                      <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
               <v-btn class="blue white--text" @click.prevent="reset">Reset</v-btn>
@@ -290,6 +290,32 @@ export default {
         this.producer.firstActiveYear=this.obj.firstActiveYear
         this.producer.producerInfo=this.obj.producerInfo
         this.producer.albumProducer=this.obj.albums
+      }
+    },
+    deleteItem(n){
+      if(this.position == 'albumGroup'){
+        var index1 = this.group.albumGroup.indexOf(n);
+        if (index1 > -1) {
+          this.group.albumGroup.splice(index1, 1);
+        }
+      }
+      else if(this.position == 'albumLabel'){
+        var index2 = this.label.albumLabel.indexOf(n);
+        if (index2 > -1) {
+          this.label.albumLabel.splice(index2, 1);
+        }
+      }
+      else if(this.position == 'albumProducer'){
+        var index3 = this.producer.albumProducer.indexOf(n);
+        if (index3 > -1) {
+          this.producer.albumProducer.splice(index3, 1);
+        }
+      }
+      else if(this.position == 'albumArtist'){
+        var index4 = this.artist.albumArtist.indexOf(n);
+        if (index4 > -1) {
+          this.artist.albumArtist.splice(index4, 1);
+        }
       }
     },
     reset () {

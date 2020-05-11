@@ -89,17 +89,17 @@
                 </v-data-table>
                 <div v-if="position == 'albumGroup'">
                   <ul v-for="n in album.albumGroup" :key="n">
-                      <li>{{n}}</li>
+                      <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
                 <div v-if="position == 'groupArtist'">
                   <ul v-for="n in artist.groupArtist" :key="n">
-                      <li>{{n}}</li>
+                      <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
                 <div v-if="position == 'groupGenre'">
                   <ul v-for="n in genre.groupGenre" :key="n">
-                      <li>{{n}}</li>
+                      <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
               <v-btn class="blue white--text" @click.prevent="reset">Reset</v-btn>
@@ -266,6 +266,26 @@ export default {
         this.genre.supergenreGenre=this.obj.supergenreGenre
         this.genre.subgenreGenre=this.obj.subgenreGenre
         this.genre.fusiongenreGenre=this.obj.fusiongenreGenre
+      }
+    },
+    deleteItem(n){
+      if(this.position == 'groupArtist'){
+        var index1 = this.artist.groupArtist.indexOf(n);
+        if (index1 > -1) {
+          this.artist.groupArtist.splice(index1, 1);
+        }
+      }
+      else if(this.position == 'albumGroup'){
+        var index2 = this.album.albumGroup.indexOf(n);
+        if (index2 > -1) {
+          this.album.albumGroup.splice(index2, 1);
+        }
+      }
+      else if(this.position == 'groupGenre'){
+        var index3 = this.genre.groupGenre.indexOf(n);
+        if (index3 > -1) {
+          this.genre.groupGenre.splice(index3, 1);
+        }
       }
     },
     reset () {
