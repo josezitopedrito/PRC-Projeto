@@ -24,7 +24,7 @@
                   required
               ></v-text-field>
               <v-text-field           
-                  label="Dsibanding Date"
+                  label="Disbanding Date"
                   v-model="group.disbandingDate"
                   required
               ></v-text-field>

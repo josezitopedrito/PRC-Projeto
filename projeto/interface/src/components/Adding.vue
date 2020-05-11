@@ -179,7 +179,6 @@
             ajuda:'imports',
             lhost:'http://localhost:5001/api',
             group:{
-                idGroup:"",
                 groupName:"",
                 formationDate:"",
                 disbandingDate:"",
@@ -192,7 +191,6 @@
                 foto:{}
             },
             album:{
-                idAlbum:"",
                 albumName:"",
                 type:"",
                 releaseDate:"",
@@ -205,7 +203,6 @@
                 foto:{}
             },
             artist:{
-                idArtist:"",
                 artistName:"",
                 birthPlace:"",
                 birthDate:"",
@@ -218,7 +215,6 @@
                 foto:{}
             },
             genre:{
-                idGenre:"",
                 genreName:"",
                 artists:[],
                 groups:[],
@@ -228,7 +224,6 @@
                 genreInfo:""
             },
             label:{
-                idLabel:"",
                 labelName:"",
                 headquarters:"",
                 foundingYear:"",
@@ -237,7 +232,6 @@
                 labelInfo:""
             },
             producer:{
-                idProducer:"",
                 producerName:"",
                 firstActiveYear:"",
                 albums:[],
@@ -265,7 +259,8 @@
             },
             confirmacao(novaInsercao){
                 if(this.type !=""){
-                    confirm('Tem a certeza que deseja inserir outro elemento? O progresso desta inserção será perdido.') && ((this.type = novaInsercao) && this.definirTotais() && (this.expand = !this.expand))
+                    confirm('Tem a certeza que deseja inserir outro elemento? O progresso desta inserção será perdido.') && ((this.type = novaInsercao) && this.cancela() && this.definirTotais() && (this.expand = !this.expand))
+                    this.model = 0
                 }else{
                     this.expand = !this.expand
                     this.type = novaInsercao
@@ -285,9 +280,8 @@
                 else if(this.type == 'Label' || this.type == 'Producer'){
                     this.total = 2
                 }
-            },/*
+            },
             cancela(){
-                this.group.idGroup = "",
                 this.group.groupName = "",
                 this.group.formationDate = "",
                 this.group.disbandingDate = "",
@@ -299,7 +293,6 @@
                 this.group.genres = [],
                 this.group.foto = {},
 
-                this.album.idAlbum = "",
                 this.album.albumName = "",
                 this.album.type = "",
                 this.album.releaseDate = "",
@@ -311,7 +304,6 @@
                 this.album.producers = [],
                 this.album.foto = {}
 
-                this.artist.idArtist = "",
                 this.artist.artistName = "",
                 this.artist.birthPlace = "",
                 this.artist.birthDate = "",
@@ -323,7 +315,6 @@
                 this.artist.genres = [],
                 this.artist.foto = {}
 
-                this.genre.idGenre = "",
                 this.genre.genreName = "",
                 this.genre.artists = [],
                 this.genre.groups = [],
@@ -332,7 +323,6 @@
                 this.genre.fusionGenres = [],
                 this.genre.genreInfo = ""
 
-                this.label.idLabel = "",
                 this.label.labelName = "",
                 this.label.headquarters = "",
                 this.label.foundingYear = "",
@@ -340,13 +330,12 @@
                 this.label.albums = [],
                 this.label.labelInfo = ""
 
-                this.producer.idProducer = "",
                 this.producer.producerName = "",
                 this.producer.firstActiveYear = "",
                 this.producer.albums = [],
                 this.producer.producerInfo = ""
 
-            },*/
+            },
             atualizaAlbum: async function(album){
                 console.log(album)
                 this.album.albumName=album.albumName

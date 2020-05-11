@@ -347,16 +347,16 @@ export default {
     },
     addAlbum(id){
       if(this.position == 'albumArtist'){
-        this.albumArtist.push(id)
+        this.artist.albumArtist.push(id)
       }
       else if(this.position == 'albumGroup'){
-        this.albumGroup.push(id)
+        this.group.albumGroup.push(id)
       }
       else if(this.position == 'albumLabel'){
-        this.albumLabel.push(id)
+        this.label.albumLabel.push(id)
       }
       else if(this.position == 'albumProducer'){
-        this.albumProducer.push(id)
+        this.producer.albumProducer.push(id)
       }
     },
     saveArtist (){
