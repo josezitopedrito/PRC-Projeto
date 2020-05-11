@@ -56,6 +56,13 @@
         </v-form>
         <v-form ref="form2" method="post" enctype="multipart/form-data" v-if="position != 'first'">
             <h1>Insert Artist</h1>
+            <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Search"
+              single-line
+              hide-details
+            ></v-text-field>
             <v-container>
                 <v-data-table
                   class="table"
