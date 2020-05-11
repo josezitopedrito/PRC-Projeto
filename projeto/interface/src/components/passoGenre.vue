@@ -63,27 +63,32 @@
                     </v-alert> 
                   </template>
                 </v-data-table>
-                <div v-if="position == 'genreArtist'">
+                <div v-if="position == 'genreArtist' && artist.genreArtist.length>0">
+                  <h3>Genres of this artist's music:</h3>
                   <ul v-for="n in artist.genreArtist" :key="n">
                       <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
-                <div v-if="position == 'groupGenre'">
+                <div v-if="position == 'groupGenre' && group.groupGenre.length>0">
+                  <h3>Genres of this musical group's music:</h3>
                   <ul v-for="n in group.groupGenre" :key="n">
                       <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
-                <div v-if="position == 'supergenreGenre'">
+                <div v-if="position == 'supergenreGenre' && genre.supergenreGenre.length>0">
+                  <h3>SuperGenres of this genre:</h3>
                   <ul v-for="n in genre.subgenreGenre" :key="n">
                       <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
-                <div v-if="position == 'subgenreGenre'">
+                <div v-if="position == 'subgenreGenre' && genre.subgenreGenre.length>0">
+                  <h3>SubGenres of this genre:</h3>
                   <ul v-for="n in genre.subgenreGenre" :key="n">
                       <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
-                <div v-if="position == 'fusiongenreGenre'">
+                <div v-if="position == 'fusiongenreGenre' && genre.fusiongenreGenre.length>0">
+                  <h3>Genres whose fusion resulted in this genre:</h3>
                   <ul v-for="n in genre.fusiongenreGenre" :key="n">
                       <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>

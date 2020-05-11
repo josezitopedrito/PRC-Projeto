@@ -87,17 +87,20 @@
                     </v-alert> 
                   </template>
                 </v-data-table>
-                <div v-if="position == 'albumGroup'">
+                <div v-if="position == 'albumGroup' && album.albumGroup.length>0">
+                  <h3>Groups who created this album:</h3>
                   <ul v-for="n in album.albumGroup" :key="n">
                       <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
-                <div v-if="position == 'groupArtist'">
+                <div v-if="position == 'groupArtist' && artist.groupArtist.length>0">
+                  <h3>Groups this artist has been a part of:</h3>
                   <ul v-for="n in artist.groupArtist" :key="n">
                       <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
-                <div v-if="position == 'groupGenre'">
+                <div v-if="position == 'groupGenre' && genre.groupGenre.length>0">
+                  <h3>Groups whose music falls into this genre:</h3>
                   <ul v-for="n in genre.groupGenre" :key="n">
                       <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>

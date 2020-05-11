@@ -90,17 +90,20 @@
                     </v-alert> 
                   </template>
                 </v-data-table>
-                <div v-if="position == 'genreArtist'">
+                <div v-if="position == 'genreArtist' && genre.genreArtist.length>0">
+                  <h3>Artists that fall into this genre of music:</h3>
                   <ul v-for="n in genre.genreArtist" :key="n">
                       <li>{{n}} <v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
-                <div v-if="position == 'groupArtist'">
+                <div v-if="position == 'groupArtist'&& group.groupArtist.length>0">
+                  <h3>Members of this group:</h3>
                   <ul v-for="n in group.groupArtist" :key="n">
                       <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
-                <div v-if="position == 'albumArtist'">
+                <div v-if="position == 'albumArtist'&& album.albumArtist.length>0">
+                  <h3>Artists who created this album:</h3>
                   <ul v-for="n in album.albumArtist" :key="n">
                       <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
