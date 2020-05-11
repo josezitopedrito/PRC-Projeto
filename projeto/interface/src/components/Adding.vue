@@ -260,7 +260,7 @@
             confirmacao(novaInsercao){
                 if(this.type !=""){
                     confirm('Tem a certeza que deseja inserir outro elemento? O progresso desta inserção será perdido.') && ((this.type = novaInsercao) && this.cancela() && this.definirTotais() && (this.expand = !this.expand))
-                    this.model = 0
+                    //this.model = 0
                 }else{
                     this.expand = !this.expand
                     this.type = novaInsercao
@@ -335,6 +335,7 @@
                 this.producer.albums = [],
                 this.producer.producerInfo = ""
 
+                this.model = 0;
             },
             atualizaAlbum: async function(album){
                 console.log(album)
@@ -349,10 +350,10 @@
                 this.album.artists=album.albumArtist
                 this.album.producers=album.albumProducer
                 if(this.total == this.model + 1){
-                    let response = await axios.post(this.lhost + '/albums/inserir',{
+                    await axios.post(this.lhost + '/albums/inserir',{
                         album:this.album
                     })
-                    console.log('Resposta: ' + response)
+                    this.cancela();
                 }else{
                     this.next()
                 }
@@ -370,10 +371,10 @@
                 this.artist.groups=artist.groupArtist
                 this.artist.genres=artist.genreArtist
                 if(this.total == this.model + 1){
-                    let response = await axios.post(this.lhost + '/artists/inserir',{
+                    await axios.post(this.lhost + '/artists/inserir',{
                         artist:this.artist
                     })
-                    console.log('Resposta: ' + response)
+                    this.cancela();
                 }else{
                     this.next()
                 }
@@ -391,10 +392,10 @@
                 this.group.genres=group.groupGenre
                 this.group.albums=group.albumGroup
                 if(this.total == this.model + 1){
-                    let response = await axios.post(this.lhost + '/groups/inserir',{
+                    await axios.post(this.lhost + '/groups/inserir',{
                         group:this.group
                     })
-                    console.log('Resposta: ' + response)
+                    this.cancela();
                 }else{
                     this.next()
                 }
@@ -409,10 +410,10 @@
                 this.genre.subGenres=genre.subgenreGenre
                 this.genre.fusionGenres=genre.fusiongenreGenre
                 if(this.total == this.model + 1){
-                    let response = await axios.post(this.lhost + '/genres/inserir',{
+                    await axios.post(this.lhost + '/genres/inserir',{
                         genre:this.genre
                     })
-                    console.log('Resposta: ' + response)
+                    this.cancela();
                 }else{
                     this.next()
                 }
@@ -425,10 +426,10 @@
                 this.label.labelInfo=label.labelInfo
                 this.label.albums=label.albumLabel
                 if(this.total == this.model + 1){
-                    let response = await axios.post(this.lhost + '/labels/inserir',{
+                    await axios.post(this.lhost + '/labels/inserir',{
                         label:this.label
                     })
-                    console.log('Resposta: ' + response)
+                    this.cancela();
                 }else{
                     this.next()
                 }
@@ -440,43 +441,14 @@
                 this.producer.producerInfo=producer.producerInfo
                 this.producer.albums=producer.albumProducer
                 if(this.total == this.model + 1){
-                    let response = await axios.post(this.lhost + '/producers/inserir',{
+                    await axios.post(this.lhost + '/producers/inserir',{
                         producer:this.producer
                     })
-                    console.log('Resposta: ' + response)
+                    this.cancela();
                 }else{
                     this.next()
                 }
-            },/*
-            submeterFolio(){
-                let formData = new FormData()
-                formData.append('idFolio',this.info.idFolio)
-                formData.append('versao',this.info.versao)
-                formData.append('tipo',this.info.tipo)
-                formData.append('obs',this.info.obs)
-                formData.append('descricao',this.info.descricao)
-                formData.append('sumario',this.info.sumario)
-                formData.append('foto',this.info.foto)
-                formData.append('ficheiro',this.info.ficheiro)
-                formData.append('textoTags',this.info.textoTags)
-                formData.append('textoSTags',this.info.textoSTags)
-                console.log(this.info.list)
-                axios.post(`http://localhost:5000/import/passoProducer/?nome=${this.$store.state.user._id}`,formData,{headers:{
-                    'Content-Type': 'multipart/form-data',
-                    Authorization:`Bearer: ${this.$store.state.jwt}`
-                }})
-                .then(response => {
-                    // JSON responses are automatically parsed.
-                    console.log(response.data)
-                    this.model=0
-                    //this.infos[0] = response.data.info
-                    //console.log(this.infos)
-                }).catch(e => {
-                    console.log(e)
-                    this.errors.push(e)
-                })
-                this.cancela()
-            }*/
+            }
         },
         updated () {
             if(this.model == null){
