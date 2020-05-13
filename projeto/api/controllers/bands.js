@@ -141,17 +141,13 @@ Bands.inserir = async function(band){
             await axios.post(postLink + encodedBand, null).then(response => {
                 //resolve(response.data.content)
                 console.log(response.data)
-                console.log('pila4')
               }).catch(e => {
                 console.log(e)
             })
-            console.log('pila')
             //console.log('Response Band: ' + responseBand)
         }catch(e){
-            console.log('pila2')
             throw(e)
         }
-        console.log('pila3')
         for(let i = 0; i <albums.length;i++){
             let queryAlbums = `INSERT DATA{
                 c:${albums[i]} c:wasCreatedBy c:group_${idBand}.

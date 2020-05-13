@@ -138,23 +138,20 @@ Genres.inserir = async function(genre){
             c:genre_${idGenre} c:name \"${genreNome}\".
             c:genre_${idGenre} c:abstract \"${abstract}\".
         }`
+        console.log(JSON.stringify(genre))
         var encodedGenre = encodeURIComponent(prefixes + queryInsertion) 
         console.log(queryInsertion)      
         try{
             await axios.post(postLink + encodedGenre, null).then(response => {
                 //resolve(response.data.content)
                 console.log(response.data)
-                console.log('pila4')
               }).catch(e => {
                 console.log(e)
             })
-            console.log('pila')
             //console.log('Response Genre: ' + responseGenre)
         }catch(e){
-            console.log('pila2')
             throw(e)
         }
-        console.log('pila3')
         for(let i = 0; i <artists.length;i++){
             let queryArtists = `INSERT DATA{
                 c:${artists[i]} c:performs c:genre_${idGenre}.

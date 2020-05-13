@@ -421,12 +421,13 @@
             atualizaLabel: async function(label){
                 //console.log(folio)
                 this.label.labelName=label.labelName
+                this.label.headquarters = label.headquarters
                 this.label.foundingYear=label.foundingYear
                 this.label.founder=label.founder
                 this.label.labelInfo=label.labelInfo
                 this.label.albums=label.albumLabel
                 if(this.total == this.model + 1){
-                    await axios.post(this.lhost + '/labels/inserir',{
+                    await axios.post(this.lhost + '/recordLabels/inserir',{
                         label:this.label
                     })
                     this.cancela();

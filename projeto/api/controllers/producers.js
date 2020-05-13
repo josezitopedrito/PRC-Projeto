@@ -85,7 +85,7 @@ Producers.inserir = async function(producer){
         var idProducer = parseInt(totalProducer[0].count,10)
         console.log('Id: ' + idProducer)
         var producerNome = producer.producer.producerName
-        var firstActiveYear = producer.producer.foundingYear
+        var firstActiveYear = producer.producer.firstActiveYear
         var abstract = producer.producer.producerInfo
         var albums = producer.producer.albums
         var queryInsertion = `INSERT DATA {
@@ -100,17 +100,13 @@ Producers.inserir = async function(producer){
             await axios.post(postLink + encodedProducer, null).then(response => {
                 //resolve(response.data.content)
                 console.log(response.data)
-                console.log('pila4')
               }).catch(e => {
                 console.log(e)
             })
-            console.log('pila')
             //console.log('Response Producer: ' + responseProducer)
         }catch(e){
-            console.log('pila2')
             throw(e)
         }
-        console.log('pila3')
         for(let i = 0; i <albums.length;i++){
             let queryAlbums = `INSERT DATA{
                 c:${albums[i]} c:wasRecordedBy c:producer_${idProducer}.

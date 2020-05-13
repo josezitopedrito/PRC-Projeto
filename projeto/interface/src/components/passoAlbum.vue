@@ -261,7 +261,6 @@ export default {
         this.album.albumProducer=this.obj.producers
       }
       else if(this.position == 'albumArtist'){
-        this.artist.idArtist=this.obj.idArtist
         this.artist.artistName=this.obj.artistName
         this.artist.gender=this.obj.gender
         this.artist.birthPlace=this.obj.birthPlace
@@ -274,7 +273,6 @@ export default {
         this.artist.genreArtist=this.obj.genres
       }
       else if(this.position == 'albumGroup'){
-        this.group.idGroup=this.obj.idGroup
         this.group.groupName=this.obj.groupName
         this.group.formationDate=this.obj.formationDate
         this.group.disbandingDate=this.obj.disbandingDate
@@ -287,7 +285,6 @@ export default {
         this.group.albumGroup=this.obj.albums
       }
       else if(this.position == 'albumLabel'){
-        this.label.idLabel=this.obj.idLabel
         this.label.labelName=this.obj.labelName
         this.label.headquarters = this.obj.headquarters,
         this.label.foundingYear = this.obj.foundingYear,
@@ -296,7 +293,6 @@ export default {
         this.label.albumLabel=this.obj.albums
       }
       else if(this.position == 'albumProducer'){
-        this.producer.idProducer=this.obj.idProducer
         this.producer.producerName=this.obj.producerName
         this.producer.firstActiveYear=this.obj.firstActiveYear
         this.producer.producerInfo=this.obj.producerInfo

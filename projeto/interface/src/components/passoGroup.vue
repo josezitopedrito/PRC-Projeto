@@ -271,11 +271,11 @@ export default {
         this.genre.idGenre=this.obj.idGenre
         this.genre.genreName=this.obj.genreName
         this.genre.genreInfo=this.obj.genreInfo
-        this.genre.groupGenre=this.obj.groupGenre
-        this.genre.genreArtist=this.obj.genreArtist
-        this.genre.supergenreGenre=this.obj.supergenreGenre
-        this.genre.subgenreGenre=this.obj.subgenreGenre
-        this.genre.fusiongenreGenre=this.obj.fusiongenreGenre
+        this.genre.groupGenre=this.obj.groups
+        this.genre.genreArtist=this.obj.artists
+        this.genre.supergenreGenre=this.obj.superGenres
+        this.genre.subgenreGenre=this.obj.subGenres
+        this.genre.fusiongenreGenre=this.obj.fusionGenres
       }
     },
     deleteItem(n){

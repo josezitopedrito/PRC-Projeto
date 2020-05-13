@@ -84,7 +84,7 @@
                 </div>
                 <div v-if="position == 'supergenreGenre' && genre.supergenreGenre.length>0">
                   <h3>SuperGenres of this genre:</h3>
-                  <ul v-for="n in genre.subgenreGenre" :key="n">
+                  <ul v-for="n in genre.supergenreGenre" :key="n">
                       <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
@@ -113,7 +113,7 @@
               <v-btn ref="submit" class="green white--text" @click="saveSubGenre();" v-if="position == 'subgenreGenre'">Submit</v-btn>
               <v-btn ref="skip" @click="saveSkipSubGenre();" class="orange white--text" :disabled="disableButton" v-if="position == 'subgenreGenre'">Saltar</v-btn>
 
-              <v-btn ref="submit" class="green white--text" @click="saveFusionGenre();" v-if="position == 'superFusionGenre'">Submit</v-btn>
+              <v-btn ref="submit" class="green white--text" @click="saveFusionGenre();" v-if="position == 'fusiongenreGenre'">Submit</v-btn>
               <v-btn ref="skip" @click="saveSkipFusionGenre();" class="orange white--text" :disabled="disableButton" v-if="position == 'fusiongenreGenre'">Saltar</v-btn>
             </v-container>
         </v-form>
@@ -136,7 +136,7 @@ export default {
         genreInfo:"",
         supergenreGenre:[],
         subgenreGenre:[],
-        fusionGenre:[],
+        fusiongenreGenre:[],
         genreArtist:[],
         groupGenre:[],
         skip:0
@@ -212,14 +212,14 @@ export default {
   },
   methods:{
     onUpdate(){
-      if(this.position == 'first'){
+      if(this.position == 'first' || this.position == 'supergenreGenre' || this.position == 'subgenreGenre' || this.position == 'fusiongenreGenre'){
         this.genre.genreName=this.obj.genreName
         this.genre.genreInfo=this.obj.genreInfo
-        this.genre.groupGenre=this.obj.groupGenre
-        this.genre.genreArtist=this.obj.genreArtist
-        this.genre.supergenreGenre=this.obj.supergenreGenre
-        this.genre.subgenreGenre=this.obj.subgenreGenre
-        this.genre.fusiongenreGenre=this.obj.fusiongenreGenre
+        this.genre.groupGenre=this.obj.groups
+        this.genre.genreArtist=this.obj.artists
+        this.genre.supergenreGenre=this.obj.superGenres
+        this.genre.subgenreGenre=this.obj.subGenres
+        this.genre.fusiongenreGenre=this.obj.fusionGenres
       }
       else if(this.position == 'groupGenre'){
         this.group.idGroup=this.obj.idGroup

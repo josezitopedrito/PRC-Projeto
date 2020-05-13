@@ -97,12 +97,12 @@ RecordLabels.inserir = async function(label){
         var abstract = label.label.labelInfo
         var albums = label.label.albums
         var queryInsertion = `INSERT DATA {
-            c:label_${idLabel} rdf:type c:RecordLabel.
-            c:label_${idLabel} c:name \"${labelNome}\".
-            c:label_${idLabel} c:headquarters \"${headquarters}\".
-            c:label_${idLabel} c:foundingYear \"${foundingYear}\".
-            c:label_${idLabel} c:founderName \"${founder}\".
-            c:label_${idLabel} c:abstract \"${abstract}\".
+            c:recordlabel_${idLabel} rdf:type c:RecordLabel.
+            c:recordlabel_${idLabel} c:name \"${labelNome}\".
+            c:recordlabel_${idLabel} c:headquarters \"${headquarters}\".
+            c:recordlabel_${idLabel} c:foundingYear \"${foundingYear}\".
+            c:recordlabel_${idLabel} c:founderName \"${founder}\".
+            c:recordlabel_${idLabel} c:abstract \"${abstract}\".
         }`
         var encodedLabel = encodeURIComponent(prefixes + queryInsertion) 
         console.log(queryInsertion)      
@@ -110,21 +110,17 @@ RecordLabels.inserir = async function(label){
             await axios.post(postLink + encodedLabel, null).then(response => {
                 //resolve(response.data.content)
                 console.log(response.data)
-                console.log('pila4')
               }).catch(e => {
                 console.log(e)
             })
-            console.log('pila')
             //console.log('Response Label: ' + responseLabel)
         }catch(e){
-            console.log('pila2')
             throw(e)
         }
-        console.log('pila3')
         for(let i = 0; i <albums.length;i++){
             let queryAlbums = `INSERT DATA{
-                c:${albums[i]} c:wasRecordedBy c:label_${idLabel}.
-                c:label_${idLabel} c:recorded c:${albums[i]}.
+                c:${albums[i]} c:wasRecordedBy c:recordlabel_${idLabel}.
+                c:recordlabel_${idLabel} c:recorded c:${albums[i]}.
             }`
             let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
             try{
