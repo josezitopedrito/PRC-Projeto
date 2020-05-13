@@ -47,7 +47,7 @@
                             {{genre.Band}}
                             <td>
                                 <v-layout justify-center>
-                                    <v-list class="tile" v-for="Band in genre.Band" :key="Band.band">
+                                    <v-list class="tile" v-for="band in genre.Band" :key="band.band">
                                         <v-list-item link :to="'/groups/' + band.band.split('#')[1]">{{ Band.bandName }}</v-list-item>
                                     </v-list>
                                 </v-layout>

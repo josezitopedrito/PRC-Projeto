@@ -58,14 +58,15 @@
                 <v-card>
                     <v-window v-if="type == 'Album'" v-model="model">
                         <v-window-item
-                            v-for="m in 5" :key="m"
+                            v-for="m in 6" :key="m"
                         >
-                            <h1>Album Insertion</h1><!-- :folio="info" :cancelado="cancelado" @atualizaFolio=atualizaFolio($event) -->
-                            <passoAlbum v-if="m == 1 && renderComponent" :obj="album" :position="first" @atualizaAlbum=atualizaAlbum($event)></passoAlbum>                           
-                            <passoArtist v-if="m == 2 && renderComponent" :obj="album" :position="albumArtist" @atualizaAlbum=atualizaAlbum($event)></passoArtist>
-                            <passoGroup v-else-if="m == 3 && renderComponent" :obj="album" :position="albumGroup" @atualizaAlbum=atualizaAlbum($event)></passoGroup>
-                            <passoLabel v-if="m == 4 && renderComponent" :obj="album" :position="albumLabel" @atualizaAlbum=atualizaAlbum($event)></passoLabel>
-                            <passoProducer v-if="m == 5 && renderComponent" :obj="album" :position="albumProducer" @atualizaAlbum=atualizaAlbum($event)></passoProducer>
+                            <h1>Album Insertion</h1>
+                            <passoEditAlbum v-if="m == 1 && renderComponent" :obj="album" :position="first" @atualizaAlbum=atualizaAlbum($event)></passoEditAlbum>                           
+                            <passoEditAlbum v-if="m == 2 && renderComponent" :obj="album" :position="second" @atualizaAlbum=atualizaAlbum($event)></passoEditAlbum>                           
+                            <passoEditArtist v-if="m == 3 && renderComponent" :obj="album" :position="albumArtist" @atualizaAlbum=atualizaAlbum($event)></passoEditArtist>
+                            <passoEditGroup v-else-if="m == 4 && renderComponent" :obj="album" :position="albumGroup" @atualizaAlbum=atualizaAlbum($event)></passoEditGroup>
+                            <passoEditLabel v-if="m == 5 && renderComponent" :obj="album" :position="albumLabel" @atualizaAlbum=atualizaAlbum($event)></passoEditLabel>
+                            <passoEditProducer v-if="m == 6 && renderComponent" :obj="album" :position="albumProducer" @atualizaAlbum=atualizaAlbum($event)></passoEditProducer>
                             
                             <!--<v-card-actions v-if="m!=1 && m!=6" class="justify-space-between">
                                 <v-btn
@@ -85,60 +86,65 @@
                     </v-window>
                     <v-window v-if="type == 'Artist'" v-model="model">
                         <v-window-item                            
-                            v-for="m in 4" :key="m"
+                            v-for="m in 5" :key="m"
                         >
                             <h1>Artist Insertion</h1>
                             <!-- :folio="info" @cancela=cancela() -->
-                            <passoArtist v-if="m == 1 && renderComponent" :obj="artist" :position="first" @atualizaArtist=atualizaArtist($event)></passoArtist>
-                            <passoAlbum v-if="m == 2 && renderComponent" :obj="artist" :position="albumArtist" @atualizaArtist=atualizaArtist($event)></passoAlbum>
-                            <passoGroup v-if="m == 3 && renderComponent" :obj="artist" :position="groupArtist" @atualizaArtist=atualizaArtist($event)></passoGroup>
-                            <passoGenre v-if="m == 4 && renderComponent" :obj="artist" :position="genreArtist" @atualizaArtist=atualizaArtist($event)></passoGenre>
+                            <passoEditArtist v-if="m == 1 && renderComponent" :obj="artist" :position="first" @atualizaArtist=atualizaArtist($event)></passoEditArtist>
+                            <passoEditArtist v-if="m == 2 && renderComponent" :obj="artist" :position="second" @atualizaArtist=atualizaArtist($event)></passoEditArtist>
+                            <passoEditAlbum v-if="m == 3 && renderComponent" :obj="artist" :position="albumArtist" @atualizaArtist=atualizaArtist($event)></passoEditAlbum>
+                            <passoEditGroup v-if="m == 4 && renderComponent" :obj="artist" :position="groupArtist" @atualizaArtist=atualizaArtist($event)></passoEditGroup>
+                            <passoEditGenre v-if="m == 5 && renderComponent" :obj="artist" :position="genreArtist" @atualizaArtist=atualizaArtist($event)></passoEditGenre>
                         </v-window-item>
                     </v-window>
                     <v-window v-if="type == 'Group'" v-model="model">
                         <v-window-item
-                            v-for="m in 4" :key="m"
+                            v-for="m in 5" :key="m"
                         >
                             <h1>Group Insertion</h1>
                             <!-- :folio="info" @cancela=cancela() -->
-                            <passoGroup v-if="m == 1 && renderComponent" :obj="group" :position="first" @atualizaGroup=atualizaGroup($event)></passoGroup>
-                            <passoAlbum v-if="m == 2 && renderComponent" :obj="group" :position="albumGroup" @atualizaGroup=atualizaGroup($event)></passoAlbum>
-                            <passoArtist v-if="m == 3 && renderComponent" :obj="group" :position="groupArtist" @atualizaGroup=atualizaGroup($event)></passoArtist>
-                            <passoGenre v-if="m == 4 && renderComponent" :obj="group" :position="groupGenre" @atualizaGroup=atualizaGroup($event)></passoGenre>
+                            <passoEditGroup v-if="m == 1 && renderComponent" :obj="group" :position="first" @atualizaGroup=atualizaGroup($event)></passoEditGroup>
+                            <passoEditGroup v-if="m == 2 && renderComponent" :obj="group" :position="second" @atualizaGroup=atualizaGroup($event)></passoEditGroup>
+                            <passoEditAlbum v-if="m == 3 && renderComponent" :obj="group" :position="albumGroup" @atualizaGroup=atualizaGroup($event)></passoEditAlbum>
+                            <passoEditArtist v-if="m == 4 && renderComponent" :obj="group" :position="groupArtist" @atualizaGroup=atualizaGroup($event)></passoEditArtist>
+                            <passoEditGenre v-if="m == 5 && renderComponent" :obj="group" :position="groupGenre" @atualizaGroup=atualizaGroup($event)></passoEditGenre>
                         </v-window-item>
                     </v-window>
                     <v-window v-if="type == 'Label'" v-model="model">
                         <v-window-item
-                            v-for="m in 2" :key="m"
+                            v-for="m in 3" :key="m"
                         >
                             <h1>Label Insertion</h1>
                             <!-- :folio="info" @cancela=cancela() -->
-                            <passoLabel v-if="m == 1 && renderComponent" :obj="label" :position="first" @atualizaLabel=atualizaLabel($event)></passoLabel>
-                            <passoAlbum v-if="m == 2 && renderComponent" :obj="label" :position="albumLabel" @atualizaLabel=atualizaLabel($event)></passoAlbum>
+                            <passoEditLabel v-if="m == 1 && renderComponent" :obj="label" :position="first" @atualizaLabel=atualizaLabel($event)></passoEditLabel>
+                            <passoEditLabel v-if="m == 2 && renderComponent" :obj="label" :position="second" @atualizaLabel=atualizaLabel($event)></passoEditLabel>
+                            <passoEditAlbum v-if="m == 3 && renderComponent" :obj="label" :position="albumLabel" @atualizaLabel=atualizaLabel($event)></passoEditAlbum>
                         </v-window-item>
                     </v-window>
                     <v-window v-if="type == 'Producer'" v-model="model">
                         <v-window-item
-                            v-for="m in 2" :key="m"
+                            v-for="m in 3" :key="m"
                         >
                             <h1>Producer Insertion</h1>
-                            <!-- :folio="info" :fileInfo="passoProducerinfo" @submeterFolio=submeterFolio() @cancela=cancela() -->
-                            <passoProducer v-if="m == 1 && renderComponent" :obj="producer" :position="first" @atualizaProducer=atualizaProducer($event)></passoProducer>
-                            <passoAlbum v-if="m == 2 && renderComponent" :obj="producer" :position="albumProducer" @atualizaProducer=atualizaProducer($event)></passoAlbum>
+                            <!-- :folio="info" :fileInfo="passoEditProducerinfo" @submeterFolio=submeterFolio() @cancela=cancela() -->
+                            <passoEditProducer v-if="m == 1 && renderComponent" :obj="producer" :position="first" @atualizaProducer=atualizaProducer($event)></passoEditProducer>
+                            <passoEditProducer v-if="m == 2 && renderComponent" :obj="producer" :position="second" @atualizaProducer=atualizaProducer($event)></passoEditProducer>
+                            <passoEditAlbum v-if="m == 3 && renderComponent" :obj="producer" :position="albumProducer" @atualizaProducer=atualizaProducer($event)></passoEditAlbum>
                         </v-window-item>
                     </v-window>
                     <v-window v-if="type == 'Genre'" v-model="model">
                         <v-window-item
-                            v-for="m in 6" :key="m"
+                            v-for="m in 7" :key="m"
                         >
                             <h1>Genre Insertion</h1>
                             <!-- :folio="info" @cancela=cancela() -->
-                            <passoGenre v-if="m == 1 && renderComponent" :obj="genre" :position="first" @atualizaGenre=atualizaGenre($event)></passoGenre>
-                            <passoArtist v-if="m == 2 && renderComponent" :obj="genre" :position="genreArtist" @atualizaGenre=atualizaGenre($event)></passoArtist>
-                            <passoGroup v-if="m == 3 && renderComponent" :obj="genre" :position="groupGenre" @atualizaGenre=atualizaGenre($event)></passoGroup>
-                            <passoGenre v-if="m == 4 && renderComponent" :obj="genre" :position="supergenreGenre" @atualizaGenre=atualizaGenre($event)></passoGenre>                           
-                            <passoGenre v-if="m == 5 && renderComponent" :obj="genre" :position="subgenreGenre" @atualizaGenre=atualizaGenre($event)></passoGenre>
-                            <passoGenre v-if="m == 6 && renderComponent" :obj="genre" :position="fusiongenreGenre" @atualizaGenre=atualizaGenre($event)></passoGenre>
+                            <passoEditGenre v-if="m == 1 && renderComponent" :obj="genre" :position="first" @atualizaGenre=atualizaGenre($event)></passoEditGenre>
+                            <passoEditGenre v-if="m == 2 && renderComponent" :obj="genre" :position="second" @atualizaGenre=atualizaGenre($event)></passoEditGenre>
+                            <passoEditArtist v-if="m == 3 && renderComponent" :obj="genre" :position="genreArtist" @atualizaGenre=atualizaGenre($event)></passoEditArtist>
+                            <passoEditGroup v-if="m == 4 && renderComponent" :obj="genre" :position="groupGenre" @atualizaGenre=atualizaGenre($event)></passoEditGroup>
+                            <passoEditGenre v-if="m == 5 && renderComponent" :obj="genre" :position="supergenreGenre" @atualizaGenre=atualizaGenre($event)></passoEditGenre>                           
+                            <passoEditGenre v-if="m == 6 && renderComponent" :obj="genre" :position="subgenreGenre" @atualizaGenre=atualizaGenre($event)></passoEditGenre>
+                            <passoEditGenre v-if="m == 7 && renderComponent" :obj="genre" :position="fusiongenreGenre" @atualizaGenre=atualizaGenre($event)></passoEditGenre>
                         </v-window-item>
                     </v-window>
                     
@@ -150,13 +156,13 @@
 
 <script>
     import NavDraw from '../components/navDraw.vue'
-    import passoAlbum from '../components/passoAlbum.vue'
-    import passoArtist from '../components/passoArtist.vue'
-    import passoGroup from '../components/passoGroup.vue'
-    import passoGenre from '../components/passoGenre.vue'
-    import passoLabel from '../components/passoLabel.vue'
-    import passoProducer from '../components/passoProducer.vue'
-    import axios from 'axios'
+    import passoEditAlbum from '../components/passoEditAlbum.vue'
+    import passoEditArtist from '../components/passoEditArtist.vue'
+    import passoEditGroup from '../components/passoEditGroup.vue'
+    import passoEditGenre from '../components/passoEditGenre.vue'
+    import passoEditLabel from '../components/passoEditLabel.vue'
+    import passoEditProducer from '../components/passoEditProducer.vue'
+    //import axios from 'axios'
     export default {
         data: () => ({
             value: null,
@@ -164,6 +170,7 @@
             expand:false,
             total:0,
             first:'first',
+            second:'second',
             albumArtist:'albumArtist',
             albumGroup:'albumGroup',
             albumLabel:'albumLabel',
@@ -241,12 +248,12 @@
         }),
         components:{
             'navDraw':NavDraw,
-            'passoAlbum':passoAlbum,
-            'passoArtist':passoArtist,
-            'passoGroup':passoGroup,
-            'passoGenre':passoGenre,
-            'passoLabel':passoLabel,
-            'passoProducer':passoProducer
+            'passoEditAlbum':passoEditAlbum,
+            'passoEditArtist':passoEditArtist,
+            'passoEditGroup':passoEditGroup,
+            'passoEditGenre':passoEditGenre,
+            'passoEditLabel':passoEditLabel,
+            'passoEditProducer':passoEditProducer
         },
         methods:{
             prev(){
@@ -267,16 +274,16 @@
             },
             definirTotais(){
                 if(this.type == 'Album'){
-                    this.total = 5
-                }
-                else if(this.type == 'Genre'){
                     this.total = 6
                 }
+                else if(this.type == 'Genre'){
+                    this.total = 7
+                }
                 else if(this.type == 'Artist' || this.type == 'Group'){
-                    this.total = 4
+                    this.total = 5
                 }
                 else if(this.type == 'Label' || this.type == 'Producer'){
-                    this.total = 2
+                    this.total = 3
                 }
             },
             cancela(){
@@ -347,14 +354,14 @@
                 this.album.groups=album.albumGroup
                 this.album.artists=album.albumArtist
                 this.album.producers=album.albumProducer
-                if(this.total == this.model + 1){
-                    await axios.post(this.lhost + '/albums/inserir',{
-                        album:this.album
-                    })
-                    this.cancela();
-                }else{
+                // if(this.total == this.model + 1){
+                //     await axios.post(this.lhost + '/albums/editar',{
+                //         album:this.album
+                //     })
+                //     this.cancela();
+                // }else{
                     this.next()
-                }
+                // }
             },
             atualizaArtist: async function(artist){
                 //console.log(folio)
@@ -368,14 +375,14 @@
                 this.artist.albums=artist.albumArtist
                 this.artist.groups=artist.groupArtist
                 this.artist.genres=artist.genreArtist
-                if(this.total == this.model + 1){
-                    await axios.post(this.lhost + '/artists/inserir',{
-                        artist:this.artist
-                    })
-                    this.cancela();
-                }else{
+                // if(this.total == this.model + 1){
+                //     await axios.post(this.lhost + '/artists/editar',{
+                //         artist:this.artist
+                //     })
+                //     this.cancela();
+                // }else{
                     this.next()
-                }
+                // }
             },
             atualizaGroup: async function(group){
                 //console.log(folio)
@@ -389,14 +396,14 @@
                 this.group.members=group.groupArtist
                 this.group.genres=group.groupGenre
                 this.group.albums=group.albumGroup
-                if(this.total == this.model + 1){
-                    await axios.post(this.lhost + '/groups/inserir',{
-                        group:this.group
-                    })
-                    this.cancela();
-                }else{
+                // if(this.total == this.model + 1){
+                //     await axios.post(this.lhost + '/groups/editar',{
+                //         group:this.group
+                //     })
+                //     this.cancela();
+                // }else{
                     this.next()
-                }
+                // }
             },
             atualizaGenre: async function(genre){
                 //console.log(folio)
@@ -407,14 +414,14 @@
                 this.genre.superGenres=genre.supergenreGenre
                 this.genre.subGenres=genre.subgenreGenre
                 this.genre.fusionGenres=genre.fusiongenreGenre
-                if(this.total == this.model + 1){
-                    await axios.post(this.lhost + '/genres/inserir',{
-                        genre:this.genre
-                    })
-                    this.cancela();
-                }else{
+                // if(this.total == this.model + 1){
+                //     await axios.post(this.lhost + '/genres/editar',{
+                //         genre:this.genre
+                //     })
+                //     this.cancela();
+                // }else{
                     this.next()
-                }
+                // }
             },
             atualizaLabel: async function(label){
                 //console.log(folio)
@@ -424,14 +431,14 @@
                 this.label.founder=label.founder
                 this.label.labelInfo=label.labelInfo
                 this.label.albums=label.albumLabel
-                if(this.total == this.model + 1){
-                    await axios.post(this.lhost + '/recordLabels/inserir',{
-                        label:this.label
-                    })
-                    this.cancela();
-                }else{
+                // if(this.total == this.model + 1){
+                //     await axios.post(this.lhost + '/recordLabels/editar',{
+                //         label:this.label
+                //     })
+                //     this.cancela();
+                // }else{
                     this.next()
-                }
+                // }
             },
             atualizaProducer: async function(producer){
                 //console.log(folio)
@@ -439,14 +446,14 @@
                 this.producer.firstActiveYear=producer.firstActiveYear
                 this.producer.producerInfo=producer.producerInfo
                 this.producer.albums=producer.albumProducer
-                if(this.total == this.model + 1){
-                    await axios.post(this.lhost + '/producers/inserir',{
-                        producer:this.producer
-                    })
-                    this.cancela();
-                }else{
+                // if(this.total == this.model + 1){
+                //     await axios.post(this.lhost + '/producers/editar',{
+                //         producer:this.producer
+                //     })
+                //     this.cancela();
+                // }else{
                     this.next()
-                }
+                // }
             }
         },
         updated () {
