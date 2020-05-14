@@ -142,5 +142,94 @@ RecordLabels.inserir = async function(label){
 }
 
 RecordLabels.editar = async function(label){
-
+    var albumsPreEdicao = label.label.albumsPreEdicao
+    for(let i = 0; i <albumsPreEdicao.length;i++){
+        let queryAlbums = `DELETE DATA{
+            c:${albumsPreEdicao[i]} c:wasRecordedBy c:recordlabel_${idLabel}.
+            c:recordlabel_${idLabel} c:recorded c:${albumsPreEdicao[i]}.
+        }`
+        let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
+        try{
+            axios.post(postLink + encodedAlbum,null)
+            .then(function(response) {
+                console.log(response.data.content)
+            })
+            .catch(function(response) {
+                console.log(response)
+            })
+        }catch(e){
+            throw(e)
+        }
+    }
+    try{
+        var idLabel = label.label.idLabel
+        console.log('Id: ' + idLabel)
+        var queryDelete = `DELETE DATA {
+            c:recordlabel_${idLabel} c:name [].
+            c:recordlabel_${idLabel} c:headquarters [].
+            c:recordlabel_${idLabel} c:foundingYear [].
+            c:recordlabel_${idLabel} c:founderName [].
+            c:recordlabel_${idLabel} c:abstract [].
+        }`
+        var encodedDelete = encodeURIComponent(prefixes + queryDelete) 
+        console.log(queryInsertion)      
+        try{
+            await axios.post(postLink + encodedDelete, null).then(response => {
+                //resolve(response.data.content)
+                console.log(response.data)
+              }).catch(e => {
+                console.log(e)
+            })
+            //console.log('Response Label: ' + responseLabel)
+        }catch(e){
+            throw(e)
+        }
+        var labelNome = label.label.labelName
+        var headquarters = label.label.headquarters
+        var foundingYear = label.label.foundingYear
+        var founder = label.label.founder
+        var abstract = label.label.labelInfo
+        var albums = label.label.albums
+        var queryInsertion = `INSERT DATA {
+            c:recordlabel_${idLabel} c:name \"${labelNome}\".
+            c:recordlabel_${idLabel} c:headquarters \"${headquarters}\".
+            c:recordlabel_${idLabel} c:foundingYear \"${foundingYear}\".
+            c:recordlabel_${idLabel} c:founderName \"${founder}\".
+            c:recordlabel_${idLabel} c:abstract \"${abstract}\".
+        }`
+        var encodedLabel = encodeURIComponent(prefixes + queryInsertion) 
+        console.log(queryInsertion)      
+        try{
+            await axios.post(postLink + encodedLabel, null).then(response => {
+                //resolve(response.data.content)
+                console.log(response.data)
+              }).catch(e => {
+                console.log(e)
+            })
+            //console.log('Response Label: ' + responseLabel)
+        }catch(e){
+            throw(e)
+        }
+        for(let i = 0; i <albums.length;i++){
+            let queryAlbums = `INSERT DATA{
+                c:${albums[i]} c:wasRecordedBy c:recordlabel_${idLabel}.
+                c:recordlabel_${idLabel} c:recorded c:${albums[i]}.
+            }`
+            let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
+            try{
+                axios.post(postLink + encodedAlbum,null)
+                .then(function(response) {
+                    console.log(response.data.content)
+                })
+                .catch(function(response) {
+                    console.log(response)
+                })
+            }catch(e){
+                throw(e)
+            }
+        }
+    }
+    catch(e){
+        throw(e)
+    }
 }

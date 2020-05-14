@@ -162,7 +162,7 @@
     import passoEditGenre from '../components/passoEditGenre.vue'
     import passoEditLabel from '../components/passoEditLabel.vue'
     import passoEditProducer from '../components/passoEditProducer.vue'
-    //import axios from 'axios'
+    import axios from 'axios'
     export default {
         data: () => ({
             value: null,
@@ -186,6 +186,7 @@
             ajuda:'imports',
             lhost:'http://localhost:5001/api',
             group:{
+                idGroup:"",
                 groupName:"",
                 formationDate:"",
                 disbandingDate:"",
@@ -193,23 +194,32 @@
                 hometown:"",
                 groupInfo:"",
                 albums:[],
+                albumsPreEdicao:[],
                 members:[],
+                membersPreEdicao:[],
                 genres:[],
+                genresPreEdicao:[],
                 foto:{}
             },
             album:{
+                idAlbum:"",
                 albumName:"",
                 type:"",
                 releaseDate:"",
                 runtime:"",
                 albumInfo:"",
                 artists:[],
+                artistsPreEdicao:[],
                 groups:[],
+                groupsPreEdicao:[],
                 labels:[],
+                labelsPreEdicao:[],
                 producers:[],
+                producersPreEdicao:[],
                 foto:{}
             },
             artist:{
+                idArtist:"",
                 artistName:"",
                 birthPlace:"",
                 birthDate:"",
@@ -217,31 +227,44 @@
                 gender:"",
                 artistInfo:"",
                 albums:[],
+                albumsPreEdicao:[],
                 groups:[],
+                groupsPreEdicao:[],
                 genres:[],
+                genresPreEdicao:[],
                 foto:{}
             },
             genre:{
+                idGenre:"",
                 genreName:"",
                 artists:[],
+                artistsPreEdicao:[],
                 groups:[],
+                groupsPreEdicao:[],
                 superGenres:[],
+                superGenresPreEdicao:[],
                 subGenres:[],
+                subGenresPreEdicao:[],
                 fusionGenres:[],
+                fusionGenresPreEdicao:[],
                 genreInfo:""
             },
             label:{
+                idLabel:"",
                 labelName:"",
                 headquarters:"",
                 foundingYear:"",
                 founder:"",
                 albums:[],
+                albumsPreEdicao:[],
                 labelInfo:""
             },
             producer:{
+                idProducer:"",
                 producerName:"",
                 firstActiveYear:"",
                 albums:[],
+                albumsPreEdicao:[],
                 producerInfo:""
             },
             renderComponent: true
@@ -287,6 +310,7 @@
                 }
             },
             cancela(){
+                this.group.idGroup = "",
                 this.group.groupName = "",
                 this.group.formationDate = "",
                 this.group.disbandingDate = "",
@@ -294,21 +318,30 @@
                 this.group.hometown = "",
                 this.group.groupInfo = "",
                 this.group.albums = [],
+                this.group.albumsPreEdicao = [],
                 this.group.members = [],
+                this.group.membersPreEdicao = [],
                 this.group.genres = [],
+                this.group.genresPreEdicao = [],
                 this.group.foto = {},
 
+                this.album.idAlbum = "",
                 this.album.albumName = "",
                 this.album.type = "",
                 this.album.releaseDate = "",
                 this.album.runtime = "",
                 this.album.albumInfo = "",
                 this.album.artists = [],
+                this.album.artistsPreEdicao = [],
                 this.album.groups = [],
+                this.album.groupsPreEdicao = [],
                 this.album.labels = [],
+                this.album.labelsPreEdicao = [],
                 this.album.producers = [],
+                this.album.producersPreEdicao = [],
                 this.album.foto = {}
 
+                this.artist.idArtist = "",
                 this.artist.artistName = "",
                 this.artist.birthPlace = "",
                 this.artist.birthDate = "",
@@ -316,33 +349,51 @@
                 this.artist.gender = "",
                 this.artist.artistInfo = "",
                 this.artist.albums = [],
+                this.artist.albumsPreEdicao = [],
                 this.artist.groups = [],
+                this.artist.groupsPreEdicao = [],
                 this.artist.genres = [],
+                this.artist.genresPreEdicao = [],
                 this.artist.foto = {}
 
+                this.genre.idGenre = "",
                 this.genre.genreName = "",
                 this.genre.artists = [],
                 this.genre.groups = [],
                 this.genre.superGenres = [],
+                this.genre.superGenresPreEdicao = [],
                 this.genre.subGenres = [],
+                this.genre.subGenresPreEdicao = [],
                 this.genre.fusionGenres = [],
+                this.genre.fusionGenresPreEdicao = [],
                 this.genre.genreInfo = ""
 
+                this.label.idLabel = "",
                 this.label.labelName = "",
                 this.label.headquarters = "",
                 this.label.foundingYear = "",
                 this.label.founder = "",
                 this.label.albums = [],
+                this.label.albumsPreEdicao = [],
                 this.label.labelInfo = ""
 
+                this.producer.idProducer = "",
                 this.producer.producerName = "",
                 this.producer.firstActiveYear = "",
                 this.producer.albums = [],
+                this.producer.albumsPreEdicao = [],
                 this.producer.producerInfo = ""
 
                 this.model = 0;
             },
             atualizaAlbum: async function(album){
+                if(this.model == 0){
+                    this.album.labelsPreEdicao=album.albumLabel
+                    this.album.groupsPreEdicao=album.albumGroup
+                    this.album.artistsPreEdicao=album.albumArtist
+                    this.album.producersPreEdicao=album.albumProducer
+                }
+                this.album.idAlbum=album.idAlbum
                 this.album.albumName=album.albumName
                 this.album.type=album.type
                 this.album.releaseDate=album.releaseDate
@@ -363,6 +414,12 @@
                 }
             },
             atualizaArtist: async function(artist){
+                if(this.model == 0){
+                    this.artist.albumsPreEdicao=artist.albumArtist
+                    this.artist.groupsPreEdicao=artist.groupArtist
+                    this.artist.genresPreEdicao=artist.genreArtist
+                }
+                this.artist.idArtist=artist.idArtist
                 this.artist.artistName=artist.artistName
                 this.artist.gender=artist.gender
                 this.artist.birthPlace=artist.birthPlace
@@ -383,6 +440,12 @@
                 }
             },
             atualizaGroup: async function(group){
+                if(this.model == 0){
+                    this.group.membersPreEdicao=group.groupArtist
+                    this.group.genresPreEdicao=group.groupGenre
+                    this.group.albumsPreEdicao=group.albumGroup
+                }
+                this.group.idGroup=group.idGroup
                 this.group.groupName=group.groupName
                 this.group.formationDate=group.formationDate
                 this.group.disbandingDate=group.disbandingDate
@@ -403,6 +466,14 @@
                 }
             },
             atualizaGenre: async function(genre){
+                if(this.model == 0){
+                    this.genre.groupsPreEdicao=genre.groupGenre
+                    this.genre.artistsPreEdicao=genre.genreArtist
+                    this.genre.superGenresPreEdicao=genre.supergenreGenre
+                    this.genre.subGenresPreEdicao=genre.subgenreGenre
+                    this.genre.fusionGenresPreEdicao=genre.fusiongenreGenre
+                }
+                this.genre.idGenre=genre.idGenre
                 this.genre.genreName=genre.genreName
                 this.genre.genreInfo=genre.genreInfo
                 this.genre.groups=genre.groupGenre
@@ -420,7 +491,10 @@
                 }
             },
             atualizaLabel: async function(label){
-                //console.log(folio)
+                if(this.model == 0){
+                    this.label.albumsPreEdicao=label.albumLabel
+                }
+                this.label.idLabel=label.idLabel
                 this.label.labelName=label.labelName
                 this.label.headquarters = label.headquarters
                 this.label.foundingYear=label.foundingYear
@@ -437,7 +511,10 @@
                 }
             },
             atualizaProducer: async function(producer){
-                //console.log(folio)
+                if(this.model == 0){
+                    this.producer.albumsPreEdicao=producer.albumProducer
+                }
+                this.producer.idProducer=producer.idProducer
                 this.producer.producerName=producer.producerName
                 this.producer.firstActiveYear=producer.firstActiveYear
                 this.producer.producerInfo=producer.producerInfo

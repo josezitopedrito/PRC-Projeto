@@ -146,6 +146,7 @@ export default {
   data(){
     return{
         producer:{
+            idProducer:"",
             producerName:"",
             firstActiveYear:"",
             producerInfo:"",
@@ -153,6 +154,7 @@ export default {
             skip:0
         },
         album:{
+          idAlbum:"",
           albumName:"",
           type:"",
           releaseDate:"",
@@ -212,6 +214,7 @@ export default {
   methods:{
     onUpdate(){
       if(this.position == 'first' || this.position == 'second'){
+        this.producer.idProducer=this.obj.idProducer
         this.producer.producerName=this.obj.producerName
         this.producer.firstActiveYear=this.obj.firstActiveYear
         this.producer.producerInfo=this.obj.producerInfo
@@ -243,6 +246,7 @@ export default {
         try{
             let response = await axios.get(this.lhost + "/producers/" + idProducer)
             console.log(response.data)
+            this.producer.idProducer = response.data.Producer[0].producer
             this.producer.producerName = response.data.Producer[0].name
             this.producer.firstActiveYear = response.data.Producer[0].hq
             this.producer.producerInfo = response.data.Producer[0].abs

@@ -177,6 +177,7 @@ export default {
   data(){
     return{
       genre:{
+        idGenre:"",
         genreName:"",
         genreInfo:"",
         supergenreGenre:[],
@@ -187,6 +188,7 @@ export default {
         skip:0
       },
       artist:{
+        idArtist:"",
         artistName:"",
         birthPlace:"",
         birthDate:"",
@@ -200,6 +202,7 @@ export default {
         skip:0
       },
       group:{
+        idGroup:"",
         groupName:"",
         formationDate:"",
         disbandingDate:"",
@@ -258,6 +261,7 @@ export default {
   methods:{
     onUpdate(){
       if(this.position == 'first' || this.position == 'second' || this.position == 'supergenreGenre' || this.position == 'subgenreGenre' || this.position == 'fusiongenreGenre'){
+        this.genre.idGenre=this.obj.idGenre
         this.genre.genreName=this.obj.genreName
         this.genre.genreInfo=this.obj.genreInfo
         this.genre.groupGenre=this.obj.groups
@@ -330,6 +334,7 @@ export default {
           console.log(idGenre)
             let response = await axios.get(this.lhost + "/genres/" + idGenre)
             console.log(response.data)
+            this.genre.idGenre = response.data.Genre[0].Genre
             this.genre.genreName = response.data.Genre[0].name
             this.genre.genreInfo = response.data.Genre[0].abs
             for(let i=0;i<response.data.artist.length;i++){

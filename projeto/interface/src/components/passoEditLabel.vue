@@ -156,6 +156,7 @@ export default {
   data(){
     return{
         label:{
+            idLabel:"",
             labelName:"",
             headquarters:"",
             foundingYear:"",
@@ -165,6 +166,7 @@ export default {
             skip:0
         },
         album:{
+          idAlbum:"",
           albumName:"",
           type:"",
           releaseDate:"",
@@ -224,6 +226,7 @@ export default {
   methods:{
     onUpdate(){
       if(this.position == 'first' || this.position == 'second'){
+        this.label.idLabel=this.obj.idLabel
         this.label.labelName=this.obj.labelName
         this.label.headquarters = this.obj.headquarters,
         this.label.foundingYear = this.obj.foundingYear,
@@ -257,11 +260,12 @@ export default {
         try{
             let response = await axios.get(this.lhost + "/recordLabels/" + idLabel)
             console.log(response.data)
-            this.label.groupName = response.data.RecordLabel[0].name
-            this.label.formationDate = response.data.RecordLabel[0].sd
-            this.label.disbandingDate = response.data.RecordLabel[0].ed
-            this.label.homepage = response.data.RecordLabel[0].hp
-            this.label.groupInfo = response.data.RecordLabel[0].abs
+            this.label.idLabel = response.data.RecordLabel[0].RecordLabel
+            this.label.labelName = response.data.RecordLabel[0].name
+            this.label.headquarters = response.data.RecordLabel[0].hq
+            this.label.foundingYear = response.data.RecordLabel[0].fy
+            this.label.founder = response.data.RecordLabel[0].fn
+            this.label.labelInfo = response.data.RecordLabel[0].abs
             for(let i=0;i<response.data.album.length;i++){
                 this.label.albumLabel.push(response.data.album[i].album.split('#')[1])
             }

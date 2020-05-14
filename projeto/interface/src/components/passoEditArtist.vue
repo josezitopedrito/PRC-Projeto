@@ -186,6 +186,7 @@ export default {
   data(){
     return{
       artist:{
+        idArtist:"",
         artistName:"",
         birthPlace:"",
         birthDate:"",
@@ -199,6 +200,7 @@ export default {
         skip:0
       },
       album:{
+        idArtist:"",
         albumName:"",
         type:"",
         releaseDate:"",
@@ -213,6 +215,7 @@ export default {
         skip:0
       },
       genre:{
+        idGenre:"",
         genreName:"",
         genreInfo:"",
         supergenreGenre:[],
@@ -223,6 +226,7 @@ export default {
         skip:0
       },
       group:{
+        idGroup:"",
         groupName:"",
         formationDate:"",
         disbandingDate:"",
@@ -282,6 +286,7 @@ export default {
   methods:{
     onUpdate(){
       if(this.position == 'first' || this.position == 'second'){
+        this.artist.idArtist=this.obj.idArtist
         this.artist.artistName=this.obj.artistName
         this.artist.gender=this.obj.gender
         this.artist.birthPlace=this.obj.birthPlace
@@ -294,6 +299,7 @@ export default {
         this.artist.genreArtist=this.obj.genres
       }
       else if(this.position == 'albumArtist'){
+        this.album.idAlbum=this.obj.idAlbum
         this.album.albumName=this.obj.albumName
         this.album.type=this.obj.type
         this.album.releaseDate=this.obj.releaseDate
@@ -306,6 +312,7 @@ export default {
         this.album.albumProducer=this.obj.producers
       }
       else if(this.position == 'groupArtist'){
+        this.group.idGroup=this.obj.idGroup
         this.group.groupName=this.obj.groupName
         this.group.formationDate=this.obj.formationDate
         this.group.disbandingDate=this.obj.disbandingDate
@@ -318,6 +325,7 @@ export default {
         this.group.albumGroup=this.obj.albums
       }
       else if(this.position == 'genreArtist'){
+        this.genre.idGenre=this.obj.idGenre
         this.genre.genreName=this.obj.genreName
         this.genre.genreInfo=this.obj.genreInfo
         this.genre.groupGenre=this.obj.groups
@@ -351,6 +359,7 @@ export default {
         try{
             let response = await axios.get(this.lhost + "/artists/" + idArtist)
             console.log(response.data)
+            this.artist.idArtist = response.data.artist[0].artist
             this.artist.artistName = response.data.artist[0].name
             this.artist.birthDate = response.data.artist[0].bd
             this.artist.deathDate = response.data.artist[0].dd

@@ -209,5 +209,173 @@ Bands.inserir = async function(band){
 }
 
 Bands.editar = async function(band){
-
+    var artistsPreEdicao = band.group.artistsPreEdicao
+    var albumsPreEdicao = band.group.albumsPreEdicao
+    var genresPreEdicao = band.group.genresPreEdicao
+    for(let i = 0; i <albumsPreEdicao.length;i++){
+        let queryAlbums = `DELETE DATA{
+            c:${albumsPreEdicao[i]} c:wasCreatedBy c:group_${idBand}.
+            c:group_${idBand} c:created c:${albumsPreEdicao[i]}.
+        }`
+        let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
+        try{
+            axios.post(postLink + encodedAlbum,null)
+            .then(function(response) {
+                console.log(response.data.content)
+            })
+            .catch(function(response) {
+                console.log(response)
+            })
+        }catch(e){
+            throw(e)
+        }
+    }
+    for(let i = 0; i <artistsPreEdicao.length;i++){
+        let queryArtists = `DELETE DATA{
+            c:group_${idBand} c:lineupMember c:${artistsPreEdicao[i]}.
+            c:${artistsPreEdicao[i]} c:memberOf c:group_${idBand}.
+        }`
+        let encodedArtist = encodeURIComponent(prefixes + queryArtists)
+        try{
+            axios.post(postLink + encodedArtist,null)
+            .then(function(response) {
+                console.log(response.data.content)
+            })
+            .catch(function(response) {
+                console.log(response)
+            })
+        }catch(e){
+            throw(e)
+        }
+    }
+    for(let i = 0; i <genresPreEdicao.length;i++){
+        let queryGenres = `DELETE DATA{
+            c:group_${idBand} c:performs c:${genresPreEdicao[i]}.
+            c:${genresPreEdicao[i]} c:wasPerformedBy c:group_${idBand}.
+        }`
+        let encodedGenre = encodeURIComponent(prefixes + queryGenres)
+        try{
+            axios.post(postLink + encodedGenre,null)
+            .then(function(response) {
+                console.log(response.data.content)
+            })
+            .catch(function(response) {
+                console.log(response)
+            })
+        }catch(e){
+            throw(e)
+        }
+    }
+    try{
+        var idBand = band.group.idGroup
+        console.log('Id: ' + idBand)
+        var queryDelete = `DELETE DATA {
+            c:group_${idBand} c:name [].
+            c:group_${idBand} c:hometown [].
+            c:group_${idBand} c:startDate [].
+            c:group_${idBand} c:endDate [].
+            c:group_${idBand} c:homepage [].
+            c:group_${idBand} c:abstract [].
+        }`
+        var encodedDelete = encodeURIComponent(prefixes + queryDelete) 
+        console.log(queryDelete)      
+        try{
+            await axios.post(postLink + encodedDelete, null).then(response => {
+                //resolve(response.data.content)
+                console.log(response.data)
+              }).catch(e => {
+                console.log(e)
+            })
+            //console.log('Response Band: ' + responseBand)
+        }catch(e){
+            throw(e)
+        }
+        var groupNome = band.group.groupName
+        var formationDate = band.group.formationDate
+        var disbandingDate = band.group.disbandingDate
+        var homepage = band.group.homepage
+        var hometown = band.group.hometown
+        var abstract = band.group.groupInfo
+        var artists = band.group.members
+        var albums = band.group.albums
+        var genres = band.group.genres
+        var queryInsertion = `INSERT DATA {
+            c:group_${idBand} c:name \"${groupNome}\".
+            c:group_${idBand} c:hometown \"${hometown}\".
+            c:group_${idBand} c:startDate \"${formationDate}\".
+            c:group_${idBand} c:endDate \"${disbandingDate}\".
+            c:group_${idBand} c:homepage \"${homepage}\".
+            c:group_${idBand} c:abstract \"${abstract}\".
+        }`
+        var encodedBand = encodeURIComponent(prefixes + queryInsertion) 
+        console.log(queryInsertion)      
+        try{
+            await axios.post(postLink + encodedBand, null).then(response => {
+                //resolve(response.data.content)
+                console.log(response.data)
+              }).catch(e => {
+                console.log(e)
+            })
+            //console.log('Response Band: ' + responseBand)
+        }catch(e){
+            throw(e)
+        }
+        for(let i = 0; i <albums.length;i++){
+            let queryAlbums = `INSERT DATA{
+                c:${albums[i]} c:wasCreatedBy c:group_${idBand}.
+                c:group_${idBand} c:created c:${albums[i]}.
+            }`
+            let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
+            try{
+                axios.post(postLink + encodedAlbum,null)
+                .then(function(response) {
+                    console.log(response.data.content)
+                })
+                .catch(function(response) {
+                    console.log(response)
+                })
+            }catch(e){
+                throw(e)
+            }
+        }
+        for(let i = 0; i <artists.length;i++){
+            let queryArtists = `INSERT DATA{
+                c:group_${idBand} c:lineupMember c:${artists[i]}.
+                c:${artists[i]} c:memberOf c:group_${idBand}.
+            }`
+            let encodedArtist = encodeURIComponent(prefixes + queryArtists)
+            try{
+                axios.post(postLink + encodedArtist,null)
+                .then(function(response) {
+                    console.log(response.data.content)
+                })
+                .catch(function(response) {
+                    console.log(response)
+                })
+            }catch(e){
+                throw(e)
+            }
+        }
+        for(let i = 0; i <genres.length;i++){
+            let queryGenres = `INSERT DATA{
+                c:group_${idBand} c:performs c:${genres[i]}.
+                c:${genres[i]} c:wasPerformedBy c:group_${idBand}.
+            }`
+            let encodedGenre = encodeURIComponent(prefixes + queryGenres)
+            try{
+                axios.post(postLink + encodedGenre,null)
+                .then(function(response) {
+                    console.log(response.data.content)
+                })
+                .catch(function(response) {
+                    console.log(response)
+                })
+            }catch(e){
+                throw(e)
+            }
+        }
+    }
+    catch(e){
+        throw(e)
+    }
 }

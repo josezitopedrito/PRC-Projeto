@@ -251,5 +251,238 @@ Genres.inserir = async function(genre){
 }
 
 Genres.editar = async function(genre){
-
+    var artistsPreEdicao = genre.genre.artistsPreEdicao
+    var groupsPreEdicao = genre.genre.groupsPreEdicao
+    var superGenresPreEdicao = genre.genre.superGenresPreEdicao
+    var subGenresPreEdicao = genre.genre.subGenresPreEdicao
+    var fusionGenresPreEdicao = genre.genre.fusionGenresPreEdicao
+    for(let i = 0; i <artistsPreEdicao.length;i++){
+        let queryArtists = `DELETE DATA{
+            c:${artistsPreEdicao[i]} c:performs c:genre_${idGenre}.
+            c:genre_${idGenre} c:wasPerformedBy c:${artistsPreEdicao[i]}.
+        }`
+        let encodedArtist = encodeURIComponent(prefixes + queryArtists)
+        try{
+            axios.post(postLink + encodedArtist,null)
+            .then(function(response) {
+                console.log(response.data.content)
+            })
+            .catch(function(response) {
+                console.log(response)
+            })
+        }catch(e){
+            throw(e)
+        }
+    }
+    for(let i = 0; i <groupsPreEdicao.length;i++){
+        let queryGroups = `DELETE DATA{
+            c:genre_${idGenre} c:wasPerformedBy c:${groupsPreEdicao[i]}.
+            c:${groupsPreEdicao[i]} c:performs c:genre_${idGenre}.
+        }`
+        let encodedGroup = encodeURIComponent(prefixes + queryGroups)
+        try{
+            axios.post(postLink + encodedGroup,null)
+            .then(function(response) {
+                console.log(response.data.content)
+            })
+            .catch(function(response) {
+                console.log(response)
+            })
+        }catch(e){
+            throw(e)
+        }
+    }
+    for(let i = 0; i <superGenresPreEdicao.length;i++){
+        let querySuperGenres = `DELETE DATA{
+            c:genre_${idGenre} c:isSubGenreOf c:${superGenresPreEdicao[i]}.
+            c:${superGenresPreEdicao[i]} c:isSupraGenreOf c:genre_${idGenre}.
+        }`
+        let encodedSuperGenre = encodeURIComponent(prefixes + querySuperGenres)
+        try{
+            axios.post(postLink + encodedSuperGenre,null)
+            .then(function(response) {
+                console.log(response.data.content)
+            })
+            .catch(function(response) {
+                console.log(response)
+            })
+        }catch(e){
+            throw(e)
+        }
+    }
+    for(let i = 0; i <subGenresPreEdicao.length;i++){
+        let querySubGenres = `DELETE DATA{
+            c:genre_${idGenre} c:isSupraGenreOf c:${subGenresPreEdicao[i]}.
+            c:${subGenresPreEdicao[i]} c:isSubGenreOf c:genre_${idGenre}.
+        }`
+        let encodedSubGenre = encodeURIComponent(prefixes + querySubGenres)
+        try{
+            axios.post(postLink + encodedSubGenre,null)
+            .then(function(response) {
+                console.log(response.data.content)
+            })
+            .catch(function(response) {
+                console.log(response)
+            })
+        }catch(e){
+            throw(e)
+        }
+    }
+    for(let i = 0; i <fusionGenresPreEdicao.length;i++){
+        let queryFusionGenres = `DELETE DATA{
+            c:genre_${idGenre} c:wasCreatedByTheFusionOf c:${fusionGenresPreEdicao[i]}.
+            c:${fusionGenresPreEdicao[i]} c:wasFusedToCreate c:genre_${idGenre}.
+        }`
+        let encodedFusionGenre = encodeURIComponent(prefixes + queryFusionGenres)
+        try{
+            axios.post(postLink + encodedFusionGenre,null)
+            .then(function(response) {
+                console.log(response.data.content)
+            })
+            .catch(function(response) {
+                console.log(response)
+            })
+        }catch(e){
+            throw(e)
+        }
+    }
+    try{
+        var idGenre = genre.genre.idGenre
+        console.log('Id: ' + idGenre)
+        var queryDelete = `DELETE DATA {
+            c:genre_${idGenre} c:name [].
+            c:genre_${idGenre} c:abstract [].
+        }`
+        var encodedDelete = encodeURIComponent(prefixes + queryDelete) 
+        console.log(queryDelete)      
+        try{
+            await axios.post(postLink + encodedDelete, null).then(response => {
+                //resolve(response.data.content)
+                console.log(response.data)
+              }).catch(e => {
+                console.log(e)
+            })
+            //console.log('Response Genre: ' + responseGenre)
+        }catch(e){
+            throw(e)
+        }
+        var genreNome = genre.genre.genreName
+        var abstract = genre.genre.genreInfo
+        var artists = genre.genre.artists
+        var groups = genre.genre.groups
+        var supergenres = genre.genre.superGenres
+        var subgenres = genre.genre.subGenres
+        var fusiongenres = genre.genre.fusionGenres
+        var queryInsertion = `INSERT DATA {
+            c:genre_${idGenre} c:name \"${genreNome}\".
+            c:genre_${idGenre} c:abstract \"${abstract}\".
+        }`
+        console.log(JSON.stringify(genre))
+        var encodedGenre = encodeURIComponent(prefixes + queryInsertion) 
+        console.log(queryInsertion)      
+        try{
+            await axios.post(postLink + encodedGenre, null).then(response => {
+                //resolve(response.data.content)
+                console.log(response.data)
+              }).catch(e => {
+                console.log(e)
+            })
+            //console.log('Response Genre: ' + responseGenre)
+        }catch(e){
+            throw(e)
+        }
+        for(let i = 0; i <artists.length;i++){
+            let queryArtists = `INSERT DATA{
+                c:${artists[i]} c:performs c:genre_${idGenre}.
+                c:genre_${idGenre} c:wasPerformedBy c:${artists[i]}.
+            }`
+            let encodedArtist = encodeURIComponent(prefixes + queryArtists)
+            try{
+                axios.post(postLink + encodedArtist,null)
+                .then(function(response) {
+                    console.log(response.data.content)
+                })
+                .catch(function(response) {
+                    console.log(response)
+                })
+            }catch(e){
+                throw(e)
+            }
+        }
+        for(let i = 0; i <groups.length;i++){
+            let queryGroups = `INSERT DATA{
+                c:genre_${idGenre} c:wasPerformedBy c:${groups[i]}.
+                c:${groups[i]} c:performs c:genre_${idGenre}.
+            }`
+            let encodedGroup = encodeURIComponent(prefixes + queryGroups)
+            try{
+                axios.post(postLink + encodedGroup,null)
+                .then(function(response) {
+                    console.log(response.data.content)
+                })
+                .catch(function(response) {
+                    console.log(response)
+                })
+            }catch(e){
+                throw(e)
+            }
+        }
+        for(let i = 0; i <supergenres.length;i++){
+            let querySuperGenres = `INSERT DATA{
+                c:genre_${idGenre} c:isSubGenreOf c:${supergenres[i]}.
+                c:${supergenres[i]} c:isSupraGenreOf c:genre_${idGenre}.
+            }`
+            let encodedSuperGenre = encodeURIComponent(prefixes + querySuperGenres)
+            try{
+                axios.post(postLink + encodedSuperGenre,null)
+                .then(function(response) {
+                    console.log(response.data.content)
+                })
+                .catch(function(response) {
+                    console.log(response)
+                })
+            }catch(e){
+                throw(e)
+            }
+        }
+        for(let i = 0; i <subgenres.length;i++){
+            let querySubGenres = `INSERT DATA{
+                c:genre_${idGenre} c:isSupraGenreOf c:${subgenres[i]}.
+                c:${subgenres[i]} c:isSubGenreOf c:genre_${idGenre}.
+            }`
+            let encodedSubGenre = encodeURIComponent(prefixes + querySubGenres)
+            try{
+                axios.post(postLink + encodedSubGenre,null)
+                .then(function(response) {
+                    console.log(response.data.content)
+                })
+                .catch(function(response) {
+                    console.log(response)
+                })
+            }catch(e){
+                throw(e)
+            }
+        }
+        for(let i = 0; i <fusiongenres.length;i++){
+            let queryFusionGenres = `INSERT DATA{
+                c:genre_${idGenre} c:wasCreatedByTheFusionOf c:${fusiongenres[i]}.
+                c:${fusiongenres[i]} c:wasFusedToCreate c:genre_${idGenre}.
+            }`
+            let encodedFusionGenre = encodeURIComponent(prefixes + queryFusionGenres)
+            try{
+                axios.post(postLink + encodedFusionGenre,null)
+                .then(function(response) {
+                    console.log(response.data.content)
+                })
+                .catch(function(response) {
+                    console.log(response)
+                })
+            }catch(e){
+                throw(e)
+            }
+        }
+    }
+    catch(e){
+        throw(e)
+    }
 }

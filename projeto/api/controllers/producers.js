@@ -132,5 +132,88 @@ Producers.inserir = async function(producer){
 }
 
 Producers.editar = async function(producer){
-
+    var albumsPreEdicao = producer.producer.albumsPreEdicao
+    for(let i = 0; i <albumsPreEdicao.length;i++){
+        let queryAlbums = `DELETE DATA{
+            c:${albumsPreEdicao[i]} c:wasRecordedBy c:producer_${idProducer}.
+            c:producer_${idProducer} c:recorded c:${albumsPreEdicao[i]}.
+        }`
+        let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
+        try{
+            axios.post(postLink + encodedAlbum,null)
+            .then(function(response) {
+                console.log(response.data.content)
+            })
+            .catch(function(response) {
+                console.log(response)
+            })
+        }catch(e){
+            throw(e)
+        }
+    }
+    try{
+        var idProducer = producer.producer.idProducer
+        console.log('Id: ' + idProducer)
+        var queryDelete = `DELETE DATA {
+            c:producer_${idProducer} c:name [].
+            c:producer_${idProducer} c:startingYear [].
+            c:producer_${idProducer} c:abstract [].
+        }`
+        var encodedDelete = encodeURIComponent(prefixes + queryDelete) 
+        console.log(queryInsertion)      
+        try{
+            await axios.post(postLink + encodedDelete, null).then(response => {
+                //resolve(response.data.content)
+                console.log(response.data)
+              }).catch(e => {
+                console.log(e)
+            })
+            //console.log('Response Producer: ' + responseProducer)
+        }catch(e){
+            throw(e)
+        }
+        var producerNome = producer.producer.producerName
+        var firstActiveYear = producer.producer.firstActiveYear
+        var abstract = producer.producer.producerInfo
+        var albums = producer.producer.albums
+        var queryInsertion = `INSERT DATA {
+            c:producer_${idProducer} c:name \"${producerNome}\".
+            c:producer_${idProducer} c:startingYear \"${firstActiveYear}\".
+            c:producer_${idProducer} c:abstract \"${abstract}\".
+        }`
+        var encodedProducer = encodeURIComponent(prefixes + queryInsertion) 
+        console.log(queryInsertion)      
+        try{
+            await axios.post(postLink + encodedProducer, null).then(response => {
+                //resolve(response.data.content)
+                console.log(response.data)
+              }).catch(e => {
+                console.log(e)
+            })
+            //console.log('Response Producer: ' + responseProducer)
+        }catch(e){
+            throw(e)
+        }
+        for(let i = 0; i <albums.length;i++){
+            let queryAlbums = `INSERT DATA{
+                c:${albums[i]} c:wasRecordedBy c:producer_${idProducer}.
+                c:producer_${idProducer} c:recorded c:${albums[i]}.
+            }`
+            let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
+            try{
+                axios.post(postLink + encodedAlbum,null)
+                .then(function(response) {
+                    console.log(response.data.content)
+                })
+                .catch(function(response) {
+                    console.log(response)
+                })
+            }catch(e){
+                throw(e)
+            }
+        }
+    }
+    catch(e){
+        throw(e)
+    }
 }

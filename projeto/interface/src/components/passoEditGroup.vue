@@ -183,6 +183,7 @@ export default {
   data(){
     return{
       group:{
+        idGroup:"",
         groupName:"",
         formationDate:"",
         disbandingDate:"",
@@ -196,6 +197,7 @@ export default {
         skip:0
       },
       album:{
+        idAlbum:"",
         albumName:"",
         type:"",
         releaseDate:"",
@@ -210,6 +212,7 @@ export default {
         skip:0
       },
       artist:{
+        idArtist:"",
         artistName:"",
         birthPlace:"",
         birthDate:"",
@@ -223,6 +226,7 @@ export default {
         skip:0
       },
       genre:{
+        idGenre:"",
         genreName:"",
         genreInfo:"",
         groupGenre:[],
@@ -275,6 +279,7 @@ export default {
   methods:{
     onUpdate(){
       if(this.position == 'first' || this.position == 'second'){
+        this.group.idGroup = this.obj.idGroup,
         this.group.groupName=this.obj.groupName
         this.group.formationDate=this.obj.formationDate
         this.group.disbandingDate=this.obj.disbandingDate
@@ -347,6 +352,7 @@ export default {
         try{
             let response = await axios.get(this.lhost + "/groups/" + idGroup)
             console.log(response.data)
+            this.group.idGroup = response.data.band[0].band
             this.group.groupName = response.data.band[0].name
             this.group.formationDate = response.data.band[0].sd
             this.group.disbandingDate = response.data.band[0].ed
