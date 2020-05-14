@@ -383,13 +383,15 @@ export default {
     editAlbum: async function(idAlbum){
         try{
             let response = await axios.get(this.lhost + "/albums/" + idAlbum)
+            console.log("Resposta")
             console.log(response.data)
-            this.album.idAlbum = response.data.album[0].album
+            this.album.idAlbum = idAlbum
             this.album.albumName = response.data.album[0].name
             this.album.type = response.data.album[0].at
             this.album.releaseDate = response.data.album[0].rd
             this.album.runtime = response.data.album[0].rt
             this.album.albumInfo = response.data.album[0].abs
+            console.log(JSON.stringify(idAlbum));
             for(let i=0;i<response.data.artist.length;i++){
                 this.album.albumArtist.push(response.data.artist[i].artist.split('#')[1])
             }

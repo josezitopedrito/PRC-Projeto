@@ -1,4 +1,5 @@
 var Artists = module.exports
+var corrigir = require('./corrigir.js')
 const axios = require('axios')
 
 var prefixes = `
@@ -118,12 +119,12 @@ Artists.inserir = async function(artist){
         var genres = artist.artist.genres
         var queryInsertion = `INSERT DATA {
             c:artist_${idArtist} rdf:type c:Artist.
-            c:artist_${idArtist} c:name \"${artistNome}\".
-            c:artist_${idArtist} c:birthPlaceName \"${birthPlace}\".
-            c:artist_${idArtist} c:birthDate \"${birthDate}\".
-            c:artist_${idArtist} c:deathDate \"${deathDate}\".
-            c:artist_${idArtist} c:gender \"${gender}\".
-            c:artist_${idArtist} c:abstract \"${abstract}\".
+            c:artist_${idArtist} c:name \"${corrigir.protect_special_char_nome(artistNome)}\".
+            c:artist_${idArtist} c:birthPlaceName \"${corrigir.protect_special_char_other(birthPlace)}\".
+            c:artist_${idArtist} c:birthDate \"${corrigir.protect_special_char_other(birthDate)}\".
+            c:artist_${idArtist} c:deathDate \"${corrigir.protect_special_char_other(deathDate)}\".
+            c:artist_${idArtist} c:gender \"${corrigir.protect_special_char_other(gender)}\".
+            c:artist_${idArtist} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
         }`
         var encodedArtist = encodeURIComponent(prefixes + queryInsertion) 
         console.log(queryInsertion)      
@@ -199,6 +200,7 @@ Artists.inserir = async function(artist){
 }
 
 Artists.editar = async function(artist){
+    var idArtist = artist.artist.idArtist
     var groupsPreEdicao = artist.artist.groupsPreEdicao
     var albumsPreEdicao = artist.artist.albumsPreEdicao
     var genresPreEdicao = artist.artist.genresPreEdicao
@@ -220,7 +222,7 @@ Artists.editar = async function(artist){
             throw(e)
         }
     }
-    for(let i = 0; i <groups.length;i++){
+    for(let i = 0; i <groupsPreEdicao.length;i++){
         let queryGroups = `DELETE DATA{
             c:artist_${idArtist} c:memberOf c:${groupsPreEdicao[i]}.
             c:${groupsPreEdicao[i]} c:lineupMember c:artist_${idArtist}.
@@ -257,7 +259,7 @@ Artists.editar = async function(artist){
         }
     }
     try{
-        var idArtist = artist.artist.idArtist
+        
         console.log('Id: ' + idArtist)
         var queryDelete = `DELETE DATA {
             c:artist_${idArtist} c:name [].
@@ -290,12 +292,12 @@ Artists.editar = async function(artist){
         var groups = artist.artist.groups
         var genres = artist.artist.genres
         var queryInsertion = `INSERT DATA {
-            c:artist_${idArtist} c:name \"${artistNome}\".
-            c:artist_${idArtist} c:birthPlaceName \"${birthPlace}\".
-            c:artist_${idArtist} c:birthDate \"${birthDate}\".
-            c:artist_${idArtist} c:deathDate \"${deathDate}\".
-            c:artist_${idArtist} c:gender \"${gender}\".
-            c:artist_${idArtist} c:abstract \"${abstract}\".
+            c:artist_${idArtist} c:name \"${corrigir.protect_special_char_nome(artistNome)}\".
+            c:artist_${idArtist} c:birthPlaceName \"${corrigir.protect_special_char_other(birthPlace)}\".
+            c:artist_${idArtist} c:birthDate \"${corrigir.protect_special_char_other(birthDate)}\".
+            c:artist_${idArtist} c:deathDate \"${corrigir.protect_special_char_other(deathDate)}\".
+            c:artist_${idArtist} c:gender \"${corrigir.protect_special_char_other(gender)}\".
+            c:artist_${idArtist} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
         }`
         var encodedArtist = encodeURIComponent(prefixes + queryInsertion) 
         console.log(queryInsertion)      
