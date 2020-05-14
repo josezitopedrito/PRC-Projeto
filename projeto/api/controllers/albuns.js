@@ -230,3 +230,7 @@ Albuns.inserir = async function(album){
         throw(e)
     } 
 }
+
+Albuns.editar = async function(album){
+
+}

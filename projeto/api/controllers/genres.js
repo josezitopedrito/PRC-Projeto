@@ -101,12 +101,14 @@ Genres.getGenre = async function(idGenre){
         var responseBand = await axios.get(getLink + encodedBand)
         var responseArtist = await axios.get(getLink + encodedArtist)
         var Genre = normalize(response.data)
+        console.log('Resposta:' + Genre)
         var SupraGenre = normalize(responseSupraGenre.data)
         var SubGenre = normalize(responseSubGenre.data)
         var FusionGenre = normalize(responseFusionGenre.data)
         var band = normalize(responseBand.data)
         var artist = normalize(responseArtist.data)
         var resposta = {"Genre":Genre,"SupraGenre":SupraGenre,"SubGenre":SubGenre,"FusionGenre":FusionGenre,"Band":band,"Artist":artist}
+        console.log('Resposta:' + resposta)
         return resposta
     }
     catch(e){
@@ -246,4 +248,8 @@ Genres.inserir = async function(genre){
     catch(e){
         throw(e)
     } 
+}
+
+Genres.editar = async function(genre){
+
 }

@@ -140,3 +140,7 @@ RecordLabels.inserir = async function(label){
         throw(e)
     } 
 }
+
+RecordLabels.editar = async function(label){
+
+}

@@ -207,3 +207,7 @@ Bands.inserir = async function(band){
         throw(e)
     } 
 }
+
+Bands.editar = async function(band){
+
+}

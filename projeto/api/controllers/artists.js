@@ -197,3 +197,7 @@ Artists.inserir = async function(artist){
         throw(e)
     } 
 }
+
+Artists.editar = async function(artist){
+
+}

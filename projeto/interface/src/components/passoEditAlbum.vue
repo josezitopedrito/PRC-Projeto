@@ -11,7 +11,7 @@
       justify="center"
       >
         <v-form ref="form3" method="post" enctype="multipart/form-data" v-if="position == 'first'">
-            <h1>Insert Album</h1>
+            <h1>Edit Album</h1>
             <v-text-field
               v-model="search"
               append-icon="mdi-magnify"

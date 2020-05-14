@@ -130,3 +130,7 @@ Producers.inserir = async function(producer){
         throw(e)
     } 
 }
+
+Producers.editar = async function(producer){
+
+}

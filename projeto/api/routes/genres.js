@@ -17,6 +17,11 @@ router.post('/inserir', function(req,res){
     Genres.inserir(req.body)
     .then(dados => res.jsonp(dados))
     .catch(erro => res.status(500).jsonp(erro))
-})
+});
+router.post('/editar', function(req,res){
+    Genres.editar(req.body)
+    .then(dados => res.jsonp(dados))
+    .catch(erro => res.status(500).jsonp(erro))
+});
 
 module.exports = router;
