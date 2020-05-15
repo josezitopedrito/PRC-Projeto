@@ -337,8 +337,8 @@ export default {
             this.genre.idGenre = idGenre
             this.genre.genreName = response.data.Genre[0].name
             this.genre.genreInfo = response.data.Genre[0].abs
-            for(let i=0;i<response.data.artist.length;i++){
-                this.genre.genreArtist.push(response.data.artist[i].artist.split('#')[1])
+            for(let i=0;i<response.data.Artist.length;i++){
+                this.genre.genreArtist.push(response.data.Artist[i].artist.split('#')[1])
             }
             for(let i=0;i<response.data.Band.length;i++){
                 this.genre.groupGenre.push(response.data.Band[i].band.split('#')[1])

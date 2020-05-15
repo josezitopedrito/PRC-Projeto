@@ -125,7 +125,7 @@ Genres.inserir = async function(genre){
         var idGenre = parseInt(totalGenres[0].count,10)
         console.log('Id: ' + idGenre)
         var genreNome = genre.genre.genreName
-        var abstract = genre.genre.genreInfo
+        var abstract = typeof genre.genre.genreInfo == 'undefined' ? "" : genre.genre.genreInfo 
         var artists = genre.genre.artists
         var groups = genre.genre.groups
         var supergenres = genre.genre.superGenres
@@ -134,7 +134,7 @@ Genres.inserir = async function(genre){
         var queryInsertion = `INSERT DATA {
             c:genre_${idGenre} rdf:type c:Genre.
             c:genre_${idGenre} c:name \"${corrigir.protect_special_char_nome(genreNome)}\".
-            c:genre_${idGenre} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
+            ${abstract == "" ? "" :`c:genre_${idGenre} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
         console.log(JSON.stringify(genre))
         var encodedGenre = encodeURIComponent(prefixes + queryInsertion) 
@@ -344,14 +344,20 @@ Genres.editar = async function(genre){
         }
     }
     try{
-        
+        var genreNome = genre.genre.genreName
+        var abstract = typeof genre.genre.genreInfo == 'undefined' ? "" : genre.genre.genreInfo 
+        var artists = genre.genre.artists
+        var groups = genre.genre.groups
+        var supergenres = genre.genre.superGenres
+        var subgenres = genre.genre.subGenres
+        var fusiongenres = genre.genre.fusionGenres
         console.log('Id: ' + idGenre)
         var queryDelete = `DELETE {
             c:${idGenre} c:name ?name.
-            c:${idGenre} c:abstract ?abstract.
+            ${abstract == "" ? "" :`c:${idGenre} c:abstract ?abstract.`}
         } WHERE {
             c:${idGenre} c:name ?name.
-            c:${idGenre} c:abstract ?abstract.
+            ${abstract == "" ? "" :`c:${idGenre} c:abstract ?abstract.`}
         }`
         var encodedDelete = encodeURIComponent(prefixes + queryDelete) 
         console.log(queryDelete)      
@@ -366,16 +372,10 @@ Genres.editar = async function(genre){
         }catch(e){
             throw(e)
         }
-        var genreNome = genre.genre.genreName
-        var abstract = genre.genre.genreInfo
-        var artists = genre.genre.artists
-        var groups = genre.genre.groups
-        var supergenres = genre.genre.superGenres
-        var subgenres = genre.genre.subGenres
-        var fusiongenres = genre.genre.fusionGenres
+        
         var queryInsertion = `INSERT DATA {
             c:${idGenre} c:name \"${corrigir.protect_special_char_nome(genreNome)}\".
-            c:${idGenre} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
+            ${abstract == "" ? "" :`c:${idGenre} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
         console.log(JSON.stringify(genre))
         var encodedGenre = encodeURIComponent(prefixes + queryInsertion) 

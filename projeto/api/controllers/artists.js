@@ -215,6 +215,7 @@ Artists.editar = async function(artist){
     var groupsPreEdicao = artist.artist.groupsPreEdicao
     var albumsPreEdicao = artist.artist.albumsPreEdicao
     var genresPreEdicao = artist.artist.genresPreEdicao
+    console.log(artist.artist)
     for(let i = 0; i <albumsPreEdicao.length;i++){
         let queryAlbums = `DELETE DATA{
             c:${albumsPreEdicao[i]} c:wasCreatedBy c:${idArtist}.
@@ -308,6 +309,7 @@ Artists.editar = async function(artist){
         var albums = artist.artist.albums
         var groups = artist.artist.groups
         var genres = artist.artist.genres
+        console.log("Generos da piça:" + genres)
         var queryInsertion = `INSERT DATA {
             c:${idArtist} c:name \"${corrigir.protect_special_char_nome(artistNome)}\".
             c:${idArtist} c:birthPlaceName \"${corrigir.protect_special_char_other(birthPlace)}\".
@@ -365,6 +367,7 @@ Artists.editar = async function(artist){
                 throw(e)
             }
         }
+        console.log("Generos da piça:" + genres)
         for(let i = 0; i <genres.length;i++){
             let queryGenres = `INSERT DATA{
                 c:${idArtist} c:performs c:${genres[i]}.
