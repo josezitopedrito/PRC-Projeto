@@ -77,18 +77,29 @@ Artists.getArtist = async function(idArtist){
         }
     } `
 
+    var queryGenre = `select ?genre ?genreName where { 
+        c:${idArtist} c:performs ?genre.
+        OPTIONAL{
+            ?genre c:name ?genreName.
+        }
+        ?genre rdf:type c:Genre.
+    } `
+
     var encoded = encodeURIComponent(prefixes + query)
     var encodedBand = encodeURIComponent(prefixes + queryBand)
     var encodedAlbum = encodeURIComponent(prefixes + queryAlbum)
+    var encodedGenre = encodeURIComponent(prefixes + queryGenre)
 
     try{
         var response = await axios.get(getLink + encoded)
         var responseBand = await axios.get(getLink + encodedBand)
         var responseAlbum = await axios.get(getLink + encodedAlbum)
+        var responseGenre = await axios.get(getLink + encodedGenre)
         var artist = normalize(response.data)
         var band = normalize(responseBand.data)
         var album = normalize(responseAlbum.data)
-        var resposta = {"artist":artist,"band":band,"album":album}
+        var genre = normalize(responseGenre.data)
+        var resposta = {"artist":artist,"band":band,"album":album,"genre":genre}
         return resposta
     }
     catch(e){
@@ -206,8 +217,8 @@ Artists.editar = async function(artist){
     var genresPreEdicao = artist.artist.genresPreEdicao
     for(let i = 0; i <albumsPreEdicao.length;i++){
         let queryAlbums = `DELETE DATA{
-            c:${albumsPreEdicao[i]} c:wasCreatedBy c:artist_${idArtist}.
-            c:artist_${idArtist} c:created c:${albumsPreEdicao[i]}.
+            c:${albumsPreEdicao[i]} c:wasCreatedBy c:${idArtist}.
+            c:${idArtist} c:created c:${albumsPreEdicao[i]}.
         }`
         let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
         try{
@@ -224,8 +235,8 @@ Artists.editar = async function(artist){
     }
     for(let i = 0; i <groupsPreEdicao.length;i++){
         let queryGroups = `DELETE DATA{
-            c:artist_${idArtist} c:memberOf c:${groupsPreEdicao[i]}.
-            c:${groupsPreEdicao[i]} c:lineupMember c:artist_${idArtist}.
+            c:${idArtist} c:memberOf c:${groupsPreEdicao[i]}.
+            c:${groupsPreEdicao[i]} c:lineupMember c:${idArtist}.
         }`
         let encodedGroup = encodeURIComponent(prefixes + queryGroups)
         try{
@@ -242,8 +253,8 @@ Artists.editar = async function(artist){
     }
     for(let i = 0; i <genresPreEdicao.length;i++){
         let queryGenres = `DELETE DATA{
-            c:artist_${idArtist} c:performs c:${genresPreEdicao[i]}.
-            c:${genresPreEdicao[i]} c:wasPerformedBy c:artist_${idArtist}.
+            c:${idArtist} c:performs c:${genresPreEdicao[i]}.
+            c:${genresPreEdicao[i]} c:wasPerformedBy c:${idArtist}.
         }`
         let encodedGenre = encodeURIComponent(prefixes + queryGenres)
         try{
@@ -259,15 +270,21 @@ Artists.editar = async function(artist){
         }
     }
     try{
-        
         console.log('Id: ' + idArtist)
-        var queryDelete = `DELETE DATA {
-            c:artist_${idArtist} c:name [].
-            c:artist_${idArtist} c:birthPlaceName [].
-            c:artist_${idArtist} c:birthDate [].
-            c:artist_${idArtist} c:deathDate [].
-            c:artist_${idArtist} c:gender [].
-            c:artist_${idArtist} c:abstract [].
+        var queryDelete = `DELETE {
+            c:${idArtist} c:name ?name.
+            c:${idArtist} c:birthPlaceName ?birthplacename.
+            c:${idArtist} c:birthDate ?birthDate.
+            c:${idArtist} c:deathDate ?deathDate.
+            c:${idArtist} c:gender ?gender.
+            c:${idArtist} c:abstract ?abstract.
+        } WHERE {
+            c:${idArtist} c:name ?name.
+            c:${idArtist} c:birthPlaceName ?birthplacename.
+            c:${idArtist} c:birthDate ?birthDate.
+            c:${idArtist} c:deathDate ?deathDate.
+            c:${idArtist} c:gender ?gender.
+            c:${idArtist} c:abstract ?abstract.
         }`
         var encodedDelete = encodeURIComponent(prefixes + queryDelete) 
         console.log(queryDelete)      
@@ -292,12 +309,12 @@ Artists.editar = async function(artist){
         var groups = artist.artist.groups
         var genres = artist.artist.genres
         var queryInsertion = `INSERT DATA {
-            c:artist_${idArtist} c:name \"${corrigir.protect_special_char_nome(artistNome)}\".
-            c:artist_${idArtist} c:birthPlaceName \"${corrigir.protect_special_char_other(birthPlace)}\".
-            c:artist_${idArtist} c:birthDate \"${corrigir.protect_special_char_other(birthDate)}\".
-            c:artist_${idArtist} c:deathDate \"${corrigir.protect_special_char_other(deathDate)}\".
-            c:artist_${idArtist} c:gender \"${corrigir.protect_special_char_other(gender)}\".
-            c:artist_${idArtist} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
+            c:${idArtist} c:name \"${corrigir.protect_special_char_nome(artistNome)}\".
+            c:${idArtist} c:birthPlaceName \"${corrigir.protect_special_char_other(birthPlace)}\".
+            c:${idArtist} c:birthDate \"${corrigir.protect_special_char_other(birthDate)}\".
+            c:${idArtist} c:deathDate \"${corrigir.protect_special_char_other(deathDate)}\".
+            c:${idArtist} c:gender \"${corrigir.protect_special_char_other(gender)}\".
+            c:${idArtist} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
         }`
         var encodedArtist = encodeURIComponent(prefixes + queryInsertion) 
         console.log(queryInsertion)      
@@ -314,8 +331,8 @@ Artists.editar = async function(artist){
         }
         for(let i = 0; i <albums.length;i++){
             let queryAlbums = `INSERT DATA{
-                c:${albums[i]} c:wasCreatedBy c:artist_${idArtist}.
-                c:artist_${idArtist} c:created c:${albums[i]}.
+                c:${albums[i]} c:wasCreatedBy c:${idArtist}.
+                c:${idArtist} c:created c:${albums[i]}.
             }`
             let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
             try{
@@ -332,8 +349,8 @@ Artists.editar = async function(artist){
         }
         for(let i = 0; i <groups.length;i++){
             let queryGroups = `INSERT DATA{
-                c:artist_${idArtist} c:memberOf c:${groups[i]}.
-                c:${groups[i]} c:lineupMember c:artist_${idArtist}.
+                c:${idArtist} c:memberOf c:${groups[i]}.
+                c:${groups[i]} c:lineupMember c:${idArtist}.
             }`
             let encodedGroup = encodeURIComponent(prefixes + queryGroups)
             try{
@@ -350,8 +367,8 @@ Artists.editar = async function(artist){
         }
         for(let i = 0; i <genres.length;i++){
             let queryGenres = `INSERT DATA{
-                c:artist_${idArtist} c:performs c:${genres[i]}.
-                c:${genres[i]} c:wasPerformedBy c:artist_${idArtist}.
+                c:${idArtist} c:performs c:${genres[i]}.
+                c:${genres[i]} c:wasPerformedBy c:${idArtist}.
             }`
             let encodedGenre = encodeURIComponent(prefixes + queryGenres)
             try{

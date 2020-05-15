@@ -246,9 +246,9 @@ export default {
         try{
             let response = await axios.get(this.lhost + "/producers/" + idProducer)
             console.log(response.data)
-            this.producer.idProducer = response.data.Producer[0].producer
+            this.producer.idProducer = idProducer
             this.producer.producerName = response.data.Producer[0].name
-            this.producer.firstActiveYear = response.data.Producer[0].hq
+            this.producer.firstActiveYear = response.data.Producer[0].sy
             this.producer.producerInfo = response.data.Producer[0].abs
             for(let i=0;i<response.data.album.length;i++){
                 this.producer.albumProducer.push(response.data.album[i].album.split('#')[1])

@@ -260,7 +260,7 @@ export default {
         try{
             let response = await axios.get(this.lhost + "/recordLabels/" + idLabel)
             console.log(response.data)
-            this.label.idLabel = response.data.RecordLabel[0].RecordLabel
+            this.label.idLabel = idLabel
             this.label.labelName = response.data.RecordLabel[0].name
             this.label.headquarters = response.data.RecordLabel[0].hq
             this.label.foundingYear = response.data.RecordLabel[0].fy

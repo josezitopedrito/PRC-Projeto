@@ -1,4 +1,5 @@
 var Producers = module.exports
+var corrigir = require('./corrigir.js')
 const axios = require('axios')
 
 var prefixes = `
@@ -90,9 +91,9 @@ Producers.inserir = async function(producer){
         var albums = producer.producer.albums
         var queryInsertion = `INSERT DATA {
             c:producer_${idProducer} rdf:type c:Producer.
-            c:producer_${idProducer} c:name \"${producerNome}\".
-            c:producer_${idProducer} c:startingYear \"${firstActiveYear}\".
-            c:producer_${idProducer} c:abstract \"${abstract}\".
+            c:producer_${idProducer} c:name \"${corrigir.protect_special_char_nome(producerNome)}\".
+            c:producer_${idProducer} c:startingYear \"${corrigir.protect_special_char_other(firstActiveYear)}\".
+            c:producer_${idProducer} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
         }`
         var encodedProducer = encodeURIComponent(prefixes + queryInsertion) 
         console.log(queryInsertion)      
@@ -132,11 +133,12 @@ Producers.inserir = async function(producer){
 }
 
 Producers.editar = async function(producer){
+    var idProducer = producer.producer.idProducer
     var albumsPreEdicao = producer.producer.albumsPreEdicao
     for(let i = 0; i <albumsPreEdicao.length;i++){
         let queryAlbums = `DELETE DATA{
-            c:${albumsPreEdicao[i]} c:wasRecordedBy c:producer_${idProducer}.
-            c:producer_${idProducer} c:recorded c:${albumsPreEdicao[i]}.
+            c:${albumsPreEdicao[i]} c:wasProducedBy c:${idProducer}.
+            c:${idProducer} c:produced c:${albumsPreEdicao[i]}.
         }`
         let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
         try{
@@ -152,12 +154,15 @@ Producers.editar = async function(producer){
         }
     }
     try{
-        var idProducer = producer.producer.idProducer
         console.log('Id: ' + idProducer)
-        var queryDelete = `DELETE DATA {
-            c:producer_${idProducer} c:name [].
-            c:producer_${idProducer} c:startingYear [].
-            c:producer_${idProducer} c:abstract [].
+        var queryDelete = `DELETE {
+            c:${idProducer} c:name ?name.
+            c:${idProducer} c:startingYear ?startingYear.
+            c:${idProducer} c:abstract ?abstract.
+        } WHERE {
+            c:${idProducer} c:name ?name.
+            c:${idProducer} c:startingYear ?startingYear.
+            c:${idProducer} c:abstract ?abstract.
         }`
         var encodedDelete = encodeURIComponent(prefixes + queryDelete) 
         console.log(queryInsertion)      
@@ -177,9 +182,9 @@ Producers.editar = async function(producer){
         var abstract = producer.producer.producerInfo
         var albums = producer.producer.albums
         var queryInsertion = `INSERT DATA {
-            c:producer_${idProducer} c:name \"${producerNome}\".
-            c:producer_${idProducer} c:startingYear \"${firstActiveYear}\".
-            c:producer_${idProducer} c:abstract \"${abstract}\".
+            c:${idProducer} c:name \"${corrigir.protect_special_char_nome(producerNome)}\".
+            c:${idProducer} c:startingYear \"${corrigir.protect_special_char_other(firstActiveYear)}\".
+            c:${idProducer} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
         }`
         var encodedProducer = encodeURIComponent(prefixes + queryInsertion) 
         console.log(queryInsertion)      
@@ -196,8 +201,8 @@ Producers.editar = async function(producer){
         }
         for(let i = 0; i <albums.length;i++){
             let queryAlbums = `INSERT DATA{
-                c:${albums[i]} c:wasRecordedBy c:producer_${idProducer}.
-                c:producer_${idProducer} c:recorded c:${albums[i]}.
+                c:${albums[i]} c:wasProducedBy c:${idProducer}.
+                c:${idProducer} c:produced c:${albums[i]}.
             }`
             let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
             try{

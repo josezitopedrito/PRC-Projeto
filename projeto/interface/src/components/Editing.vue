@@ -388,10 +388,10 @@
             },
             atualizaAlbum: async function(album){
                 if(this.model == 0){
-                    this.album.labelsPreEdicao=album.albumLabel
-                    this.album.groupsPreEdicao=album.albumGroup
-                    this.album.artistsPreEdicao=album.albumArtist
-                    this.album.producersPreEdicao=album.albumProducer
+                    album.albumLabel.forEach(elem => this.album.labelsPreEdicao.push(elem))
+                    album.albumGroup.forEach(elem => this.album.groupsPreEdicao.push(elem))
+                    album.albumArtist.forEach(elem => this.album.artistsPreEdicao.push(elem))
+                    album.albumProducer.forEach(elem => this.album.producersPreEdicao.push(elem))
                 }
                 this.album.idAlbum=album.idAlbum
                 this.album.albumName=album.albumName
@@ -407,17 +407,20 @@
                 if(this.total == this.model + 1){
                     await axios.post(this.lhost + '/albums/editar',{
                         album:this.album
+                    }).then(() => {
+                        this.cancela();
+                    }).catch(e => {
+                        console.log(e)
                     })
-                    this.cancela();
                 }else{
                     this.next()
                 }
             },
             atualizaArtist: async function(artist){
                 if(this.model == 0){
-                    this.artist.albumsPreEdicao=artist.albumArtist
-                    this.artist.groupsPreEdicao=artist.groupArtist
-                    this.artist.genresPreEdicao=artist.genreArtist
+                    artist.albumArtist.forEach(elem => this.artist.albumsPreEdicao.push(elem))
+                    artist.groupArtist.forEach(elem => this.artist.groupsPreEdicao.push(elem))
+                    artist.genreArtist.forEach(elem => this.artist.genresPreEdicao.push(elem))
                 }
                 this.artist.idArtist=artist.idArtist
                 this.artist.artistName=artist.artistName
@@ -433,17 +436,20 @@
                 if(this.total == this.model + 1){
                     await axios.post(this.lhost + '/artists/editar',{
                         artist:this.artist
+                    }).then(() => {
+                        this.cancela();
+                    }).catch(e => {
+                        console.log(e)
                     })
-                    this.cancela();
                 }else{
                     this.next()
                 }
             },
             atualizaGroup: async function(group){
                 if(this.model == 0){
-                    this.group.membersPreEdicao=group.groupArtist
-                    this.group.genresPreEdicao=group.groupGenre
-                    this.group.albumsPreEdicao=group.albumGroup
+                    group.groupArtist.forEach(elem => this.group.membersPreEdicao.push(elem))
+                    group.groupGenre.forEach(elem => this.group.genresPreEdicao.push(elem))
+                    group.albumGroup.forEach(elem => this.group.albumsPreEdicao.push(elem))
                 }
                 this.group.idGroup=group.idGroup
                 this.group.groupName=group.groupName
@@ -459,19 +465,22 @@
                 if(this.total == this.model + 1){
                     await axios.post(this.lhost + '/groups/editar',{
                         group:this.group
+                    }).then(() => {
+                        this.cancela();
+                    }).catch(e => {
+                        console.log(e)
                     })
-                    this.cancela();
                 }else{
                     this.next()
                 }
             },
             atualizaGenre: async function(genre){
                 if(this.model == 0){
-                    this.genre.groupsPreEdicao=genre.groupGenre
-                    this.genre.artistsPreEdicao=genre.genreArtist
-                    this.genre.superGenresPreEdicao=genre.supergenreGenre
-                    this.genre.subGenresPreEdicao=genre.subgenreGenre
-                    this.genre.fusionGenresPreEdicao=genre.fusiongenreGenre
+                    genre.groupGenre.forEach(elem => this.genre.groupsPreEdicao.push(elem))
+                    genre.genreArtist.forEach(elem => this.genre.artistsPreEdicao.push(elem))
+                    genre.supergenreGenre.forEach(elem => this.genre.superGenresPreEdicao.push(elem))
+                    genre.subgenreGenre.forEach(elem => this.genre.subGenresPreEdicao.push(elem))
+                    genre.fusiongenreGenre.forEach(elem => this.genre.fusionGenresPreEdicao.push(elem))
                 }
                 this.genre.idGenre=genre.idGenre
                 this.genre.genreName=genre.genreName
@@ -484,15 +493,18 @@
                 if(this.total == this.model + 1){
                     await axios.post(this.lhost + '/genres/editar',{
                         genre:this.genre
+                    }).then(() => {
+                        this.cancela();
+                    }).catch(e => {
+                        console.log(e)
                     })
-                    this.cancela();
                 }else{
                     this.next()
                 }
             },
             atualizaLabel: async function(label){
                 if(this.model == 0){
-                    this.label.albumsPreEdicao=label.albumLabel
+                    label.albumLabel.forEach(elem => this.label.albumsPreEdicao.push(elem)) 
                 }
                 this.label.idLabel=label.idLabel
                 this.label.labelName=label.labelName
@@ -504,15 +516,18 @@
                 if(this.total == this.model + 1){
                     await axios.post(this.lhost + '/recordLabels/editar',{
                         label:this.label
+                    }).then(() => {
+                        this.cancela();
+                    }).catch(e => {
+                        console.log(e)
                     })
-                    this.cancela();
                 }else{
                     this.next()
                 }
             },
             atualizaProducer: async function(producer){
                 if(this.model == 0){
-                    this.producer.albumsPreEdicao=producer.albumProducer
+                    producer.albumProducer.forEach(elem => this.producer.albumsPreEdicao.push(elem))
                 }
                 this.producer.idProducer=producer.idProducer
                 this.producer.producerName=producer.producerName
@@ -522,8 +537,11 @@
                 if(this.total == this.model + 1){
                     await axios.post(this.lhost + '/producers/editar',{
                         producer:this.producer
+                    }).then(() => {
+                        this.cancela();
+                    }).catch(e => {
+                        console.log(e)
                     })
-                    this.cancela();
                 }else{
                     this.next()
                 }

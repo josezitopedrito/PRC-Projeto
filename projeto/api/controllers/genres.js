@@ -1,4 +1,5 @@
 var Genres = module.exports
+var corrigir = require('./corrigir.js')
 const axios = require('axios')
 
 var prefixes = `
@@ -45,7 +46,6 @@ Genres.getGenre = async function(idGenre){
             c:${idGenre} c:abstract ?abs.
         }
     }`
-
     var querySupraGenre = `select ?genre ?genreName where { 
         c:${idGenre} c:isSubGenreOf ?genre.
         OPTIONAL{
@@ -53,7 +53,6 @@ Genres.getGenre = async function(idGenre){
         }
         ?genre rdf:type c:Genre.
     } `
-
     var querySubGenre = `select ?genre ?genreName where { 
         c:${idGenre} c:isSupraGenreOf ?genre.
         OPTIONAL{
@@ -61,7 +60,6 @@ Genres.getGenre = async function(idGenre){
         }
         ?genre rdf:type c:Genre.
     } `
-
     var queryFusionGenre = `select ?genre ?genreName where { 
         c:${idGenre} c:wasFusedToCreate ?genre.
         OPTIONAL{
@@ -69,15 +67,13 @@ Genres.getGenre = async function(idGenre){
         }
         ?genre rdf:type c:Genre.
     } `
-
     var queryBand = `select ?band ?bandName where { 
         ?band c:performs c:${idGenre}.
         OPTIONAL{
-            ?genre c:name ?bandName.
+            ?band c:name ?bandName.
         }
-        ?band rdf:type c:Band.
+        ?band rdf:type c:Group.
     } `
-
     var queryArtist = `select ?artist ?artistName where { 
         ?artist c:performs c:${idGenre}.
         OPTIONAL{
@@ -91,8 +87,7 @@ Genres.getGenre = async function(idGenre){
     var encodedSubGenre = encodeURIComponent(prefixes + querySubGenre)
     var encodedFusionGenre = encodeURIComponent(prefixes + queryFusionGenre)
     var encodedBand = encodeURIComponent(prefixes + queryBand)
-    var encodedGenre = encodeURIComponent(prefixes + queryArtist)
-
+    var encodedArtist= encodeURIComponent(prefixes + queryArtist)
     try{
         var response = await axios.get(getLink + encoded)
         var responseSupraGenre = await axios.get(getLink + encodedSupraGenre)
@@ -100,6 +95,7 @@ Genres.getGenre = async function(idGenre){
         var responseFusionGenre = await axios.get(getLink + encodedFusionGenre)
         var responseBand = await axios.get(getLink + encodedBand)
         var responseArtist = await axios.get(getLink + encodedArtist)
+        console.log("Antes do normalize")
         var Genre = normalize(response.data)
         console.log('Resposta:' + Genre)
         var SupraGenre = normalize(responseSupraGenre.data)
@@ -108,7 +104,7 @@ Genres.getGenre = async function(idGenre){
         var band = normalize(responseBand.data)
         var artist = normalize(responseArtist.data)
         var resposta = {"Genre":Genre,"SupraGenre":SupraGenre,"SubGenre":SubGenre,"FusionGenre":FusionGenre,"Band":band,"Artist":artist}
-        console.log('Resposta:' + resposta)
+        console.log('Resposta:' + JSON.stringify(resposta))
         return resposta
     }
     catch(e){
@@ -137,8 +133,8 @@ Genres.inserir = async function(genre){
         var fusiongenres = genre.genre.fusionGenres
         var queryInsertion = `INSERT DATA {
             c:genre_${idGenre} rdf:type c:Genre.
-            c:genre_${idGenre} c:name \"${genreNome}\".
-            c:genre_${idGenre} c:abstract \"${abstract}\".
+            c:genre_${idGenre} c:name \"${corrigir.protect_special_char_nome(genreNome)}\".
+            c:genre_${idGenre} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
         }`
         console.log(JSON.stringify(genre))
         var encodedGenre = encodeURIComponent(prefixes + queryInsertion) 
@@ -251,6 +247,7 @@ Genres.inserir = async function(genre){
 }
 
 Genres.editar = async function(genre){
+    var idGenre = genre.genre.idGenre
     var artistsPreEdicao = genre.genre.artistsPreEdicao
     var groupsPreEdicao = genre.genre.groupsPreEdicao
     var superGenresPreEdicao = genre.genre.superGenresPreEdicao
@@ -258,8 +255,8 @@ Genres.editar = async function(genre){
     var fusionGenresPreEdicao = genre.genre.fusionGenresPreEdicao
     for(let i = 0; i <artistsPreEdicao.length;i++){
         let queryArtists = `DELETE DATA{
-            c:${artistsPreEdicao[i]} c:performs c:genre_${idGenre}.
-            c:genre_${idGenre} c:wasPerformedBy c:${artistsPreEdicao[i]}.
+            c:${artistsPreEdicao[i]} c:performs c:${idGenre}.
+            c:${idGenre} c:wasPerformedBy c:${artistsPreEdicao[i]}.
         }`
         let encodedArtist = encodeURIComponent(prefixes + queryArtists)
         try{
@@ -276,8 +273,8 @@ Genres.editar = async function(genre){
     }
     for(let i = 0; i <groupsPreEdicao.length;i++){
         let queryGroups = `DELETE DATA{
-            c:genre_${idGenre} c:wasPerformedBy c:${groupsPreEdicao[i]}.
-            c:${groupsPreEdicao[i]} c:performs c:genre_${idGenre}.
+            c:${idGenre} c:wasPerformedBy c:${groupsPreEdicao[i]}.
+            c:${groupsPreEdicao[i]} c:performs c:${idGenre}.
         }`
         let encodedGroup = encodeURIComponent(prefixes + queryGroups)
         try{
@@ -294,8 +291,8 @@ Genres.editar = async function(genre){
     }
     for(let i = 0; i <superGenresPreEdicao.length;i++){
         let querySuperGenres = `DELETE DATA{
-            c:genre_${idGenre} c:isSubGenreOf c:${superGenresPreEdicao[i]}.
-            c:${superGenresPreEdicao[i]} c:isSupraGenreOf c:genre_${idGenre}.
+            c:${idGenre} c:isSubGenreOf c:${superGenresPreEdicao[i]}.
+            c:${superGenresPreEdicao[i]} c:isSupraGenreOf c:${idGenre}.
         }`
         let encodedSuperGenre = encodeURIComponent(prefixes + querySuperGenres)
         try{
@@ -312,8 +309,8 @@ Genres.editar = async function(genre){
     }
     for(let i = 0; i <subGenresPreEdicao.length;i++){
         let querySubGenres = `DELETE DATA{
-            c:genre_${idGenre} c:isSupraGenreOf c:${subGenresPreEdicao[i]}.
-            c:${subGenresPreEdicao[i]} c:isSubGenreOf c:genre_${idGenre}.
+            c:${idGenre} c:isSupraGenreOf c:${subGenresPreEdicao[i]}.
+            c:${subGenresPreEdicao[i]} c:isSubGenreOf c:${idGenre}.
         }`
         let encodedSubGenre = encodeURIComponent(prefixes + querySubGenres)
         try{
@@ -330,8 +327,8 @@ Genres.editar = async function(genre){
     }
     for(let i = 0; i <fusionGenresPreEdicao.length;i++){
         let queryFusionGenres = `DELETE DATA{
-            c:genre_${idGenre} c:wasCreatedByTheFusionOf c:${fusionGenresPreEdicao[i]}.
-            c:${fusionGenresPreEdicao[i]} c:wasFusedToCreate c:genre_${idGenre}.
+            c:${idGenre} c:wasCreatedByTheFusionOf c:${fusionGenresPreEdicao[i]}.
+            c:${fusionGenresPreEdicao[i]} c:wasFusedToCreate c:${idGenre}.
         }`
         let encodedFusionGenre = encodeURIComponent(prefixes + queryFusionGenres)
         try{
@@ -347,11 +344,14 @@ Genres.editar = async function(genre){
         }
     }
     try{
-        var idGenre = genre.genre.idGenre
+        
         console.log('Id: ' + idGenre)
-        var queryDelete = `DELETE DATA {
-            c:genre_${idGenre} c:name [].
-            c:genre_${idGenre} c:abstract [].
+        var queryDelete = `DELETE {
+            c:${idGenre} c:name ?name.
+            c:${idGenre} c:abstract ?abstract.
+        } WHERE {
+            c:${idGenre} c:name ?name.
+            c:${idGenre} c:abstract ?abstract.
         }`
         var encodedDelete = encodeURIComponent(prefixes + queryDelete) 
         console.log(queryDelete)      
@@ -374,8 +374,8 @@ Genres.editar = async function(genre){
         var subgenres = genre.genre.subGenres
         var fusiongenres = genre.genre.fusionGenres
         var queryInsertion = `INSERT DATA {
-            c:genre_${idGenre} c:name \"${genreNome}\".
-            c:genre_${idGenre} c:abstract \"${abstract}\".
+            c:${idGenre} c:name \"${corrigir.protect_special_char_nome(genreNome)}\".
+            c:${idGenre} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
         }`
         console.log(JSON.stringify(genre))
         var encodedGenre = encodeURIComponent(prefixes + queryInsertion) 
@@ -393,8 +393,8 @@ Genres.editar = async function(genre){
         }
         for(let i = 0; i <artists.length;i++){
             let queryArtists = `INSERT DATA{
-                c:${artists[i]} c:performs c:genre_${idGenre}.
-                c:genre_${idGenre} c:wasPerformedBy c:${artists[i]}.
+                c:${artists[i]} c:performs c:${idGenre}.
+                c:${idGenre} c:wasPerformedBy c:${artists[i]}.
             }`
             let encodedArtist = encodeURIComponent(prefixes + queryArtists)
             try{
@@ -411,8 +411,8 @@ Genres.editar = async function(genre){
         }
         for(let i = 0; i <groups.length;i++){
             let queryGroups = `INSERT DATA{
-                c:genre_${idGenre} c:wasPerformedBy c:${groups[i]}.
-                c:${groups[i]} c:performs c:genre_${idGenre}.
+                c:${idGenre} c:wasPerformedBy c:${groups[i]}.
+                c:${groups[i]} c:performs c:${idGenre}.
             }`
             let encodedGroup = encodeURIComponent(prefixes + queryGroups)
             try{
@@ -429,8 +429,8 @@ Genres.editar = async function(genre){
         }
         for(let i = 0; i <supergenres.length;i++){
             let querySuperGenres = `INSERT DATA{
-                c:genre_${idGenre} c:isSubGenreOf c:${supergenres[i]}.
-                c:${supergenres[i]} c:isSupraGenreOf c:genre_${idGenre}.
+                c:${idGenre} c:isSubGenreOf c:${supergenres[i]}.
+                c:${supergenres[i]} c:isSupraGenreOf c:${idGenre}.
             }`
             let encodedSuperGenre = encodeURIComponent(prefixes + querySuperGenres)
             try{
@@ -447,8 +447,8 @@ Genres.editar = async function(genre){
         }
         for(let i = 0; i <subgenres.length;i++){
             let querySubGenres = `INSERT DATA{
-                c:genre_${idGenre} c:isSupraGenreOf c:${subgenres[i]}.
-                c:${subgenres[i]} c:isSubGenreOf c:genre_${idGenre}.
+                c:${idGenre} c:isSupraGenreOf c:${subgenres[i]}.
+                c:${subgenres[i]} c:isSubGenreOf c:${idGenre}.
             }`
             let encodedSubGenre = encodeURIComponent(prefixes + querySubGenres)
             try{
@@ -465,8 +465,8 @@ Genres.editar = async function(genre){
         }
         for(let i = 0; i <fusiongenres.length;i++){
             let queryFusionGenres = `INSERT DATA{
-                c:genre_${idGenre} c:wasCreatedByTheFusionOf c:${fusiongenres[i]}.
-                c:${fusiongenres[i]} c:wasFusedToCreate c:genre_${idGenre}.
+                c:${idGenre} c:wasCreatedByTheFusionOf c:${fusiongenres[i]}.
+                c:${fusiongenres[i]} c:wasFusedToCreate c:${idGenre}.
             }`
             let encodedFusionGenre = encodeURIComponent(prefixes + queryFusionGenres)
             try{

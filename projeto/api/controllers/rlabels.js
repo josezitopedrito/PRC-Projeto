@@ -1,4 +1,5 @@
 var RecordLabels = module.exports
+var corrigir = require('./corrigir.js')
 const axios = require('axios')
 
 var prefixes = `
@@ -98,11 +99,11 @@ RecordLabels.inserir = async function(label){
         var albums = label.label.albums
         var queryInsertion = `INSERT DATA {
             c:recordlabel_${idLabel} rdf:type c:RecordLabel.
-            c:recordlabel_${idLabel} c:name \"${labelNome}\".
-            c:recordlabel_${idLabel} c:headquarters \"${headquarters}\".
-            c:recordlabel_${idLabel} c:foundingYear \"${foundingYear}\".
-            c:recordlabel_${idLabel} c:founderName \"${founder}\".
-            c:recordlabel_${idLabel} c:abstract \"${abstract}\".
+            c:recordlabel_${idLabel} c:name \"${corrigir.protect_special_char_nome(labelNome)}\".
+            c:recordlabel_${idLabel} c:headquarters \"${corrigir.protect_special_char_other(headquarters)}\".
+            c:recordlabel_${idLabel} c:foundingYear \"${corrigir.protect_special_char_other(foundingYear)}\".
+            c:recordlabel_${idLabel} c:founderName \"${corrigir.protect_special_char_other(founder)}\".
+            c:recordlabel_${idLabel} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
         }`
         var encodedLabel = encodeURIComponent(prefixes + queryInsertion) 
         console.log(queryInsertion)      
@@ -142,11 +143,12 @@ RecordLabels.inserir = async function(label){
 }
 
 RecordLabels.editar = async function(label){
+    var idLabel = label.label.idLabel
     var albumsPreEdicao = label.label.albumsPreEdicao
     for(let i = 0; i <albumsPreEdicao.length;i++){
         let queryAlbums = `DELETE DATA{
-            c:${albumsPreEdicao[i]} c:wasRecordedBy c:recordlabel_${idLabel}.
-            c:recordlabel_${idLabel} c:recorded c:${albumsPreEdicao[i]}.
+            c:${albumsPreEdicao[i]} c:wasRecordedBy c:${idLabel}.
+            c:${idLabel} c:recorded c:${albumsPreEdicao[i]}.
         }`
         let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
         try{
@@ -162,14 +164,19 @@ RecordLabels.editar = async function(label){
         }
     }
     try{
-        var idLabel = label.label.idLabel
         console.log('Id: ' + idLabel)
-        var queryDelete = `DELETE DATA {
-            c:recordlabel_${idLabel} c:name [].
-            c:recordlabel_${idLabel} c:headquarters [].
-            c:recordlabel_${idLabel} c:foundingYear [].
-            c:recordlabel_${idLabel} c:founderName [].
-            c:recordlabel_${idLabel} c:abstract [].
+        var queryDelete = `DELETE {
+            c:${idLabel} c:name ?name.
+            c:${idLabel} c:headquarters ?headq.
+            c:${idLabel} c:foundingYear ?foundingY.
+            c:${idLabel} c:founderName ?founder.
+            c:${idLabel} c:abstract ?abstract.
+        } WHERE {
+            c:${idLabel} c:name ?name.
+            c:${idLabel} c:headquarters ?headq.
+            c:${idLabel} c:foundingYear ?foundingY.
+            c:${idLabel} c:founderName ?founder.
+            c:${idLabel} c:abstract ?abstract.
         }`
         var encodedDelete = encodeURIComponent(prefixes + queryDelete) 
         console.log(queryInsertion)      
@@ -191,11 +198,11 @@ RecordLabels.editar = async function(label){
         var abstract = label.label.labelInfo
         var albums = label.label.albums
         var queryInsertion = `INSERT DATA {
-            c:recordlabel_${idLabel} c:name \"${labelNome}\".
-            c:recordlabel_${idLabel} c:headquarters \"${headquarters}\".
-            c:recordlabel_${idLabel} c:foundingYear \"${foundingYear}\".
-            c:recordlabel_${idLabel} c:founderName \"${founder}\".
-            c:recordlabel_${idLabel} c:abstract \"${abstract}\".
+            c:${idLabel} c:name \"${corrigir.protect_special_char_nome(labelNome)}\".
+            c:${idLabel} c:headquarters \"${corrigir.protect_special_char_other(headquarters)}\".
+            c:${idLabel} c:foundingYear \"${corrigir.protect_special_char_other(foundingYear)}\".
+            c:${idLabel} c:founderName \"${corrigir.protect_special_char_other(founder)}\".
+            c:${idLabel} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
         }`
         var encodedLabel = encodeURIComponent(prefixes + queryInsertion) 
         console.log(queryInsertion)      
@@ -212,8 +219,8 @@ RecordLabels.editar = async function(label){
         }
         for(let i = 0; i <albums.length;i++){
             let queryAlbums = `INSERT DATA{
-                c:${albums[i]} c:wasRecordedBy c:recordlabel_${idLabel}.
-                c:recordlabel_${idLabel} c:recorded c:${albums[i]}.
+                c:${albums[i]} c:wasRecordedBy c:${idLabel}.
+                c:${idLabel} c:recorded c:${albums[i]}.
             }`
             let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
             try{

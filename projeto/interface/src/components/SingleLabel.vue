@@ -71,7 +71,7 @@ export default {
   name: 'RecordLabel',
   data(){
     return{
-      label:{RecordLabel:[{}],Producer:[{producer:""}],album:[{album:""}]},
+      label:{RecordLabel:[{}],album:[{album:""}]},
       lhost:'http://localhost:5001/api'
     }
   },

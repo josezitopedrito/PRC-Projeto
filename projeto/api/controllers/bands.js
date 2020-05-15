@@ -1,4 +1,5 @@
 var Bands = module.exports
+var corrigir = require('./corrigir.js')
 const axios = require('axios')
 
 var prefixes = `
@@ -128,12 +129,12 @@ Bands.inserir = async function(band){
         var genres = band.group.genres
         var queryInsertion = `INSERT DATA {
             c:group_${idBand} rdf:type c:Group.
-            c:group_${idBand} c:name \"${groupNome}\".
-            c:group_${idBand} c:hometown \"${hometown}\".
-            c:group_${idBand} c:startDate \"${formationDate}\".
-            c:group_${idBand} c:endDate \"${disbandingDate}\".
-            c:group_${idBand} c:homepage \"${homepage}\".
-            c:group_${idBand} c:abstract \"${abstract}\".
+            c:group_${idBand} c:name \"${corrigir.protect_special_char_nome(groupNome)}\".
+            c:group_${idBand} c:hometown \"${corrigir.protect_special_char_other(hometown)}\".
+            c:group_${idBand} c:startDate \"${corrigir.protect_special_char_other(formationDate)}\".
+            c:group_${idBand} c:endDate \"${corrigir.protect_special_char_other(disbandingDate)}\".
+            c:group_${idBand} c:homepage \"${corrigir.protect_special_char_other(homepage)}\".
+            c:group_${idBand} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
         }`
         var encodedBand = encodeURIComponent(prefixes + queryInsertion) 
         console.log(queryInsertion)      
@@ -209,13 +210,16 @@ Bands.inserir = async function(band){
 }
 
 Bands.editar = async function(band){
-    var artistsPreEdicao = band.group.artistsPreEdicao
+    console.log("banda:" + JSON.stringify(band))
+    var idBand = band.group.idGroup
+    var artistsPreEdicao = band.group.membersPreEdicao
     var albumsPreEdicao = band.group.albumsPreEdicao
     var genresPreEdicao = band.group.genresPreEdicao
+    console.log("primeiro break");
     for(let i = 0; i <albumsPreEdicao.length;i++){
         let queryAlbums = `DELETE DATA{
-            c:${albumsPreEdicao[i]} c:wasCreatedBy c:group_${idBand}.
-            c:group_${idBand} c:created c:${albumsPreEdicao[i]}.
+            c:${albumsPreEdicao[i]} c:wasCreatedBy c:${idBand}.
+            c:${idBand} c:created c:${albumsPreEdicao[i]}.
         }`
         let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
         try{
@@ -230,10 +234,12 @@ Bands.editar = async function(band){
             throw(e)
         }
     }
+    console.log("segundo break");
+    console.log("predit:" + JSON.stringify(artistsPreEdicao))
     for(let i = 0; i <artistsPreEdicao.length;i++){
         let queryArtists = `DELETE DATA{
-            c:group_${idBand} c:lineupMember c:${artistsPreEdicao[i]}.
-            c:${artistsPreEdicao[i]} c:memberOf c:group_${idBand}.
+            c:${idBand} c:lineupMember c:${artistsPreEdicao[i]}.
+            c:${artistsPreEdicao[i]} c:memberOf c:${idBand}.
         }`
         let encodedArtist = encodeURIComponent(prefixes + queryArtists)
         try{
@@ -248,10 +254,11 @@ Bands.editar = async function(band){
             throw(e)
         }
     }
+    console.log("terceiro break");
     for(let i = 0; i <genresPreEdicao.length;i++){
         let queryGenres = `DELETE DATA{
-            c:group_${idBand} c:performs c:${genresPreEdicao[i]}.
-            c:${genresPreEdicao[i]} c:wasPerformedBy c:group_${idBand}.
+            c:${idBand} c:performs c:${genresPreEdicao[i]}.
+            c:${genresPreEdicao[i]} c:wasPerformedBy c:${idBand}.
         }`
         let encodedGenre = encodeURIComponent(prefixes + queryGenres)
         try{
@@ -267,17 +274,25 @@ Bands.editar = async function(band){
         }
     }
     try{
-        var idBand = band.group.idGroup
+        console.log("quarto break");
         console.log('Id: ' + idBand)
-        var queryDelete = `DELETE DATA {
-            c:group_${idBand} c:name [].
-            c:group_${idBand} c:hometown [].
-            c:group_${idBand} c:startDate [].
-            c:group_${idBand} c:endDate [].
-            c:group_${idBand} c:homepage [].
-            c:group_${idBand} c:abstract [].
+        var queryDelete = `DELETE {
+            c:${idBand} c:name ?name.
+            c:${idBand} c:hometown ?hometown.
+            c:${idBand} c:startDate ?startDate.
+            c:${idBand} c:endDate ?endDate.
+            c:${idBand} c:homepage ?homepage.
+            c:${idBand} c:abstract ?abstract.
+        } WHERE {
+            c:${idBand} c:name ?name.
+            c:${idBand} c:hometown ?hometown.
+            c:${idBand} c:startDate ?startDate.
+            c:${idBand} c:endDate ?endDate.
+            c:${idBand} c:homepage ?homepage.
+            c:${idBand} c:abstract ?abstract.
         }`
         var encodedDelete = encodeURIComponent(prefixes + queryDelete) 
+        console.log("quinto break");
         console.log(queryDelete)      
         try{
             await axios.post(postLink + encodedDelete, null).then(response => {
@@ -300,13 +315,14 @@ Bands.editar = async function(band){
         var albums = band.group.albums
         var genres = band.group.genres
         var queryInsertion = `INSERT DATA {
-            c:group_${idBand} c:name \"${groupNome}\".
-            c:group_${idBand} c:hometown \"${hometown}\".
-            c:group_${idBand} c:startDate \"${formationDate}\".
-            c:group_${idBand} c:endDate \"${disbandingDate}\".
-            c:group_${idBand} c:homepage \"${homepage}\".
-            c:group_${idBand} c:abstract \"${abstract}\".
+            c:${idBand} c:name \"${corrigir.protect_special_char_nome(groupNome)}\".
+            c:${idBand} c:hometown \"${corrigir.protect_special_char_other(hometown)}\".
+            c:${idBand} c:startDate \"${corrigir.protect_special_char_other(formationDate)}\".
+            c:${idBand} c:endDate \"${corrigir.protect_special_char_other(disbandingDate)}\".
+            c:${idBand} c:homepage \"${corrigir.protect_special_char_other(homepage)}\".
+            c:${idBand} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
         }`
+        console.log("sexto break");
         var encodedBand = encodeURIComponent(prefixes + queryInsertion) 
         console.log(queryInsertion)      
         try{
@@ -322,8 +338,8 @@ Bands.editar = async function(band){
         }
         for(let i = 0; i <albums.length;i++){
             let queryAlbums = `INSERT DATA{
-                c:${albums[i]} c:wasCreatedBy c:group_${idBand}.
-                c:group_${idBand} c:created c:${albums[i]}.
+                c:${albums[i]} c:wasCreatedBy c:${idBand}.
+                c:${idBand} c:created c:${albums[i]}.
             }`
             let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
             try{
@@ -340,8 +356,8 @@ Bands.editar = async function(band){
         }
         for(let i = 0; i <artists.length;i++){
             let queryArtists = `INSERT DATA{
-                c:group_${idBand} c:lineupMember c:${artists[i]}.
-                c:${artists[i]} c:memberOf c:group_${idBand}.
+                c:${idBand} c:lineupMember c:${artists[i]}.
+                c:${artists[i]} c:memberOf c:${idBand}.
             }`
             let encodedArtist = encodeURIComponent(prefixes + queryArtists)
             try{
@@ -358,8 +374,8 @@ Bands.editar = async function(band){
         }
         for(let i = 0; i <genres.length;i++){
             let queryGenres = `INSERT DATA{
-                c:group_${idBand} c:performs c:${genres[i]}.
-                c:${genres[i]} c:wasPerformedBy c:group_${idBand}.
+                c:${idBand} c:performs c:${genres[i]}.
+                c:${genres[i]} c:wasPerformedBy c:${idBand}.
             }`
             let encodedGenre = encodeURIComponent(prefixes + queryGenres)
             try{

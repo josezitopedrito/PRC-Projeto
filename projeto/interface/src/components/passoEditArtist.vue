@@ -359,7 +359,7 @@ export default {
         try{
             let response = await axios.get(this.lhost + "/artists/" + idArtist)
             console.log(response.data)
-            this.artist.idArtist = response.data.artist[0].artist
+            this.artist.idArtist = idArtist
             this.artist.artistName = response.data.artist[0].name
             this.artist.birthDate = response.data.artist[0].bd
             this.artist.deathDate = response.data.artist[0].dd

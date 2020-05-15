@@ -334,7 +334,7 @@ export default {
           console.log(idGenre)
             let response = await axios.get(this.lhost + "/genres/" + idGenre)
             console.log(response.data)
-            this.genre.idGenre = response.data.Genre[0].Genre
+            this.genre.idGenre = idGenre
             this.genre.genreName = response.data.Genre[0].name
             this.genre.genreInfo = response.data.Genre[0].abs
             for(let i=0;i<response.data.artist.length;i++){

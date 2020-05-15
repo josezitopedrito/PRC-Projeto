@@ -348,10 +348,9 @@
                 this.album.artists=album.albumArtist
                 this.album.producers=album.albumProducer
                 if(this.total == this.model + 1){
-                    await axios.post(this.lhost + '/albums/inserir',{
+                    confirm('Are you sure you want to save this album?') && (await axios.post(this.lhost + '/albums/inserir',{
                         album:this.album
-                    })
-                    this.cancela();
+                    }) && this.cancela())
                 }else{
                     this.next()
                 }
@@ -369,10 +368,9 @@
                 this.artist.groups=artist.groupArtist
                 this.artist.genres=artist.genreArtist
                 if(this.total == this.model + 1){
-                    await axios.post(this.lhost + '/artists/inserir',{
+                    confirm('Are you sure you want to save this artist?') && (await axios.post(this.lhost + '/artists/inserir',{
                         artist:this.artist
-                    })
-                    this.cancela();
+                    }) && this.cancela())
                 }else{
                     this.next()
                 }
@@ -390,10 +388,9 @@
                 this.group.genres=group.groupGenre
                 this.group.albums=group.albumGroup
                 if(this.total == this.model + 1){
-                    await axios.post(this.lhost + '/groups/inserir',{
+                    confirm('Are you sure you want to save this group?') && (await axios.post(this.lhost + '/groups/inserir',{
                         group:this.group
-                    })
-                    this.cancela();
+                    }) && this.cancela())
                 }else{
                     this.next()
                 }
@@ -408,10 +405,9 @@
                 this.genre.subGenres=genre.subgenreGenre
                 this.genre.fusionGenres=genre.fusiongenreGenre
                 if(this.total == this.model + 1){
-                    await axios.post(this.lhost + '/genres/inserir',{
+                    confirm('Are you sure you want to save this genre?') && (await axios.post(this.lhost + '/genres/inserir',{
                         genre:this.genre
-                    })
-                    this.cancela();
+                    }) && this.cancela())
                 }else{
                     this.next()
                 }
@@ -425,10 +421,9 @@
                 this.label.labelInfo=label.labelInfo
                 this.label.albums=label.albumLabel
                 if(this.total == this.model + 1){
-                    await axios.post(this.lhost + '/recordLabels/inserir',{
+                    confirm('Are you sure you want to save this label?') && (await axios.post(this.lhost + '/recordLabels/inserir',{
                         label:this.label
-                    })
-                    this.cancela();
+                    }) && this.cancela())
                 }else{
                     this.next()
                 }
@@ -440,10 +435,9 @@
                 this.producer.producerInfo=producer.producerInfo
                 this.producer.albums=producer.albumProducer
                 if(this.total == this.model + 1){
-                    await axios.post(this.lhost + '/producers/inserir',{
+                    confirm('Are you sure you want to save this producer?') && (await axios.post(this.lhost + '/producers/inserir',{
                         producer:this.producer
-                    })
-                    this.cancela();
+                    }) && this.cancela())
                 }else{
                     this.next()
                 }

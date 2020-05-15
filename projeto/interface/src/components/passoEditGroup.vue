@@ -352,7 +352,7 @@ export default {
         try{
             let response = await axios.get(this.lhost + "/groups/" + idGroup)
             console.log(response.data)
-            this.group.idGroup = response.data.band[0].band
+            this.group.idGroup = idGroup
             this.group.groupName = response.data.band[0].name
             this.group.formationDate = response.data.band[0].sd
             this.group.disbandingDate = response.data.band[0].ed
@@ -368,6 +368,7 @@ export default {
             for(let i=0;i<response.data.genre.length;i++){
                 this.group.groupGenre.push(response.data.genre[i].genre.split('#')[1])
             }
+            console.log("ANTES DO SAVE:" + this.group)
             this.save()
         }catch(e){
             console.log(e)
