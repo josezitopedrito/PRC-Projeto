@@ -133,13 +133,14 @@ Albuns.inserir = async function(album){
         var groups = album.album.groups
         var labels = album.album.labels
         var producers = album.album.producers
+        //${abstract == "" ? "" :`c:genre_${idGenre} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         var queryInsertion = `INSERT DATA {
             c:album_${idAlbum} rdf:type c:Album.
             c:album_${idAlbum} c:name \"${corrigir.protect_special_char_nome(albumNome)}\".
-            c:album_${idAlbum} c:albumType \"${corrigir.protect_special_char_other(albumType)}\".
-            c:album_${idAlbum} c:releaseDate \"${corrigir.protect_special_char_other(releaseDate)}\".
-            c:album_${idAlbum} c:runtime \"${corrigir.protect_special_char_other(runtime)}\".
-            c:album_${idAlbum} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
+            ${albumType == "" ? "" :`c:album_${idAlbum} c:albumType \"${corrigir.protect_special_char_other(albumType)}\".`}
+            ${releaseDate == "" ? "" :`c:album_${idAlbum} c:releaseDate \"${corrigir.protect_special_char_other(releaseDate)}\".`}
+            ${runtime == "" ? "" :`c:album_${idAlbum} c:runtime \"${corrigir.protect_special_char_other(runtime)}\".`}
+            ${abstract == "" ? "" :`c:album_${idAlbum} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
         var encodedAlbum = encodeURIComponent(prefixes + queryInsertion) 
         console.log(queryInsertion)      
@@ -314,16 +315,16 @@ Albuns.editar = async function(album){
         console.log('Id: ' + idAlbum)
         var queryDelete = `DELETE {
             c:${idAlbum} c:name ?name.
-            c:${idAlbum} c:albumType ?album.
-            c:${idAlbum} c:releaseDate ?releaseDate.
-            c:${idAlbum} c:runtime ?runtine.
-            c:${idAlbum} c:abstract ?abstract.
+            ${albumType == "" ? "" :`c:${idAlbum} c:albumType ?album.`}
+            ${releaseDate == "" ? "" :`c:${idAlbum} c:releaseDate ?releaseDate.`}
+            ${runtime == "" ? "" :`c:${idAlbum} c:runtime ?runtine.`}
+            ${abstract == "" ? "" :`c:${idAlbum} c:abstract ?abstract.`}
         } WHERE {
             c:${idAlbum} c:name ?name.
-            c:${idAlbum} c:albumType ?album.
-            c:${idAlbum} c:releaseDate ?releaseDate.
-            c:${idAlbum} c:runtime ?runtine.
-            c:${idAlbum} c:abstract ?abstract.
+            ${albumType == "" ? "" :`c:${idAlbum} c:albumType ?album.`}
+            ${releaseDate == "" ? "" :`c:${idAlbum} c:releaseDate ?releaseDate.`}
+            ${runtime == "" ? "" :`c:${idAlbum} c:runtime ?runtine.`}
+            ${abstract == "" ? "" :`c:${idAlbum} c:abstract ?abstract.`}
         }`
         var encodedDelete = encodeURIComponent(prefixes + queryDelete) 
         try{
@@ -348,10 +349,10 @@ Albuns.editar = async function(album){
         var producers = album.album.producers
         var queryInsertion = `INSERT DATA {
             c:${idAlbum} c:name \"${corrigir.protect_special_char_nome(albumNome)}\".
-            c:${idAlbum} c:albumType \"${corrigir.protect_special_char_other(albumType)}\".
-            c:${idAlbum} c:releaseDate \"${corrigir.protect_special_char_other(releaseDate)}\".
-            c:${idAlbum} c:runtime \"${corrigir.protect_special_char_other(runtime)}\".
-            c:${idAlbum} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
+            ${albumType == "" ? "" :`c:${idAlbum} c:albumType \"${corrigir.protect_special_char_other(albumType)}\".`}
+            ${releaseDate == "" ? "" :`c:${idAlbum} c:releaseDate \"${corrigir.protect_special_char_other(releaseDate)}\".`}
+            ${runtime == "" ? "" :`c:${idAlbum} c:runtime \"${corrigir.protect_special_char_other(runtime)}\".`}
+            ${abstract == "" ? "" :`c:${idAlbum} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
         var encodedAlbum = encodeURIComponent(prefixes + queryInsertion) 
         console.log(queryInsertion)      

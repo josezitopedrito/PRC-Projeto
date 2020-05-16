@@ -100,10 +100,10 @@ RecordLabels.inserir = async function(label){
         var queryInsertion = `INSERT DATA {
             c:recordlabel_${idLabel} rdf:type c:RecordLabel.
             c:recordlabel_${idLabel} c:name \"${corrigir.protect_special_char_nome(labelNome)}\".
-            c:recordlabel_${idLabel} c:headquarters \"${corrigir.protect_special_char_other(headquarters)}\".
-            c:recordlabel_${idLabel} c:foundingYear \"${corrigir.protect_special_char_other(foundingYear)}\".
-            c:recordlabel_${idLabel} c:founderName \"${corrigir.protect_special_char_other(founder)}\".
-            c:recordlabel_${idLabel} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
+            ${headquarters == "" ? "" :`c:recordlabel_${idLabel} c:headquarters \"${corrigir.protect_special_char_other(headquarters)}\".`}
+            ${foundingYear == "" ? "" :`c:recordlabel_${idLabel} c:foundingYear \"${corrigir.protect_special_char_other(foundingYear)}\".`}
+            ${founder == "" ? "" :`c:recordlabel_${idLabel} c:founderName \"${corrigir.protect_special_char_other(founder)}\".`}
+            ${abstract == "" ? "" :`c:recordlabel_${idLabel} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
         var encodedLabel = encodeURIComponent(prefixes + queryInsertion) 
         console.log(queryInsertion)      
@@ -167,16 +167,16 @@ RecordLabels.editar = async function(label){
         console.log('Id: ' + idLabel)
         var queryDelete = `DELETE {
             c:${idLabel} c:name ?name.
-            c:${idLabel} c:headquarters ?headq.
-            c:${idLabel} c:foundingYear ?foundingY.
-            c:${idLabel} c:founderName ?founder.
-            c:${idLabel} c:abstract ?abstract.
+            ${headquarters == "" ? "" :`c:${idLabel} c:headquarters ?headq.`}
+            ${foundingYear == "" ? "" :`c:${idLabel} c:foundingYear ?foundingY.`}
+            ${founder == "" ? "" :`c:${idLabel} c:founderName ?founder.`}
+            ${abstract == "" ? "" :`c:${idLabel} c:abstract ?abstract.`}
         } WHERE {
             c:${idLabel} c:name ?name.
-            c:${idLabel} c:headquarters ?headq.
-            c:${idLabel} c:foundingYear ?foundingY.
-            c:${idLabel} c:founderName ?founder.
-            c:${idLabel} c:abstract ?abstract.
+            ${headquarters == "" ? "" :`c:${idLabel} c:headquarters ?headq.`}
+            ${foundingYear == "" ? "" :`c:${idLabel} c:foundingYear ?foundingY.`}
+            ${founder == "" ? "" :`c:${idLabel} c:founderName ?founder.`}
+            ${abstract == "" ? "" :`c:${idLabel} c:abstract ?abstract.`}
         }`
         var encodedDelete = encodeURIComponent(prefixes + queryDelete) 
         console.log(queryInsertion)      
@@ -199,10 +199,10 @@ RecordLabels.editar = async function(label){
         var albums = label.label.albums
         var queryInsertion = `INSERT DATA {
             c:${idLabel} c:name \"${corrigir.protect_special_char_nome(labelNome)}\".
-            c:${idLabel} c:headquarters \"${corrigir.protect_special_char_other(headquarters)}\".
-            c:${idLabel} c:foundingYear \"${corrigir.protect_special_char_other(foundingYear)}\".
-            c:${idLabel} c:founderName \"${corrigir.protect_special_char_other(founder)}\".
-            c:${idLabel} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
+            ${headquarters == "" ? "" :`c:recordlabel_${idLabel} c:headquarters \"${corrigir.protect_special_char_other(headquarters)}\".`}
+            ${foundingYear == "" ? "" :`c:recordlabel_${idLabel} c:foundingYear \"${corrigir.protect_special_char_other(foundingYear)}\".`}
+            ${founder == "" ? "" :`c:recordlabel_${idLabel} c:founderName \"${corrigir.protect_special_char_other(founder)}\".`}
+            ${abstract == "" ? "" :`c:recordlabel_${idLabel} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
         var encodedLabel = encodeURIComponent(prefixes + queryInsertion) 
         console.log(queryInsertion)      

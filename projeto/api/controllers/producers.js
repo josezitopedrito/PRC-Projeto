@@ -92,8 +92,8 @@ Producers.inserir = async function(producer){
         var queryInsertion = `INSERT DATA {
             c:producer_${idProducer} rdf:type c:Producer.
             c:producer_${idProducer} c:name \"${corrigir.protect_special_char_nome(producerNome)}\".
-            c:producer_${idProducer} c:startingYear \"${corrigir.protect_special_char_other(firstActiveYear)}\".
-            c:producer_${idProducer} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
+            ${firstActiveYear == "" ? "" :`c:producer_${idProducer} c:startingYear \"${corrigir.protect_special_char_other(firstActiveYear)}\".`}
+            ${abstract == "" ? "" :`c:producer_${idProducer} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
         var encodedProducer = encodeURIComponent(prefixes + queryInsertion) 
         console.log(queryInsertion)      
@@ -157,12 +157,12 @@ Producers.editar = async function(producer){
         console.log('Id: ' + idProducer)
         var queryDelete = `DELETE {
             c:${idProducer} c:name ?name.
-            c:${idProducer} c:startingYear ?startingYear.
-            c:${idProducer} c:abstract ?abstract.
+            ${firstActiveYear == "" ? "" :`c:${idProducer} c:startingYear ?startingYear.`}
+            ${abstract == "" ? "" :`c:${idProducer} c:abstract ?abstract.`}
         } WHERE {
             c:${idProducer} c:name ?name.
-            c:${idProducer} c:startingYear ?startingYear.
-            c:${idProducer} c:abstract ?abstract.
+            ${firstActiveYear == "" ? "" :`c:${idProducer} c:startingYear ?startingYear.`}
+            ${abstract == "" ? "" :`c:${idProducer} c:abstract ?abstract.`}
         }`
         var encodedDelete = encodeURIComponent(prefixes + queryDelete) 
         console.log(queryInsertion)      
@@ -183,8 +183,8 @@ Producers.editar = async function(producer){
         var albums = producer.producer.albums
         var queryInsertion = `INSERT DATA {
             c:${idProducer} c:name \"${corrigir.protect_special_char_nome(producerNome)}\".
-            c:${idProducer} c:startingYear \"${corrigir.protect_special_char_other(firstActiveYear)}\".
-            c:${idProducer} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
+            ${firstActiveYear == "" ? "" :`c:producer_${idProducer} c:startingYear \"${corrigir.protect_special_char_other(firstActiveYear)}\".`}
+            ${abstract == "" ? "" :`c:producer_${idProducer} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
         var encodedProducer = encodeURIComponent(prefixes + queryInsertion) 
         console.log(queryInsertion)      

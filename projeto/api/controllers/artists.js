@@ -131,11 +131,11 @@ Artists.inserir = async function(artist){
         var queryInsertion = `INSERT DATA {
             c:artist_${idArtist} rdf:type c:Artist.
             c:artist_${idArtist} c:name \"${corrigir.protect_special_char_nome(artistNome)}\".
-            c:artist_${idArtist} c:birthPlaceName \"${corrigir.protect_special_char_other(birthPlace)}\".
-            c:artist_${idArtist} c:birthDate \"${corrigir.protect_special_char_other(birthDate)}\".
-            c:artist_${idArtist} c:deathDate \"${corrigir.protect_special_char_other(deathDate)}\".
-            c:artist_${idArtist} c:gender \"${corrigir.protect_special_char_other(gender)}\".
-            c:artist_${idArtist} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
+            ${birthPlace == "" ? "" :`c:artist_${idArtist} c:birthPlaceName \"${corrigir.protect_special_char_other(birthPlace)}\".`}
+            ${birthDate == "" ? "" :`c:artist_${idArtist} c:birthDate \"${corrigir.protect_special_char_other(birthDate)}\".`}
+            ${deathDate == "" ? "" :`c:artist_${idArtist} c:deathDate \"${corrigir.protect_special_char_other(deathDate)}\".`}
+            ${gender == "" ? "" :`c:artist_${idArtist} c:gender \"${corrigir.protect_special_char_other(gender)}\".`}
+            ${abstract == "" ? "" :`c:artist_${idArtist} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
         var encodedArtist = encodeURIComponent(prefixes + queryInsertion) 
         console.log(queryInsertion)      
@@ -274,18 +274,18 @@ Artists.editar = async function(artist){
         console.log('Id: ' + idArtist)
         var queryDelete = `DELETE {
             c:${idArtist} c:name ?name.
-            c:${idArtist} c:birthPlaceName ?birthplacename.
-            c:${idArtist} c:birthDate ?birthDate.
-            c:${idArtist} c:deathDate ?deathDate.
-            c:${idArtist} c:gender ?gender.
-            c:${idArtist} c:abstract ?abstract.
+            ${birthPlace == "" ? "" :`c:${idArtist} c:birthPlaceName ?birthplacename.`}
+            ${birthDate == "" ? "" :`c:${idArtist} c:birthDate ?birthDate.`}
+            ${deathDate == "" ? "" :`c:${idArtist} c:deathDate ?deathDate.`}
+            ${gender == "" ? "" :`c:${idArtist} c:gender ?gender.`}
+            ${abstract == "" ? "" :`c:${idArtist} c:abstract ?abstract.`}
         } WHERE {
             c:${idArtist} c:name ?name.
-            c:${idArtist} c:birthPlaceName ?birthplacename.
-            c:${idArtist} c:birthDate ?birthDate.
-            c:${idArtist} c:deathDate ?deathDate.
-            c:${idArtist} c:gender ?gender.
-            c:${idArtist} c:abstract ?abstract.
+            ${birthPlace == "" ? "" :`c:${idArtist} c:birthPlaceName ?birthplacename.`}
+            ${birthDate == "" ? "" :`c:${idArtist} c:birthDate ?birthDate.`}
+            ${deathDate == "" ? "" :`c:${idArtist} c:deathDate ?deathDate.`}
+            ${gender == "" ? "" :`c:${idArtist} c:gender ?gender.`}
+            ${abstract == "" ? "" :`c:${idArtist} c:abstract ?abstract.`}
         }`
         var encodedDelete = encodeURIComponent(prefixes + queryDelete) 
         console.log(queryDelete)      
@@ -312,11 +312,11 @@ Artists.editar = async function(artist){
         console.log("Generos da piça:" + genres)
         var queryInsertion = `INSERT DATA {
             c:${idArtist} c:name \"${corrigir.protect_special_char_nome(artistNome)}\".
-            c:${idArtist} c:birthPlaceName \"${corrigir.protect_special_char_other(birthPlace)}\".
-            c:${idArtist} c:birthDate \"${corrigir.protect_special_char_other(birthDate)}\".
-            c:${idArtist} c:deathDate \"${corrigir.protect_special_char_other(deathDate)}\".
-            c:${idArtist} c:gender \"${corrigir.protect_special_char_other(gender)}\".
-            c:${idArtist} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
+            ${birthPlace == "" ? "" :`c:artist_${idArtist} c:birthPlaceName \"${corrigir.protect_special_char_other(birthPlace)}\".`}
+            ${birthDate == "" ? "" :`c:artist_${idArtist} c:birthDate \"${corrigir.protect_special_char_other(birthDate)}\".`}
+            ${deathDate == "" ? "" :`c:artist_${idArtist} c:deathDate \"${corrigir.protect_special_char_other(deathDate)}\".`}
+            ${gender == "" ? "" :`c:artist_${idArtist} c:gender \"${corrigir.protect_special_char_other(gender)}\".`}
+            ${abstract == "" ? "" :`c:artist_${idArtist} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
         var encodedArtist = encodeURIComponent(prefixes + queryInsertion) 
         console.log(queryInsertion)      

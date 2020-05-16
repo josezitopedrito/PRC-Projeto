@@ -130,11 +130,11 @@ Bands.inserir = async function(band){
         var queryInsertion = `INSERT DATA {
             c:group_${idBand} rdf:type c:Group.
             c:group_${idBand} c:name \"${corrigir.protect_special_char_nome(groupNome)}\".
-            c:group_${idBand} c:hometown \"${corrigir.protect_special_char_other(hometown)}\".
-            c:group_${idBand} c:startDate \"${corrigir.protect_special_char_other(formationDate)}\".
-            c:group_${idBand} c:endDate \"${corrigir.protect_special_char_other(disbandingDate)}\".
-            c:group_${idBand} c:homepage \"${corrigir.protect_special_char_other(homepage)}\".
-            c:group_${idBand} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
+            ${hometown == "" ? "" :`c:group_${idBand} c:hometown \"${corrigir.protect_special_char_other(hometown)}\".`}
+            ${formationDate == "" ? "" :`c:group_${idBand} c:startDate \"${corrigir.protect_special_char_other(formationDate)}\".`}
+            ${disbandingDate == "" ? "" :`c:group_${idBand} c:endDate \"${corrigir.protect_special_char_other(disbandingDate)}\".`}
+            ${homepage == "" ? "" :`c:group_${idBand} c:homepage \"${corrigir.protect_special_char_other(homepage)}\".`}
+            ${abstract == "" ? "" :`c:group_${idBand} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
         var encodedBand = encodeURIComponent(prefixes + queryInsertion) 
         console.log(queryInsertion)      
@@ -278,18 +278,18 @@ Bands.editar = async function(band){
         console.log('Id: ' + idBand)
         var queryDelete = `DELETE {
             c:${idBand} c:name ?name.
-            c:${idBand} c:hometown ?hometown.
-            c:${idBand} c:startDate ?startDate.
-            c:${idBand} c:endDate ?endDate.
-            c:${idBand} c:homepage ?homepage.
-            c:${idBand} c:abstract ?abstract.
+            ${hometown == "" ? "" :`c:${idBand} c:hometown ?hometown.`}
+            ${formationDate == "" ? "" :`c:${idBand} c:startDate ?startDate.`}
+            ${disbandingDate == "" ? "" :`c:${idBand} c:endDate ?endDate.`}
+            ${homepage == "" ? "" :`c:${idBand} c:homepage ?homepage.`}
+            ${abstract == "" ? "" :`c:${idBand} c:abstract ?abstract.`}
         } WHERE {
             c:${idBand} c:name ?name.
-            c:${idBand} c:hometown ?hometown.
-            c:${idBand} c:startDate ?startDate.
-            c:${idBand} c:endDate ?endDate.
-            c:${idBand} c:homepage ?homepage.
-            c:${idBand} c:abstract ?abstract.
+            ${hometown == "" ? "" :`c:${idBand} c:hometown ?hometown.`}
+            ${formationDate == "" ? "" :`c:${idBand} c:startDate ?startDate.`}
+            ${disbandingDate == "" ? "" :`c:${idBand} c:endDate ?endDate.`}
+            ${homepage == "" ? "" :`c:${idBand} c:homepage ?homepage.`}
+            ${abstract == "" ? "" :`c:${idBand} c:abstract ?abstract.`}
         }`
         var encodedDelete = encodeURIComponent(prefixes + queryDelete) 
         console.log("quinto break");
@@ -316,11 +316,11 @@ Bands.editar = async function(band){
         var genres = band.group.genres
         var queryInsertion = `INSERT DATA {
             c:${idBand} c:name \"${corrigir.protect_special_char_nome(groupNome)}\".
-            c:${idBand} c:hometown \"${corrigir.protect_special_char_other(hometown)}\".
-            c:${idBand} c:startDate \"${corrigir.protect_special_char_other(formationDate)}\".
-            c:${idBand} c:endDate \"${corrigir.protect_special_char_other(disbandingDate)}\".
-            c:${idBand} c:homepage \"${corrigir.protect_special_char_other(homepage)}\".
-            c:${idBand} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".
+            ${hometown == "" ? "" :`c:group_${idBand} c:hometown \"${corrigir.protect_special_char_other(hometown)}\".`}
+            ${formationDate == "" ? "" :`c:group_${idBand} c:startDate \"${corrigir.protect_special_char_other(formationDate)}\".`}
+            ${disbandingDate == "" ? "" :`c:group_${idBand} c:endDate \"${corrigir.protect_special_char_other(disbandingDate)}\".`}
+            ${homepage == "" ? "" :`c:group_${idBand} c:homepage \"${corrigir.protect_special_char_other(homepage)}\".`}
+            ${abstract == "" ? "" :`c:group_${idBand} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
         console.log("sexto break");
         var encodedBand = encodeURIComponent(prefixes + queryInsertion) 
