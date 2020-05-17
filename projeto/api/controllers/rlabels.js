@@ -91,14 +91,13 @@ RecordLabels.inserir = async function(label){
         console.log('Label: ' + JSON.stringify(totalRecordLabel))
         var idLabel = parseInt(totalRecordLabel[0].count,10)
         console.log('Id: ' + idLabel)
-        var labelNome = label.label.labelName
-        var headquarters = label.label.headquarters
-        var foundingYear = label.label.foundingYear
-        var founder = label.label.founder
-        var abstract = label.label.labelInfo
+        var labelNome = typeof label.label.labelName == 'undefined' ? "" : label.label.labelName
+        var headquarters = typeof label.label.headquarters == 'undefined' ? "" : label.label.headquarters
+        var foundingYear = typeof label.label.foundingYear == 'undefined' ? "" : label.label.foundingYear
+        var founder = typeof label.label.founder == 'undefined' ? "" : label.label.founder
+        var abstract = typeof label.label.labelInfo == 'undefined' ? "" : label.label.labelInfo
         var albums = label.label.albums
         var queryInsertion = `INSERT DATA {
-            c:recordlabel_${idLabel} rdf:type c:RecordLabel.
             c:recordlabel_${idLabel} c:name \"${corrigir.protect_special_char_nome(labelNome)}\".
             ${headquarters == "" ? "" :`c:recordlabel_${idLabel} c:headquarters \"${corrigir.protect_special_char_other(headquarters)}\".`}
             ${foundingYear == "" ? "" :`c:recordlabel_${idLabel} c:foundingYear \"${corrigir.protect_special_char_other(foundingYear)}\".`}
@@ -191,18 +190,18 @@ RecordLabels.editar = async function(label){
         }catch(e){
             throw(e)
         }
-        var labelNome = label.label.labelName
-        var headquarters = label.label.headquarters
-        var foundingYear = label.label.foundingYear
-        var founder = label.label.founder
-        var abstract = label.label.labelInfo
+        var labelNome = typeof label.label.labelName == 'undefined' ? "" : label.label.labelName
+        var headquarters = typeof label.label.headquarters == 'undefined' ? "" : label.label.headquarters
+        var foundingYear = typeof label.label.foundingYear == 'undefined' ? "" : label.label.foundingYear
+        var founder = typeof label.label.founder == 'undefined' ? "" : label.label.founder
+        var abstract = typeof label.label.labelInfo == 'undefined' ? "" : label.label.labelInfo
         var albums = label.label.albums
         var queryInsertion = `INSERT DATA {
             c:${idLabel} c:name \"${corrigir.protect_special_char_nome(labelNome)}\".
-            ${headquarters == "" ? "" :`c:recordlabel_${idLabel} c:headquarters \"${corrigir.protect_special_char_other(headquarters)}\".`}
-            ${foundingYear == "" ? "" :`c:recordlabel_${idLabel} c:foundingYear \"${corrigir.protect_special_char_other(foundingYear)}\".`}
-            ${founder == "" ? "" :`c:recordlabel_${idLabel} c:founderName \"${corrigir.protect_special_char_other(founder)}\".`}
-            ${abstract == "" ? "" :`c:recordlabel_${idLabel} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
+            ${headquarters == "" ? "" :`c:${idLabel} c:headquarters \"${corrigir.protect_special_char_other(headquarters)}\".`}
+            ${foundingYear == "" ? "" :`c:${idLabel} c:foundingYear \"${corrigir.protect_special_char_other(foundingYear)}\".`}
+            ${founder == "" ? "" :`c:${idLabel} c:founderName \"${corrigir.protect_special_char_other(founder)}\".`}
+            ${abstract == "" ? "" :`c:${idLabel} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
         var encodedLabel = encodeURIComponent(prefixes + queryInsertion) 
         console.log(queryInsertion)      

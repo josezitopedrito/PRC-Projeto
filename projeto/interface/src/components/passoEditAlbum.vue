@@ -139,42 +139,44 @@
                     </v-alert> 
                   </template>
                 </v-data-table>
-                <div v-if="position == 'albumGroup' && group.albumGroup.length>0">
+                <v-btn class="blue white--text" @click.prevent="reset">Reset</v-btn>
+                <v-btn ref="submit" class="green white--text" @click="saveGroup();" v-if="position == 'albumGroup'">Submit</v-btn>
+                <v-btn ref="skip" @click="saveSkipGroup();" class="orange white--text" :disabled="disableButton" v-if="position == 'albumGroup'">Saltar</v-btn>
+
+                <v-btn ref="submit" class="green white--text" @click="saveLabel();" v-if="position == 'albumLabel'">Submit</v-btn>
+                <v-btn ref="skip" @click="saveSkipLabel();" class="orange white--text" :disabled="disableButton" v-if="position == 'albumLabel'">Saltar</v-btn>
+
+                <v-btn ref="submit" class="green white--text" @click="saveArtist();" v-if="position == 'albumArtist'">Submit</v-btn>
+                <v-btn ref="skip" @click="saveSkipArtist();" class="orange white--text" :disabled="disableButton" v-if="position == 'albumArtist'">Saltar</v-btn>
+
+                <v-btn ref="submit" class="green white--text" @click="saveProducer();" v-if="position == 'albumProducer'">Submit</v-btn>
+                <v-btn ref="skip" @click="saveSkipProducer();" class="orange white--text" :disabled="disableButton" v-if="position == 'albumProducer'">Saltar</v-btn>
+                <div v-if="position == 'albumGroup' && group.albumGroup.length>0" style="overflow-y: scroll;height: 100px;width: 800px;">
                   <h3>Albums this musical group has created:</h3>
                   <ul v-for="n in group.albumGroup" :key="n">
                       <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
-                <div v-if="position == 'albumLabel' && label.albumLabel.length>0">
+                <div v-if="position == 'albumLabel' && label.albumLabel.length>0" style="overflow-y: scroll;height: 100px;width: 800px;">
                   <h3>Albums this record label has put out:</h3>
                   <ul v-for="n in label.albumLabel" :key="n">
                       <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
-                <div v-if="position == 'albumArtist' && artist.albumArtist.length>0">
+                <div v-if="position == 'albumArtist' && artist.albumArtist.length>0" style="overflow-y: scroll;height: 100px;width: 800px;">
                   <h3>Albums this artist has created:</h3>
                   <ul v-for="n in artist.albumArtist" :key="n">
                       <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
-                <div v-if="position == 'albumProducer' && producer.albumProducer.length>0">
+                <div v-if="position == 'albumProducer' && producer.albumProducer.length>0" style="overflow-y: scroll;height: 100px;width: 800px;">
                   <h3>Albums this producer has produced:</h3>
                   <ul v-for="n in producer.albumProducer" :key="n">
                       <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
-              <v-btn class="blue white--text" @click.prevent="reset">Reset</v-btn>
-              <v-btn ref="submit" class="green white--text" @click="saveGroup();" v-if="position == 'albumGroup'">Submit</v-btn>
-              <v-btn ref="skip" @click="saveSkipGroup();" class="orange white--text" :disabled="disableButton" v-if="position == 'albumGroup'">Saltar</v-btn>
+                
 
-              <v-btn ref="submit" class="green white--text" @click="saveLabel();" v-if="position == 'albumLabel'">Submit</v-btn>
-              <v-btn ref="skip" @click="saveSkipLabel();" class="orange white--text" :disabled="disableButton" v-if="position == 'albumLabel'">Saltar</v-btn>
-
-              <v-btn ref="submit" class="green white--text" @click="saveArtist();" v-if="position == 'albumArtist'">Submit</v-btn>
-              <v-btn ref="skip" @click="saveSkipArtist();" class="orange white--text" :disabled="disableButton" v-if="position == 'albumArtist'">Saltar</v-btn>
-
-              <v-btn ref="submit" class="green white--text" @click="saveProducer();" v-if="position == 'albumProducer'">Submit</v-btn>
-              <v-btn ref="skip" @click="saveSkipProducer();" class="orange white--text" :disabled="disableButton" v-if="position == 'albumProducer'">Saltar</v-btn>
             </v-container>
         </v-form>
       </v-row>

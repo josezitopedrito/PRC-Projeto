@@ -52,6 +52,16 @@
                                 </v-layout>
                             </td>
                         </tr>
+                        <tr v-if="genre.Artist[0]">
+                            <td class="text-left">Artists</td>
+                            <td>
+                                <v-layout justify-center>
+                                    <v-list class="tile" v-for="artist in genre.Artist" :key="artist.artist">
+                                        <v-list-item link :to="'/artists/' + artist.artist.split('#')[1]">{{ artist.artistName }}</v-list-item>
+                                    </v-list>
+                                </v-layout>
+                            </td>
+                        </tr>
                         <tr>
                             <td class="text-left">Genre information</td>
                             <td>
@@ -77,7 +87,7 @@ export default {
   name: 'Género',
   data(){
     return{
-      genre:{Genre:[{}],SubGenre:[{genre:""}],SupraGenre:[{genre:""}],FusionGenre:[{genre:""}],Band:[{band:""}]},
+      genre:{Genre:[{}],SubGenre:[{genre:""}],SupraGenre:[{genre:""}],FusionGenre:[{genre:""}],Band:[{band:""}],Artist:[{artist:""}]},
       lhost:'http://localhost:5001/api'
     }
   },

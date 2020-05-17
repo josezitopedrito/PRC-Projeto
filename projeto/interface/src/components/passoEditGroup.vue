@@ -139,25 +139,7 @@
                     </v-alert> 
                   </template>
                 </v-data-table>
-                <div v-if="position == 'albumGroup' && album.albumGroup.length>0">
-                  <h3>Groups who created this album:</h3>
-                  <ul v-for="n in album.albumGroup" :key="n">
-                      <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
-                  </ul>
-                </div>
-                <div v-if="position == 'groupArtist' && artist.groupArtist.length>0">
-                  <h3>Groups this artist has been a part of:</h3>
-                  <ul v-for="n in artist.groupArtist" :key="n">
-                      <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
-                  </ul>
-                </div>
-                <div v-if="position == 'groupGenre' && genre.groupGenre.length>0">
-                  <h3>Groups whose music falls into this genre:</h3>
-                  <ul v-for="n in genre.groupGenre" :key="n">
-                      <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
-                  </ul>
-                </div>
-              <v-btn class="blue white--text" @click.prevent="reset">Reset</v-btn>
+                <v-btn class="blue white--text" @click.prevent="reset">Reset</v-btn>
               <v-btn ref="submit" class="green white--text" @click="saveAlbum();" v-if="position == 'albumGroup'">Submit</v-btn>
               <v-btn ref="skip" @click="saveSkipAlbum();" class="orange white--text" :disabled="disableButton" v-if="position == 'albumGroup'">Saltar</v-btn>
 
@@ -166,6 +148,25 @@
 
               <v-btn ref="submit" class="green white--text" @click="saveGenre();" v-if="position == 'groupGenre'">Submit</v-btn>
               <v-btn ref="skip" @click="saveSkipGenre();" class="orange white--text" :disabled="disableButton" v-if="position == 'groupGenre'">Saltar</v-btn>
+                <div v-if="position == 'albumGroup' && album.albumGroup.length>0" style="overflow-y: scroll;height: 100px;width: 800px;">
+                  <h3>Groups who created this album:</h3>
+                  <ul v-for="n in album.albumGroup" :key="n">
+                      <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
+                  </ul>
+                </div>
+                <div v-if="position == 'groupArtist' && artist.groupArtist.length>0" style="overflow-y: scroll;height: 100px;width: 800px;">
+                  <h3>Groups this artist has been a part of:</h3>
+                  <ul v-for="n in artist.groupArtist" :key="n">
+                      <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
+                  </ul>
+                </div>
+                <div v-if="position == 'groupGenre' && genre.groupGenre.length>0" style="overflow-y: scroll;height: 100px;width: 800px;">
+                  <h3>Groups whose music falls into this genre:</h3>
+                  <ul v-for="n in genre.groupGenre" :key="n">
+                      <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
+                  </ul>
+                </div>
+              
             </v-container>
         </v-form>
       </v-row>

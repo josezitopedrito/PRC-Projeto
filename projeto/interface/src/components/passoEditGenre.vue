@@ -115,51 +115,52 @@
                     </v-alert> 
                   </template>
                 </v-data-table>
-                <div v-if="position == 'genreArtist' && artist.genreArtist.length>0">
+                <v-btn class="blue white--text" @click.prevent="reset">Reset</v-btn>
+                <v-btn ref="submit" class="green white--text" @click="saveGroup();" v-if="position == 'groupGenre'">Submit</v-btn>
+                <v-btn ref="skip" @click="saveSkipGroup();" class="orange white--text" :disabled="disableButton" v-if="position == 'groupGenre'">Saltar</v-btn>
+
+                <v-btn ref="submit" class="green white--text" @click="saveArtist();" v-if="position == 'genreArtist'">Submit</v-btn>
+                <v-btn ref="skip" @click="saveSkipArtist();" class="orange white--text" :disabled="disableButton" v-if="position == 'genreArtist'">Saltar</v-btn>
+
+                <v-btn ref="submit" class="green white--text" @click="saveSuperGenre();" v-if="position == 'supergenreGenre'">Submit</v-btn>
+                <v-btn ref="skip" @click="saveSkipSuperGenre();" class="orange white--text" :disabled="disableButton" v-if="position == 'supergenreGenre'">Saltar</v-btn>
+
+                <v-btn ref="submit" class="green white--text" @click="saveSubGenre();" v-if="position == 'subgenreGenre'">Submit</v-btn>
+                <v-btn ref="skip" @click="saveSkipSubGenre();" class="orange white--text" :disabled="disableButton" v-if="position == 'subgenreGenre'">Saltar</v-btn>
+
+                <v-btn ref="submit" class="green white--text" @click="saveFusionGenre();" v-if="position == 'fusiongenreGenre'">Submit</v-btn>
+                <v-btn ref="skip" @click="saveSkipFusionGenre();" class="orange white--text" :disabled="disableButton" v-if="position == 'fusiongenreGenre'">Saltar</v-btn>
+                <div v-if="position == 'genreArtist' && artist.genreArtist.length>0" style="overflow-y: scroll;height: 100px;width: 800px;">
                   <h3>Genres of this artist's music:</h3>
                   <ul v-for="n in artist.genreArtist" :key="n">
                       <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
-                <div v-if="position == 'groupGenre' && group.groupGenre.length>0">
+                <div v-if="position == 'groupGenre' && group.groupGenre.length>0" style="overflow-y: scroll;height: 100px;width: 800px;">
                   <h3>Genres of this musical group's music:</h3>
                   <ul v-for="n in group.groupGenre" :key="n">
                       <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
-                <div v-if="position == 'supergenreGenre' && genre.supergenreGenre.length>0">
+                <div v-if="position == 'supergenreGenre' && genre.supergenreGenre.length>0" style="overflow-y: scroll;height: 100px;width: 800px;">
                   <h3>SuperGenres of this genre:</h3>
                   <ul v-for="n in genre.supergenreGenre" :key="n">
                       <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
-                <div v-if="position == 'subgenreGenre' && genre.subgenreGenre.length>0">
+                <div v-if="position == 'subgenreGenre' && genre.subgenreGenre.length>0" style="overflow-y: scroll;height: 100px;width: 800px;">
                   <h3>SubGenres of this genre:</h3>
                   <ul v-for="n in genre.subgenreGenre" :key="n">
                       <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
-                <div v-if="position == 'fusiongenreGenre' && genre.fusiongenreGenre.length>0">
+                <div v-if="position == 'fusiongenreGenre' && genre.fusiongenreGenre.length>0" style="overflow-y: scroll;height: 100px;width: 800px;">
                   <h3>Genres whose fusion resulted in this genre:</h3>
                   <ul v-for="n in genre.fusiongenreGenre" :key="n">
                       <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                   </ul>
                 </div>
-              <v-btn class="blue white--text" @click.prevent="reset">Reset</v-btn>
-              <v-btn ref="submit" class="green white--text" @click="saveGroup();" v-if="position == 'groupGenre'">Submit</v-btn>
-              <v-btn ref="skip" @click="saveSkipGroup();" class="orange white--text" :disabled="disableButton" v-if="position == 'groupGenre'">Saltar</v-btn>
 
-              <v-btn ref="submit" class="green white--text" @click="saveArtist();" v-if="position == 'genreArtist'">Submit</v-btn>
-              <v-btn ref="skip" @click="saveSkipArtist();" class="orange white--text" :disabled="disableButton" v-if="position == 'genreArtist'">Saltar</v-btn>
-
-              <v-btn ref="submit" class="green white--text" @click="saveSuperGenre();" v-if="position == 'supergenreGenre'">Submit</v-btn>
-              <v-btn ref="skip" @click="saveSkipSuperGenre();" class="orange white--text" :disabled="disableButton" v-if="position == 'supergenreGenre'">Saltar</v-btn>
-
-              <v-btn ref="submit" class="green white--text" @click="saveSubGenre();" v-if="position == 'subgenreGenre'">Submit</v-btn>
-              <v-btn ref="skip" @click="saveSkipSubGenre();" class="orange white--text" :disabled="disableButton" v-if="position == 'subgenreGenre'">Saltar</v-btn>
-
-              <v-btn ref="submit" class="green white--text" @click="saveFusionGenre();" v-if="position == 'fusiongenreGenre'">Submit</v-btn>
-              <v-btn ref="skip" @click="saveSkipFusionGenre();" class="orange white--text" :disabled="disableButton" v-if="position == 'fusiongenreGenre'">Saltar</v-btn>
             </v-container>
         </v-form>
       </v-row>

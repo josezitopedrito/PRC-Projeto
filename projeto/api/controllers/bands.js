@@ -118,17 +118,16 @@ Bands.inserir = async function(band){
         var idBand = parseInt(totalBands[0].count,10)
         console.log('Id: ' + idBand)
         console.log(JSON.stringify(band))
-        var groupNome = band.group.groupName
-        var formationDate = band.group.formationDate
-        var disbandingDate = band.group.disbandingDate
-        var homepage = band.group.homepage
-        var hometown = band.group.hometown
-        var abstract = band.group.groupInfo
+        var groupNome = typeof band.group.groupName == 'undefined' ? "" : band.group.groupName 
+        var formationDate = typeof band.group.formationDate == 'undefined' ? "" : band.group.formationDate
+        var disbandingDate = typeof band.group.disbandingDate == 'undefined' ? "" : band.group.disbandingDate
+        var homepage = typeof band.group.homepage == 'undefined' ? "" : band.group.homepage
+        var hometown = typeof band.group.hometown == 'undefined' ? "" : band.group.hometown
+        var abstract = typeof band.group.groupInfo == 'undefined' ? "" : band.group.groupInfo
         var artists = band.group.members
         var albums = band.group.albums
         var genres = band.group.genres
         var queryInsertion = `INSERT DATA {
-            c:group_${idBand} rdf:type c:Group.
             c:group_${idBand} c:name \"${corrigir.protect_special_char_nome(groupNome)}\".
             ${hometown == "" ? "" :`c:group_${idBand} c:hometown \"${corrigir.protect_special_char_other(hometown)}\".`}
             ${formationDate == "" ? "" :`c:group_${idBand} c:startDate \"${corrigir.protect_special_char_other(formationDate)}\".`}
@@ -305,22 +304,22 @@ Bands.editar = async function(band){
         }catch(e){
             throw(e)
         }
-        var groupNome = band.group.groupName
-        var formationDate = band.group.formationDate
-        var disbandingDate = band.group.disbandingDate
-        var homepage = band.group.homepage
-        var hometown = band.group.hometown
-        var abstract = band.group.groupInfo
+        var groupNome = typeof band.group.groupName == 'undefined' ? "" : band.group.groupName 
+        var formationDate = typeof band.group.formationDate == 'undefined' ? "" : band.group.formationDate
+        var disbandingDate = typeof band.group.disbandingDate == 'undefined' ? "" : band.group.disbandingDate
+        var homepage = typeof band.group.homepage == 'undefined' ? "" : band.group.homepage
+        var hometown = typeof band.group.hometown == 'undefined' ? "" : band.group.hometown
+        var abstract = typeof band.group.groupInfo == 'undefined' ? "" : band.group.groupInfo
         var artists = band.group.members
         var albums = band.group.albums
         var genres = band.group.genres
         var queryInsertion = `INSERT DATA {
             c:${idBand} c:name \"${corrigir.protect_special_char_nome(groupNome)}\".
-            ${hometown == "" ? "" :`c:group_${idBand} c:hometown \"${corrigir.protect_special_char_other(hometown)}\".`}
-            ${formationDate == "" ? "" :`c:group_${idBand} c:startDate \"${corrigir.protect_special_char_other(formationDate)}\".`}
-            ${disbandingDate == "" ? "" :`c:group_${idBand} c:endDate \"${corrigir.protect_special_char_other(disbandingDate)}\".`}
-            ${homepage == "" ? "" :`c:group_${idBand} c:homepage \"${corrigir.protect_special_char_other(homepage)}\".`}
-            ${abstract == "" ? "" :`c:group_${idBand} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
+            ${hometown == "" ? "" :`c:${idBand} c:hometown \"${corrigir.protect_special_char_other(hometown)}\".`}
+            ${formationDate == "" ? "" :`c:${idBand} c:startDate \"${corrigir.protect_special_char_other(formationDate)}\".`}
+            ${disbandingDate == "" ? "" :`c:${idBand} c:endDate \"${corrigir.protect_special_char_other(disbandingDate)}\".`}
+            ${homepage == "" ? "" :`c:${idBand} c:homepage \"${corrigir.protect_special_char_other(homepage)}\".`}
+            ${abstract == "" ? "" :`c:${idBand} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
         console.log("sexto break");
         var encodedBand = encodeURIComponent(prefixes + queryInsertion) 

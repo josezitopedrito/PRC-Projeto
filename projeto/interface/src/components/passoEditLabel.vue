@@ -130,15 +130,16 @@
                     </v-alert> 
                     </template>
                 </v-data-table>
-              <div v-if="album.albumLabel.length>0">
+              <v-btn class="blue white--text" @click.prevent="reset">Reset</v-btn>
+              <v-btn ref="submit" class="green white--text" @click="saveAlbum();">Submit</v-btn>
+              <v-btn ref="skip" @click="saveSkipAlbum();" class="orange white--text" :disabled="disableButton">Saltar</v-btn>
+              <div v-if="album.albumLabel.length>0" style="overflow-y: scroll;height: 100px;width: 800px;">
                 <h3>Record Labelds who put out this album:</h3>
                 <ul v-for="n in album.albumLabel" :key="n">
                     <li>{{n}}<v-btn depressed @click="deleteItem(n)">Eliminar</v-btn></li>
                 </ul>
               </div>
-              <v-btn class="blue white--text" @click.prevent="reset">Reset</v-btn>
-              <v-btn ref="submit" class="green white--text" @click="saveAlbum();">Submit</v-btn>
-              <v-btn ref="skip" @click="saveSkipAlbum();" class="orange white--text" :disabled="disableButton">Saltar</v-btn>
+              
             </v-container>
         </v-form>
       </v-row>

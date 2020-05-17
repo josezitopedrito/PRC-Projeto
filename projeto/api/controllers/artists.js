@@ -119,17 +119,17 @@ Artists.inserir = async function(artist){
         console.log('Artist: ' + JSON.stringify(totalArtists))
         var idArtist = parseInt(totalArtists[0].count,10)
         console.log('Id: ' + idArtist)
-        var artistNome = artist.artist.artistName
-        var birthPlace = artist.artist.birthPlace
-        var birthDate = artist.artist.birthDate
-        var deathDate = artist.artist.deathDate
-        var gender = artist.artist.gender
-        var abstract = artist.artist.artistInfo
-        var albums = artist.artist.albums
-        var groups = artist.artist.groups
-        var genres = artist.artist.genres
+        var artistNome = typeof artist.artist.artistName == 'undefined' ? "" :  artist.artist.artistName
+        var birthPlace = typeof artist.artist.birthPlace == 'undefined' ? "" : artist.artist.birthPlace
+        var birthDate = typeof artist.artist.birthDate == 'undefined' ? "" : artist.artist.birthDate
+        var deathDate = typeof artist.artist.deathDate == 'undefined' ? "" : artist.artist.deathDate
+        var gender = typeof artist.artist.gender == 'undefined' ? "" : artist.artist.gender
+        var abstract = typeof artist.artist.artistInfo == 'undefined' ? "" : artist.artist.artistInfo
+        var albums = artist.artist.albums 
+        var groups = artist.artist.groups 
+        var genres = artist.artist.genres 
+        console.log("Generos da piça:" + genres)
         var queryInsertion = `INSERT DATA {
-            c:artist_${idArtist} rdf:type c:Artist.
             c:artist_${idArtist} c:name \"${corrigir.protect_special_char_nome(artistNome)}\".
             ${birthPlace == "" ? "" :`c:artist_${idArtist} c:birthPlaceName \"${corrigir.protect_special_char_other(birthPlace)}\".`}
             ${birthDate == "" ? "" :`c:artist_${idArtist} c:birthDate \"${corrigir.protect_special_char_other(birthDate)}\".`}
@@ -300,26 +300,28 @@ Artists.editar = async function(artist){
         }catch(e){
             throw(e)
         }
-        var artistNome = artist.artist.artistName
-        var birthPlace = artist.artist.birthPlace
-        var birthDate = artist.artist.birthDate
-        var deathDate = artist.artist.deathDate
-        var gender = artist.artist.gender
-        var abstract = artist.artist.artistInfo
-        var albums = artist.artist.albums
-        var groups = artist.artist.groups
-        var genres = artist.artist.genres
+        var artistNome = typeof artist.artist.artistName == 'undefined' ? "" :  artist.artist.artistName
+        var birthPlace = typeof artist.artist.birthPlace == 'undefined' ? "" : artist.artist.birthPlace
+        var birthDate = typeof artist.artist.birthDate == 'undefined' ? "" : artist.artist.birthDate
+        var deathDate = typeof artist.artist.deathDate == 'undefined' ? "" : artist.artist.deathDate
+        var gender = typeof artist.artist.gender == 'undefined' ? "" : artist.artist.gender
+        var abstract = typeof artist.artist.artistInfo == 'undefined' ? "" : artist.artist.artistInfo
+        var albums = artist.artist.albums 
+        var groups = artist.artist.groups 
+        var genres = artist.artist.genres 
         console.log("Generos da piça:" + genres)
         var queryInsertion = `INSERT DATA {
             c:${idArtist} c:name \"${corrigir.protect_special_char_nome(artistNome)}\".
-            ${birthPlace == "" ? "" :`c:artist_${idArtist} c:birthPlaceName \"${corrigir.protect_special_char_other(birthPlace)}\".`}
-            ${birthDate == "" ? "" :`c:artist_${idArtist} c:birthDate \"${corrigir.protect_special_char_other(birthDate)}\".`}
-            ${deathDate == "" ? "" :`c:artist_${idArtist} c:deathDate \"${corrigir.protect_special_char_other(deathDate)}\".`}
-            ${gender == "" ? "" :`c:artist_${idArtist} c:gender \"${corrigir.protect_special_char_other(gender)}\".`}
-            ${abstract == "" ? "" :`c:artist_${idArtist} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
+            ${birthPlace == "" ? "" :`c:${idArtist} c:birthPlaceName \"${corrigir.protect_special_char_other(birthPlace)}\".`}
+            ${birthDate == "" ? "" :`c:${idArtist} c:birthDate \"${corrigir.protect_special_char_other(birthDate)}\".`}
+            ${deathDate == "" ? "" :`c:${idArtist} c:deathDate \"${corrigir.protect_special_char_other(deathDate)}\".`}
+            ${gender == "" ? "" :`c:${idArtist} c:gender \"${corrigir.protect_special_char_other(gender)}\".`}
+            ${abstract == "" ? "" :`c:${idArtist} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
+        console.log(queryInsertion)
+        console.log("AQUIIIIIIIII")
         var encodedArtist = encodeURIComponent(prefixes + queryInsertion) 
-        console.log(queryInsertion)      
+            
         try{
             await axios.post(postLink + encodedArtist, null).then(response => {
                 //resolve(response.data.content)

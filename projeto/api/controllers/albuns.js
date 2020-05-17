@@ -124,23 +124,21 @@ Albuns.inserir = async function(album){
         console.log('Album: ' + JSON.stringify(totalAlbuns))
         var idAlbum = parseInt(totalAlbuns[0].count,10)
         console.log('Id: ' + idAlbum)
-        var albumNome = album.album.albumName
-        var albumType = album.album.type
-        var releaseDate = album.album.releaseDate
-        var runtime = album.album.runtime
-        var abstract = album.album.albumInfo
+        var albumNome = typeof album.album.albumName == 'undefined' ? "" : album.album.albumName
+        var albumType = typeof album.album.type == 'undefined' ? "" : album.album.type
+        var releaseDate = typeof album.album.releaseDate == 'undefined' ? "" : album.album.releaseDate
+        var runtime = typeof album.album.runtime == 'undefined' ? "" : album.album.runtime
+        var abstract = typeof album.album.albumInfo == 'undefined' ? "" : album.album.albumInfo
         var artists = album.album.artists
         var groups = album.album.groups
         var labels = album.album.labels
         var producers = album.album.producers
-        //${abstract == "" ? "" :`c:genre_${idGenre} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         var queryInsertion = `INSERT DATA {
-            c:album_${idAlbum} rdf:type c:Album.
-            c:album_${idAlbum} c:name \"${corrigir.protect_special_char_nome(albumNome)}\".
-            ${albumType == "" ? "" :`c:album_${idAlbum} c:albumType \"${corrigir.protect_special_char_other(albumType)}\".`}
-            ${releaseDate == "" ? "" :`c:album_${idAlbum} c:releaseDate \"${corrigir.protect_special_char_other(releaseDate)}\".`}
-            ${runtime == "" ? "" :`c:album_${idAlbum} c:runtime \"${corrigir.protect_special_char_other(runtime)}\".`}
-            ${abstract == "" ? "" :`c:album_${idAlbum} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
+            c:${idAlbum} c:name \"${corrigir.protect_special_char_nome(albumNome)}\".
+            ${albumType == "" ? "" :`c:${idAlbum} c:albumType \"${corrigir.protect_special_char_other(albumType)}\".`}
+            ${releaseDate == "" ? "" :`c:${idAlbum} c:releaseDate \"${corrigir.protect_special_char_other(releaseDate)}\".`}
+            ${runtime == "" ? "" :`c:${idAlbum} c:runtime \"${corrigir.protect_special_char_other(runtime)}\".`}
+            ${abstract == "" ? "" :`c:${idAlbum} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
         var encodedAlbum = encodeURIComponent(prefixes + queryInsertion) 
         console.log(queryInsertion)      
@@ -338,11 +336,11 @@ Albuns.editar = async function(album){
         }catch(e){
             throw(e)
         }
-        var albumNome = album.album.albumName
-        var albumType = album.album.type
-        var releaseDate = album.album.releaseDate
-        var runtime = album.album.runtime
-        var abstract = album.album.albumInfo
+        var albumNome = typeof album.album.albumName == 'undefined' ? "" : album.album.albumName
+        var albumType = typeof album.album.type == 'undefined' ? "" : album.album.type
+        var releaseDate = typeof album.album.releaseDate == 'undefined' ? "" : album.album.releaseDate
+        var runtime = typeof album.album.runtime == 'undefined' ? "" : album.album.runtime
+        var abstract = typeof album.album.albumInfo == 'undefined' ? "" : album.album.albumInfo
         var artists = album.album.artists
         var groups = album.album.groups
         var labels = album.album.labels

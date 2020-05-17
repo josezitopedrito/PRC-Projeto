@@ -18,8 +18,10 @@ export default {
 
 footer{
     background: black;
-    padding: 6px;
-    background-size: cover;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
 }
 p{
     color: lightyellow;
