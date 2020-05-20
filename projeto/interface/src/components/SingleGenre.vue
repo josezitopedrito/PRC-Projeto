@@ -17,7 +17,7 @@
                             <td>
                                 <v-layout justify-center>
                                     <v-list class="tile" v-for="SubGenre in genre.SubGenre" :key="`sub${SubGenre.genre}`">
-                                        <v-list-item link :to="'/genres/' + SubGenre.genre.split('#')[1]">{{ SubGenre.genreName }}</v-list-item>
+                                        <v-list-item link @click="changePage(SubGenre)">{{ SubGenre.genreName }}</v-list-item>
                                     </v-list>
                                 </v-layout>
                             </td>
@@ -27,7 +27,7 @@
                             <td>
                                 <v-layout justify-center>
                                     <v-list class="tile" v-for="SupraGenre in genre.SupraGenre" :key="`supra${SupraGenre.genre}`">
-                                        <v-list-item link :to="'/genres/' + SupraGenre.genre.split('#')[1]">{{ SupraGenre.genreName }}</v-list-item>
+                                        <v-list-item link @click="changePage(SupraGenre)">{{ SupraGenre.genreName }}</v-list-item>
                                     </v-list>
                                 </v-layout>
                             </td>
@@ -37,7 +37,7 @@
                             <td>
                                 <v-layout justify-center>
                                     <v-list class="tile" v-for="FusionGenre in genre.FusionGenre" :key="`fusion${FusionGenre.genre}`">
-                                        <v-list-item link :to="'/genres/' + FusionGenre.genre.split('#')[1]">{{ FusionGenre.genreName }}</v-list-item>
+                                        <v-list-item link @click="changePage(FusionGenre)">{{ FusionGenre.genreName }}</v-list-item>
                                     </v-list>
                                 </v-layout>
                             </td>
@@ -89,6 +89,16 @@ export default {
     return{
       genre:{Genre:[{}],SubGenre:[{genre:""}],SupraGenre:[{genre:""}],FusionGenre:[{genre:""}],Band:[{band:""}],Artist:[{artist:""}]},
       lhost:'http://localhost:5001/api'
+    }
+  },
+  methods:{
+    changePage:async function(FusionGenre){
+        try{
+            this.$router.push({path:`/genres/${FusionGenre.genre.split('#')[1]}`})
+            this.$emit('changePage')
+        }catch(e){
+            console.log(e)
+        }
     }
   },
   created: async function(){
