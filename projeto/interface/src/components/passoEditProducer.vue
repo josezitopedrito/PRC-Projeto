@@ -245,7 +245,6 @@ export default {
     editProducer: async function(idProducer){
         try{
             let response = await axios.get(this.lhost + "/producers/" + idProducer)
-            console.log(response.data)
             this.producer.idProducer = idProducer
             this.producer.producerName = response.data.Producer[0].name
             this.producer.firstActiveYear = response.data.Producer[0].sy
@@ -276,7 +275,6 @@ export default {
     },
     saveSkip (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaProducer', this.producer)
     },
     addProducer(id){
@@ -287,7 +285,6 @@ export default {
     },
     saveSkipAlbum (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaAlbum', this.album)
     }
     

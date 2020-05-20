@@ -18,7 +18,7 @@
         :headers="halbuns"
         :items="albuns"
         :search="search"
-        :sort-by="['Nome','Artist/Group','Options']"
+        :sort-by="['Name','Options']"
         :sort-desc="[true,true,false]"
         multi-sort
         :footer-props="{
@@ -64,8 +64,8 @@ export default {
       search:'',
       halbuns:[
        {text:"Name",sortable:true, value:'name',class:'subtitle-1'},
-       {text:"Artist/Group",sortable:true, value:'creator',class:'subtitle-1'},
-       {text:'Options',value:'options',sortable: false}
+      //  {text:"Artist/Group",sortable:true, value:'creator',class:'subtitle-1'},
+       {text:'Options',value:'options',sortable: false,class:'subtitle-1'}
       ],
       albuns:[],
       lhost:'http://localhost:5001/api'
@@ -74,7 +74,6 @@ export default {
   created: async function(){
     try{
       let response = await axios.get(this.lhost + "/albums")
-      console.log("Albuns: " + response.data)
       this.albuns = response.data
     }catch(e){
       return e

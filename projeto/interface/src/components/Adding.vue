@@ -336,7 +336,6 @@
                 this.model = 0;
             },
             atualizaAlbum: async function(album){
-                console.log(album)
                 this.album.albumName=album.albumName
                 this.album.type=album.type
                 this.album.releaseDate=album.releaseDate
@@ -356,7 +355,6 @@
                 }
             },
             atualizaArtist: async function(artist){
-                //console.log(folio)
                 this.artist.artistName=artist.artistName
                 this.artist.gender=artist.gender
                 this.artist.birthPlace=artist.birthPlace
@@ -376,7 +374,6 @@
                 }
             },
             atualizaGroup: async function(group){
-                //console.log(folio)
                 this.group.groupName=group.groupName
                 this.group.formationDate=group.formationDate
                 this.group.disbandingDate=group.disbandingDate
@@ -396,7 +393,6 @@
                 }
             },
             atualizaGenre: async function(genre){
-                //console.log(folio)
                 this.genre.genreName=genre.genreName
                 this.genre.genreInfo=genre.genreInfo
                 this.genre.groups=genre.groupGenre
@@ -413,7 +409,6 @@
                 }
             },
             atualizaLabel: async function(label){
-                //console.log(folio)
                 this.label.labelName=label.labelName
                 this.label.headquarters = label.headquarters
                 this.label.foundingYear=label.foundingYear
@@ -429,7 +424,6 @@
                 }
             },
             atualizaProducer: async function(producer){
-                //console.log(folio)
                 this.producer.producerName=producer.producerName
                 this.producer.firstActiveYear=producer.firstActiveYear
                 this.producer.producerInfo=producer.producerInfo
@@ -447,8 +441,6 @@
             if(this.model == null){
                 this.value = 0
             }
-            console.log('model: ' + this.model)
-            console.log('total: ' + this.total)
             this.value = parseInt(100/this.total * this.model,10)
         }
     }

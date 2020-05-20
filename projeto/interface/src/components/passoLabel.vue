@@ -227,7 +227,6 @@ export default {
     },
     saveSkip (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaLabel', this.label)
     },
     addLabel(id){
@@ -238,7 +237,6 @@ export default {
     },
     saveSkipAlbum (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaAlbum', this.album)
     }
     

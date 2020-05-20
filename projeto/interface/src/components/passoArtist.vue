@@ -211,7 +211,6 @@ export default {
   created: async function(){
     try{
       let response = await axios.get(this.lhost + "/artists")
-      console.log(response.data)
       this.artistas = response.data
     }catch(e){
       return e
@@ -323,22 +322,17 @@ export default {
     },
     saveSkip (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaArtist', this.artist)
     },
     addArtist(id){
-      console.log('ID: ' + id)
       if(this.position == 'genreArtist'){
-        console.log(this.genre)
         this.genre.genreArtist.push(id)
-        console.log(this.genre.genreArtist)
       }
       else if(this.position == 'groupArtist'){
         this.group.groupArtist.push(id)
       }
       else if(this.position == 'albumArtist'){
         this.album.albumArtist.push(id)
-        console.log('array: ' + this.album.albumArtist)
       }
     },
     saveGenre (){
@@ -346,7 +340,6 @@ export default {
     },
     saveSkipGenre (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaGenre', this.genre)
     },
     saveGroup (){
@@ -354,7 +347,6 @@ export default {
     },
     saveSkipGroup (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaGroup', this.group)
     },
     saveAlbum (){
@@ -362,7 +354,6 @@ export default {
     },
     saveSkipAlbum (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaAlbum', this.album)
     }
     

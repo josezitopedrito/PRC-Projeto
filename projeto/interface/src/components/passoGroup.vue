@@ -205,7 +205,6 @@ export default {
     try{
       let response = await axios.get(this.lhost + "/groups")
       this.groups = response.data
-      console.log(this.groups)
     }catch(e){
       return e
     }
@@ -319,7 +318,6 @@ export default {
     },
     saveSkip (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaGroup', this.group)
     },
     addGroup(id){
@@ -338,7 +336,6 @@ export default {
     },
     saveSkipAlbum (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaAlbum', this.album)
     },
     saveArtist (){
@@ -346,7 +343,6 @@ export default {
     },
     saveSkipArtist (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaArtist', this.artist)
     },
     saveGenre(){
@@ -354,7 +350,6 @@ export default {
     },
     saveSkipGenre (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaGenre', this.genre)
     }
 

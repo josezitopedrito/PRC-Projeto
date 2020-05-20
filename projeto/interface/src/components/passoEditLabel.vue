@@ -260,7 +260,6 @@ export default {
     editLabel: async function(idLabel){
         try{
             let response = await axios.get(this.lhost + "/recordLabels/" + idLabel)
-            console.log(response.data)
             this.label.idLabel = idLabel
             this.label.labelName = response.data.RecordLabel[0].name
             this.label.headquarters = response.data.RecordLabel[0].hq
@@ -295,7 +294,6 @@ export default {
     },
     saveSkip (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaLabel', this.label)
     },
     addLabel(id){
@@ -306,7 +304,6 @@ export default {
     },
     saveSkipAlbum (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaAlbum', this.album)
     }
     

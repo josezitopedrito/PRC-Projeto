@@ -551,8 +551,6 @@
             if(this.model == null){
                 this.value = 0
             }
-            console.log('model: ' + this.model)
-            console.log('total: ' + this.total)
             this.value = parseInt(100/this.total * this.model,10)
         }
     }

@@ -116,7 +116,6 @@ export default {
   methods:{
     fileName: function(str){
         if(str.substring(0,5) == 'File:' && (str.substring(str.length - 4,str.length) == '.jpg'||str.substring(str.length - 5,str.length) == '.jpeg'||str.substring(str.length - 4,str.length) == '.png'||str.substring(str.length - 4,str.length) == '.gif')){
-            console.log('PRINT DECISIVO: ' + str)
             return str.substring(5,str.length)
         }else{
             return 'nothing'
@@ -129,8 +128,8 @@ export default {
       let response = await axios.get(this.lhost + this.$route.path)
       
       this.group = response.data
-      console.log(this.group)
     }catch(e){
+      console.log(e)
       return e
     }
     this.url = "https://en.wikipedia.org/w/api.php"; 
@@ -147,40 +146,32 @@ export default {
 
     this.url = this.url.split(" ").join("_")
 
-    console.log(this.url)
     try{
-      let response2 = await axios.get(this.url)
+      let response2 = await axios.get(this.url,{'Access-Control-Allow-Origin':'*'})
       var pages = response2.data.query.pages;
         for (var page in pages) {
             for (var img of pages[page].images) {
-                console.log(img.title)
                 var str = this.fileName(img.title)
                 if(str!='nothing'){
                     str = str.split(" ").join("_")
-                    console.log(str)
                     try{
-                        let schyper = await axios.get('http://api.hashify.net/hash/md5/hex?value=' + str)
-                        console.log(schyper)
+                        let schyper = await axios.get('https://api.hashify.net/hash/md5/hex?value=' + str,{'Access-Control-Allow-Origin':'*'})
                         var schipheredStr = schyper.data['Digest']
-                        console.log(schipheredStr)
-                        var url2 = 'https://upload.wikimedia.org/wikipedia/commons/' + schipheredStr.charAt(0) + '/' + schipheredStr.charAt(0) + schipheredStr.charAt(1) + '/' + str
-                        console.log(url2)         
-                        let finalresponse = await axios.get(url2,{responseType:'arraybuffer'})
+                        var url2 = 'https://upload.wikimedia.org/wikipedia/commons/' + schipheredStr.charAt(0) + '/' + schipheredStr.charAt(0) + schipheredStr.charAt(1) + '/' + str       
+                        let finalresponse = await axios.get(url2,{responseType:'arraybuffer','Access-Control-Allow-Origin':'*'})
                         var image = new Buffer(finalresponse.data, 'binary').toString('base64')
-                        console.log(image)
                         this.imagem = `data:${finalresponse.headers['content-type'].toLowerCase()};base64,${image}`
                         break
                     }catch(e){
                         try{
                             if(this.imagem == ''){
-                                url2 = 'https://upload.wikimedia.org/wikipedia/en/' + schipheredStr.charAt(0) + '/' + schipheredStr.charAt(0) + schipheredStr.charAt(1) + '/' + str
-                                console.log(url2)         
-                                let finalresponse = await axios.get(url2,{responseType:'arraybuffer'})
+                                url2 = 'https://upload.wikimedia.org/wikipedia/en/' + schipheredStr.charAt(0) + '/' + schipheredStr.charAt(0) + schipheredStr.charAt(1) + '/' + str        
+                                let finalresponse = await axios.get(url2,{responseType:'arraybuffer','Access-Control-Allow-Origin':'*'})
                                 image = new Buffer(finalresponse.data, 'binary').toString('base64')
                                 this.imagem = `data:${finalresponse.headers['content-type'].toLowerCase()};base64,${image}`
                             }
                         }catch{
-                            console.log('wrongFile')
+                            // console.log('wrongFile')
                         }
                     }
                 }

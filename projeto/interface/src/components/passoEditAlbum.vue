@@ -275,7 +275,6 @@ export default {
   created: async function(){
     try{
       let response = await axios.get(this.lhost + "/albums")
-      console.log("Albuns: " + response.data)
       this.albuns = response.data
     }catch(e){
       return e
@@ -385,7 +384,6 @@ export default {
     editAlbum: async function(idAlbum){
         try{
             let response = await axios.get(this.lhost + "/albums/" + idAlbum)
-            console.log(response.data)
             this.album.idAlbum = idAlbum
             this.album.albumName = response.data.album[0].name
             this.album.type = response.data.album[0].at
@@ -430,7 +428,6 @@ export default {
     },
     saveSkip (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaAlbum', this.album)
     },
     addAlbum(id){
@@ -452,7 +449,6 @@ export default {
     },
     saveSkiprtist (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaArtist', this.artist)
     },
     saveGroup (){
@@ -460,7 +456,6 @@ export default {
     },
     saveSkipGroup (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaGroup', this.group)
     },
     saveLabel (){
@@ -468,7 +463,6 @@ export default {
     },
     saveSkipLabel (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaLabel', this.label)
     },
     saveProducer (){
@@ -476,7 +470,6 @@ export default {
     },
     saveSkipProducer (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaProducer', this.producer)
     }
     

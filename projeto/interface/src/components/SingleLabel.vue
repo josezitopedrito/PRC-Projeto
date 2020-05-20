@@ -80,8 +80,8 @@ export default {
       let response = await axios.get(this.lhost + this.$route.path)
       
       this.label = response.data
-      console.log(this.label)
     }catch(e){
+      console.log(e)
       return e
     }
   }

@@ -296,7 +296,6 @@ export default {
     },
     saveSkip (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaGenre', this.genre)
     },
     addGenre(id){
@@ -322,7 +321,6 @@ export default {
     },
     saveSkipArtist (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaArtist', this.artist)
     },
     saveGroup (){
@@ -330,7 +328,6 @@ export default {
     },
     saveSkipGroup (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaGroup', this.group)
     },
     saveSuperGenre (){
@@ -338,7 +335,6 @@ export default {
     },
     saveSkipSuperGenre (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaGenre', this.genre)
     },
     saveSubGenre (){
@@ -346,7 +342,6 @@ export default {
     },
     saveSkipSubGenre (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaGenre', this.genre)
     },
     saveFusionGenre (){
@@ -354,7 +349,6 @@ export default {
     },
     saveSkipFusionGenre (){
       this.skip = 1
-      //console.log(this.skip)
       this.$emit('atualizaGenre', this.genre)
     }
     

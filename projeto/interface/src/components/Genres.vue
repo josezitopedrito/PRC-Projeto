@@ -18,7 +18,7 @@
         :headers="hgeneros"
         :items="generos"
         :search="search"
-        :sort-by="['Id','Nome','Options']"
+        :sort-by="['Name','Options']"
         :sort-desc="[true,true,false]"
         multi-sort
         :footer-props="{
@@ -63,9 +63,9 @@ export default {
     return{
       search:'',
       hgeneros:[
-        {text:"Id",sortable:true, value:'id',filterable: false,class:'subtitle-1'},
+        // {text:"Id",sortable:true, value:'id',filterable: false,class:'subtitle-1'},
         {text:"Name",sortable:true, value:'name',class:'subtitle-1'},
-        {text:'Options',value:'options',sortable: false}
+        {text:'Options',value:'options',sortable: false,class:'subtitle-1'}
       ],
       generos:[],
       lhost:'http://localhost:5001/api'
