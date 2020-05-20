@@ -22,10 +22,9 @@ function normalize(response) {
 };
 
 Albuns.getLista = async function(){
-    var query = ` select ?id ?name ?creator where {
+    var query = ` select ?id ?name where {
         ?id rdf:type c:Album.
         ?id c:name ?name.
-        ?creator c:created ?id
     }` 
     var encoded = encodeURIComponent(prefixes + query)
 
@@ -119,11 +118,8 @@ Albuns.inserir = async function(album){
     var encodedGetTotal = encodeURIComponent(prefixes + queryGetTotal)
     try{
         var response = await axios.get(getLink + encodedGetTotal)
-        console.log(JSON.stringify(response.data))
         var totalAlbuns = normalize(response.data)
-        console.log('Album: ' + JSON.stringify(totalAlbuns))
         var idAlbum = parseInt(totalAlbuns[0].count,10)
-        console.log('Id: ' + idAlbum)
         var albumNome = typeof album.album.albumName == 'undefined' ? "" : album.album.albumName
         var albumType = typeof album.album.type == 'undefined' ? "" : album.album.type
         var releaseDate = typeof album.album.releaseDate == 'undefined' ? "" : album.album.releaseDate
@@ -140,16 +136,13 @@ Albuns.inserir = async function(album){
             ${runtime == "" ? "" :`c:${idAlbum} c:runtime \"${corrigir.protect_special_char_other(runtime)}\".`}
             ${abstract == "" ? "" :`c:${idAlbum} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
-        var encodedAlbum = encodeURIComponent(prefixes + queryInsertion) 
-        console.log(queryInsertion)      
+        var encodedAlbum = encodeURIComponent(prefixes + queryInsertion)     
         try{
-            await axios.post(postLink + encodedAlbum, null).then(response => {
-                //resolve(response.data.content)
-                console.log(response.data)
+            await axios.post(postLink + encodedAlbum, null).then(() => {
+                console.log("Post do album bem sucedido")
               }).catch(e => {
                 console.log(e)
             })
-            //console.log('Response Album: ' + responseAlbum)
         }catch(e){
             throw(e)
         }
@@ -161,8 +154,8 @@ Albuns.inserir = async function(album){
             let encodedArtist = encodeURIComponent(prefixes + queryArtists)
             try{
                 axios.post(postLink + encodedArtist,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Post de artists do album bem sucedido")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -179,8 +172,8 @@ Albuns.inserir = async function(album){
             let encodedGroup = encodeURIComponent(prefixes + queryGroups)
             try{
                 axios.post(postLink + encodedGroup,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Post de groups do album bem sucedido")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -197,8 +190,8 @@ Albuns.inserir = async function(album){
             let encodedLabel = encodeURIComponent(prefixes + queryLabels)
             try{
                 axios.post(postLink + encodedLabel,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Post das record labels do album bem sucedido")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -215,8 +208,8 @@ Albuns.inserir = async function(album){
             let encodedProducers = encodeURIComponent(prefixes + queryProducers)
             try{
                 axios.post(postLink + encodedProducers,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Post dos producers do album bem sucedido")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -245,8 +238,8 @@ Albuns.editar = async function(album){
         let encodedArtist = encodeURIComponent(prefixes + queryDeleteArtists)
         try{
             axios.post(postLink + encodedArtist,null)
-            .then(function(response) {
-                console.log(response.data.content)
+            .then(function() {
+                console.log("Eliminação dos artists do album bem sucedido")
             })
             .catch(function(response) {
                 console.log(response)
@@ -263,8 +256,8 @@ Albuns.editar = async function(album){
         let encodedGroup = encodeURIComponent(prefixes + queryDeleteGroups)
         try{
             axios.post(postLink + encodedGroup,null)
-            .then(function(response) {
-                console.log(response.data.content)
+            .then(function() {
+                console.log("Eliminação dos groups do album bem sucedido")
             })
             .catch(function(response) {
                 console.log(response)
@@ -281,8 +274,8 @@ Albuns.editar = async function(album){
         let encodedLabel = encodeURIComponent(prefixes + queryDeleteLabels)
         try{
             axios.post(postLink + encodedLabel,null)
-            .then(function(response) {
-                console.log(response.data.content)
+            .then(function() {
+                console.log("Eliminação das record labels do album bem sucedido")
             })
             .catch(function(response) {
                 console.log(response)
@@ -299,8 +292,8 @@ Albuns.editar = async function(album){
         let encodedProducers = encodeURIComponent(prefixes + queryDeleteProducers)
         try{
             axios.post(postLink + encodedProducers,null)
-            .then(function(response) {
-                console.log(response.data.content)
+            .then(function() {
+                console.log("Eliminação de producers do album bem sucedido")
             })
             .catch(function(response) {
                 console.log(response)
@@ -310,7 +303,6 @@ Albuns.editar = async function(album){
         }
     }
     try{
-        console.log('Id: ' + idAlbum)
         var queryDelete = `DELETE {
             c:${idAlbum} c:name ?name.
             ${albumType == "" ? "" :`c:${idAlbum} c:albumType ?album.`}
@@ -326,13 +318,11 @@ Albuns.editar = async function(album){
         }`
         var encodedDelete = encodeURIComponent(prefixes + queryDelete) 
         try{
-            await axios.post(postLink + encodedDelete, null).then(response => {
-                //resolve(response.data.content)
-                console.log(response.data)
+            await axios.post(postLink + encodedDelete, null).then(() => {
+                console.log("Eliminação das entradas do album bem sucedida")
               }).catch(e => {
                 console.log(e)
             })
-            //console.log('Response Album: ' + responseAlbum)
         }catch(e){
             throw(e)
         }
@@ -352,16 +342,13 @@ Albuns.editar = async function(album){
             ${runtime == "" ? "" :`c:${idAlbum} c:runtime \"${corrigir.protect_special_char_other(runtime)}\".`}
             ${abstract == "" ? "" :`c:${idAlbum} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
-        var encodedAlbum = encodeURIComponent(prefixes + queryInsertion) 
-        console.log(queryInsertion)      
+        var encodedAlbum = encodeURIComponent(prefixes + queryInsertion)      
         try{
-            await axios.post(postLink + encodedAlbum, null).then(response => {
-                //resolve(response.data.content)
-                console.log(response.data)
+            await axios.post(postLink + encodedAlbum, null).then(()=> {
+                console.log("Substituição das entradas do album bem sucedida")
               }).catch(e => {
                 console.log(e)
             })
-            //console.log('Response Album: ' + responseAlbum)
         }catch(e){
             throw(e)
         }
@@ -373,8 +360,8 @@ Albuns.editar = async function(album){
             let encodedArtist = encodeURIComponent(prefixes + queryArtists)
             try{
                 axios.post(postLink + encodedArtist,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Substituição dos artists do album bem sucedida")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -391,8 +378,8 @@ Albuns.editar = async function(album){
             let encodedGroup = encodeURIComponent(prefixes + queryGroups)
             try{
                 axios.post(postLink + encodedGroup,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Substituição dos groups do album bem sucedida")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -409,8 +396,8 @@ Albuns.editar = async function(album){
             let encodedLabel = encodeURIComponent(prefixes + queryLabels)
             try{
                 axios.post(postLink + encodedLabel,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Substituição das record labels do album bem sucedida")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -427,8 +414,8 @@ Albuns.editar = async function(album){
             let encodedProducers = encodeURIComponent(prefixes + queryProducers)
             try{
                 axios.post(postLink + encodedProducers,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Substituição dos producers do album bem sucedida")
                 })
                 .catch(function(response) {
                     console.log(response)

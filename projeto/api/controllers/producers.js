@@ -80,11 +80,8 @@ Producers.inserir = async function(producer){
     var encodedGetTotal = encodeURIComponent(prefixes + queryGetTotal)
     try{
         var response = await axios.get(getLink + encodedGetTotal)
-        console.log(JSON.stringify(response.data))
         var totalProducer = normalize(response.data)
-        console.log('Producer: ' + JSON.stringify(totalProducer))
         var idProducer = parseInt(totalProducer[0].count,10)
-        console.log('Id: ' + idProducer)
         var producerNome = typeof producer.producer.producerName == 'undefined' ? "" : producer.producer.producerName 
         var firstActiveYear = typeof producer.producer.firstActiveYear == 'undefined' ? "" : producer.producer.firstActiveYear
         var abstract = typeof producer.producer.producerInfo == 'undefined' ? "" : producer.producer.producerInfo
@@ -94,16 +91,13 @@ Producers.inserir = async function(producer){
             ${firstActiveYear == "" ? "" :`c:producer_${idProducer} c:startingYear \"${corrigir.protect_special_char_other(firstActiveYear)}\".`}
             ${abstract == "" ? "" :`c:producer_${idProducer} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
-        var encodedProducer = encodeURIComponent(prefixes + queryInsertion) 
-        console.log(queryInsertion)      
+        var encodedProducer = encodeURIComponent(prefixes + queryInsertion)    
         try{
-            await axios.post(postLink + encodedProducer, null).then(response => {
-                //resolve(response.data.content)
-                console.log(response.data)
+            await axios.post(postLink + encodedProducer, null).then(() => {
+                console.log("Post do producer bem sucedido")
               }).catch(e => {
                 console.log(e)
             })
-            //console.log('Response Producer: ' + responseProducer)
         }catch(e){
             throw(e)
         }
@@ -115,8 +109,8 @@ Producers.inserir = async function(producer){
             let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
             try{
                 axios.post(postLink + encodedAlbum,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Post de albums do producer bem sucedido")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -142,8 +136,8 @@ Producers.editar = async function(producer){
         let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
         try{
             axios.post(postLink + encodedAlbum,null)
-            .then(function(response) {
-                console.log(response.data.content)
+            .then(function() {
+                console.log("Eliminação de albums do producer bem sucedida")
             })
             .catch(function(response) {
                 console.log(response)
@@ -153,7 +147,6 @@ Producers.editar = async function(producer){
         }
     }
     try{
-        console.log('Id: ' + idProducer)
         var queryDelete = `DELETE {
             c:${idProducer} c:name ?name.
             ${firstActiveYear == "" ? "" :`c:${idProducer} c:startingYear ?startingYear.`}
@@ -163,16 +156,13 @@ Producers.editar = async function(producer){
             ${firstActiveYear == "" ? "" :`c:${idProducer} c:startingYear ?startingYear.`}
             ${abstract == "" ? "" :`c:${idProducer} c:abstract ?abstract.`}
         }`
-        var encodedDelete = encodeURIComponent(prefixes + queryDelete) 
-        console.log(queryInsertion)      
+        var encodedDelete = encodeURIComponent(prefixes + queryDelete)      
         try{
-            await axios.post(postLink + encodedDelete, null).then(response => {
-                //resolve(response.data.content)
-                console.log(response.data)
+            await axios.post(postLink + encodedDelete, null).then(() => {
+                console.log("Eliminação de entradas do producer bem sucedida")
               }).catch(e => {
                 console.log(e)
             })
-            //console.log('Response Producer: ' + responseProducer)
         }catch(e){
             throw(e)
         }
@@ -185,16 +175,13 @@ Producers.editar = async function(producer){
             ${firstActiveYear == "" ? "" :`c:${idProducer} c:startingYear \"${corrigir.protect_special_char_other(firstActiveYear)}\".`}
             ${abstract == "" ? "" :`c:${idProducer} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
-        var encodedProducer = encodeURIComponent(prefixes + queryInsertion) 
-        console.log(queryInsertion)      
+        var encodedProducer = encodeURIComponent(prefixes + queryInsertion)    
         try{
-            await axios.post(postLink + encodedProducer, null).then(response => {
-                //resolve(response.data.content)
-                console.log(response.data)
+            await axios.post(postLink + encodedProducer, null).then(()=> {
+                console.log("Substituição de entradas do producer bem sucedida")
               }).catch(e => {
                 console.log(e)
             })
-            //console.log('Response Producer: ' + responseProducer)
         }catch(e){
             throw(e)
         }
@@ -206,8 +193,8 @@ Producers.editar = async function(producer){
             let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
             try{
                 axios.post(postLink + encodedAlbum,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Substituição de albums do producer bem sucedido")
                 })
                 .catch(function(response) {
                     console.log(response)

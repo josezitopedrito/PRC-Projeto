@@ -95,16 +95,13 @@ Genres.getGenre = async function(idGenre){
         var responseFusionGenre = await axios.get(getLink + encodedFusionGenre)
         var responseBand = await axios.get(getLink + encodedBand)
         var responseArtist = await axios.get(getLink + encodedArtist)
-        console.log("Antes do normalize")
         var Genre = normalize(response.data)
-        console.log('Resposta:' + Genre)
         var SupraGenre = normalize(responseSupraGenre.data)
         var SubGenre = normalize(responseSubGenre.data)
         var FusionGenre = normalize(responseFusionGenre.data)
         var band = normalize(responseBand.data)
         var artist = normalize(responseArtist.data)
         var resposta = {"Genre":Genre,"SupraGenre":SupraGenre,"SubGenre":SubGenre,"FusionGenre":FusionGenre,"Band":band,"Artist":artist}
-        console.log('Resposta:' + JSON.stringify(resposta))
         return resposta
     }
     catch(e){
@@ -119,11 +116,8 @@ Genres.inserir = async function(genre){
     var encodedGetTotal = encodeURIComponent(prefixes + queryGetTotal)
     try{
         var response = await axios.get(getLink + encodedGetTotal)
-        console.log(JSON.stringify(response.data))
         var totalGenres = normalize(response.data)
-        console.log('Genre: ' + JSON.stringify(totalGenres))
         var idGenre = parseInt(totalGenres[0].count,10)
-        console.log('Id: ' + idGenre)
         var genreNome = genre.genre.genreName
         var abstract = typeof genre.genre.genreInfo == 'undefined' ? "" : genre.genre.genreInfo 
         var artists = genre.genre.artists
@@ -136,17 +130,13 @@ Genres.inserir = async function(genre){
             c:genre_${idGenre} c:name \"${corrigir.protect_special_char_nome(genreNome)}\".
             ${abstract == "" ? "" :`c:genre_${idGenre} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
-        console.log(JSON.stringify(genre))
-        var encodedGenre = encodeURIComponent(prefixes + queryInsertion) 
-        console.log(queryInsertion)      
+        var encodedGenre = encodeURIComponent(prefixes + queryInsertion)       
         try{
-            await axios.post(postLink + encodedGenre, null).then(response => {
-                //resolve(response.data.content)
-                console.log(response.data)
+            await axios.post(postLink + encodedGenre, null).then(() => {
+                console.log("Post do genre bem sucedido")
               }).catch(e => {
                 console.log(e)
             })
-            //console.log('Response Genre: ' + responseGenre)
         }catch(e){
             throw(e)
         }
@@ -158,8 +148,8 @@ Genres.inserir = async function(genre){
             let encodedArtist = encodeURIComponent(prefixes + queryArtists)
             try{
                 axios.post(postLink + encodedArtist,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Post de artists do genre bem sucedido")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -176,8 +166,8 @@ Genres.inserir = async function(genre){
             let encodedGroup = encodeURIComponent(prefixes + queryGroups)
             try{
                 axios.post(postLink + encodedGroup,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Post de groups do genre bem sucedido")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -194,8 +184,8 @@ Genres.inserir = async function(genre){
             let encodedSuperGenre = encodeURIComponent(prefixes + querySuperGenres)
             try{
                 axios.post(postLink + encodedSuperGenre,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Post de supergenres do genre bem sucedido")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -212,8 +202,8 @@ Genres.inserir = async function(genre){
             let encodedSubGenre = encodeURIComponent(prefixes + querySubGenres)
             try{
                 axios.post(postLink + encodedSubGenre,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Post de subgenres do genre bem sucedido")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -230,8 +220,8 @@ Genres.inserir = async function(genre){
             let encodedFusionGenre = encodeURIComponent(prefixes + queryFusionGenres)
             try{
                 axios.post(postLink + encodedFusionGenre,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Post de fusiongenre do genre bem sucedido")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -261,8 +251,8 @@ Genres.editar = async function(genre){
         let encodedArtist = encodeURIComponent(prefixes + queryArtists)
         try{
             axios.post(postLink + encodedArtist,null)
-            .then(function(response) {
-                console.log(response.data.content)
+            .then(function() {
+                console.log("Eliminação de artists do genre bem sucedida")
             })
             .catch(function(response) {
                 console.log(response)
@@ -279,8 +269,8 @@ Genres.editar = async function(genre){
         let encodedGroup = encodeURIComponent(prefixes + queryGroups)
         try{
             axios.post(postLink + encodedGroup,null)
-            .then(function(response) {
-                console.log(response.data.content)
+            .then(function() {
+                console.log("Eliminação de groups do genre bem sucedida")
             })
             .catch(function(response) {
                 console.log(response)
@@ -297,8 +287,8 @@ Genres.editar = async function(genre){
         let encodedSuperGenre = encodeURIComponent(prefixes + querySuperGenres)
         try{
             axios.post(postLink + encodedSuperGenre,null)
-            .then(function(response) {
-                console.log(response.data.content)
+            .then(function() {
+                console.log("Eliminação de supergenres do genre bem sucedida")
             })
             .catch(function(response) {
                 console.log(response)
@@ -315,8 +305,8 @@ Genres.editar = async function(genre){
         let encodedSubGenre = encodeURIComponent(prefixes + querySubGenres)
         try{
             axios.post(postLink + encodedSubGenre,null)
-            .then(function(response) {
-                console.log(response.data.content)
+            .then(function() {
+                console.log("Eliminação de subgenres do genre bem sucedida")
             })
             .catch(function(response) {
                 console.log(response)
@@ -333,8 +323,8 @@ Genres.editar = async function(genre){
         let encodedFusionGenre = encodeURIComponent(prefixes + queryFusionGenres)
         try{
             axios.post(postLink + encodedFusionGenre,null)
-            .then(function(response) {
-                console.log(response.data.content)
+            .then(function() {
+                console.log("Eliminação de fusiongenres do genre bem sucedida")
             })
             .catch(function(response) {
                 console.log(response)
@@ -351,7 +341,6 @@ Genres.editar = async function(genre){
         var supergenres = genre.genre.superGenres
         var subgenres = genre.genre.subGenres
         var fusiongenres = genre.genre.fusionGenres
-        console.log('Id: ' + idGenre)
         var queryDelete = `DELETE {
             c:${idGenre} c:name ?name.
             ${abstract == "" ? "" :`c:${idGenre} c:abstract ?abstract.`}
@@ -359,16 +348,13 @@ Genres.editar = async function(genre){
             c:${idGenre} c:name ?name.
             ${abstract == "" ? "" :`c:${idGenre} c:abstract ?abstract.`}
         }`
-        var encodedDelete = encodeURIComponent(prefixes + queryDelete) 
-        console.log(queryDelete)      
+        var encodedDelete = encodeURIComponent(prefixes + queryDelete)      
         try{
-            await axios.post(postLink + encodedDelete, null).then(response => {
-                //resolve(response.data.content)
-                console.log(response.data)
+            await axios.post(postLink + encodedDelete, null).then(() => {
+                console.log("Eliminação das entradas do genre bem sucedida")
               }).catch(e => {
                 console.log(e)
             })
-            //console.log('Response Genre: ' + responseGenre)
         }catch(e){
             throw(e)
         }
@@ -377,17 +363,13 @@ Genres.editar = async function(genre){
             c:${idGenre} c:name \"${corrigir.protect_special_char_nome(genreNome)}\".
             ${abstract == "" ? "" :`c:${idGenre} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
-        console.log(JSON.stringify(genre))
-        var encodedGenre = encodeURIComponent(prefixes + queryInsertion) 
-        console.log(queryInsertion)      
+        var encodedGenre = encodeURIComponent(prefixes + queryInsertion)      
         try{
-            await axios.post(postLink + encodedGenre, null).then(response => {
-                //resolve(response.data.content)
-                console.log(response.data)
+            await axios.post(postLink + encodedGenre, null).then(() => {
+                console.log("Inserção das entradas do genre bem sucedida")
               }).catch(e => {
                 console.log(e)
             })
-            //console.log('Response Genre: ' + responseGenre)
         }catch(e){
             throw(e)
         }
@@ -399,8 +381,8 @@ Genres.editar = async function(genre){
             let encodedArtist = encodeURIComponent(prefixes + queryArtists)
             try{
                 axios.post(postLink + encodedArtist,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Substituição de artists do genre bem sucedida")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -417,8 +399,8 @@ Genres.editar = async function(genre){
             let encodedGroup = encodeURIComponent(prefixes + queryGroups)
             try{
                 axios.post(postLink + encodedGroup,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Substituição de groups do genre bem sucedida")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -435,8 +417,8 @@ Genres.editar = async function(genre){
             let encodedSuperGenre = encodeURIComponent(prefixes + querySuperGenres)
             try{
                 axios.post(postLink + encodedSuperGenre,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Substituição de supergenres do genre bem sucedida")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -453,8 +435,8 @@ Genres.editar = async function(genre){
             let encodedSubGenre = encodeURIComponent(prefixes + querySubGenres)
             try{
                 axios.post(postLink + encodedSubGenre,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Substituição de subgenres do genre bem sucedida")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -471,8 +453,8 @@ Genres.editar = async function(genre){
             let encodedFusionGenre = encodeURIComponent(prefixes + queryFusionGenres)
             try{
                 axios.post(postLink + encodedFusionGenre,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Substituição de fusiongenres do genre bem sucedida")
                 })
                 .catch(function(response) {
                     console.log(response)

@@ -112,12 +112,8 @@ Bands.inserir = async function(band){
     var encodedGetTotal = encodeURIComponent(prefixes + queryGetTotal)
     try{
         var response = await axios.get(getLink + encodedGetTotal)
-        console.log(JSON.stringify(response.data))
         var totalBands = normalize(response.data)
-        console.log('Band: ' + JSON.stringify(totalBands))
         var idBand = parseInt(totalBands[0].count,10)
-        console.log('Id: ' + idBand)
-        console.log(JSON.stringify(band))
         var groupNome = typeof band.group.groupName == 'undefined' ? "" : band.group.groupName 
         var formationDate = typeof band.group.formationDate == 'undefined' ? "" : band.group.formationDate
         var disbandingDate = typeof band.group.disbandingDate == 'undefined' ? "" : band.group.disbandingDate
@@ -135,16 +131,13 @@ Bands.inserir = async function(band){
             ${homepage == "" ? "" :`c:group_${idBand} c:homepage \"${corrigir.protect_special_char_other(homepage)}\".`}
             ${abstract == "" ? "" :`c:group_${idBand} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
-        var encodedBand = encodeURIComponent(prefixes + queryInsertion) 
-        console.log(queryInsertion)      
+        var encodedBand = encodeURIComponent(prefixes + queryInsertion)     
         try{
-            await axios.post(postLink + encodedBand, null).then(response => {
-                //resolve(response.data.content)
-                console.log(response.data)
+            await axios.post(postLink + encodedBand, null).then(() => {
+                console.log("Post das entradas do group bem sucedida")
               }).catch(e => {
                 console.log(e)
             })
-            //console.log('Response Band: ' + responseBand)
         }catch(e){
             throw(e)
         }
@@ -156,8 +149,8 @@ Bands.inserir = async function(band){
             let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
             try{
                 axios.post(postLink + encodedAlbum,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Post de albums do group bem sucedida")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -174,8 +167,8 @@ Bands.inserir = async function(band){
             let encodedArtist = encodeURIComponent(prefixes + queryArtists)
             try{
                 axios.post(postLink + encodedArtist,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Post de artists do group bem sucedida")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -192,8 +185,8 @@ Bands.inserir = async function(band){
             let encodedGenre = encodeURIComponent(prefixes + queryGenres)
             try{
                 axios.post(postLink + encodedGenre,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Post de genres do group bem sucedida")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -209,12 +202,10 @@ Bands.inserir = async function(band){
 }
 
 Bands.editar = async function(band){
-    console.log("banda:" + JSON.stringify(band))
     var idBand = band.group.idGroup
     var artistsPreEdicao = band.group.membersPreEdicao
     var albumsPreEdicao = band.group.albumsPreEdicao
     var genresPreEdicao = band.group.genresPreEdicao
-    console.log("primeiro break");
     for(let i = 0; i <albumsPreEdicao.length;i++){
         let queryAlbums = `DELETE DATA{
             c:${albumsPreEdicao[i]} c:wasCreatedBy c:${idBand}.
@@ -223,8 +214,8 @@ Bands.editar = async function(band){
         let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
         try{
             axios.post(postLink + encodedAlbum,null)
-            .then(function(response) {
-                console.log(response.data.content)
+            .then(function() {
+                console.log("Eliminação de albums do group bem sucedida")
             })
             .catch(function(response) {
                 console.log(response)
@@ -233,8 +224,6 @@ Bands.editar = async function(band){
             throw(e)
         }
     }
-    console.log("segundo break");
-    console.log("predit:" + JSON.stringify(artistsPreEdicao))
     for(let i = 0; i <artistsPreEdicao.length;i++){
         let queryArtists = `DELETE DATA{
             c:${idBand} c:lineupMember c:${artistsPreEdicao[i]}.
@@ -243,8 +232,8 @@ Bands.editar = async function(band){
         let encodedArtist = encodeURIComponent(prefixes + queryArtists)
         try{
             axios.post(postLink + encodedArtist,null)
-            .then(function(response) {
-                console.log(response.data.content)
+            .then(function() {
+                console.log("Eliminação de artists do group bem sucedida")
             })
             .catch(function(response) {
                 console.log(response)
@@ -253,7 +242,6 @@ Bands.editar = async function(band){
             throw(e)
         }
     }
-    console.log("terceiro break");
     for(let i = 0; i <genresPreEdicao.length;i++){
         let queryGenres = `DELETE DATA{
             c:${idBand} c:performs c:${genresPreEdicao[i]}.
@@ -262,8 +250,8 @@ Bands.editar = async function(band){
         let encodedGenre = encodeURIComponent(prefixes + queryGenres)
         try{
             axios.post(postLink + encodedGenre,null)
-            .then(function(response) {
-                console.log(response.data.content)
+            .then(function() {
+                console.log("Eliminação de genres do group bem sucedida")
             })
             .catch(function(response) {
                 console.log(response)
@@ -273,8 +261,6 @@ Bands.editar = async function(band){
         }
     }
     try{
-        console.log("quarto break");
-        console.log('Id: ' + idBand)
         var queryDelete = `DELETE {
             c:${idBand} c:name ?name.
             ${hometown == "" ? "" :`c:${idBand} c:hometown ?hometown.`}
@@ -290,17 +276,13 @@ Bands.editar = async function(band){
             ${homepage == "" ? "" :`c:${idBand} c:homepage ?homepage.`}
             ${abstract == "" ? "" :`c:${idBand} c:abstract ?abstract.`}
         }`
-        var encodedDelete = encodeURIComponent(prefixes + queryDelete) 
-        console.log("quinto break");
-        console.log(queryDelete)      
+        var encodedDelete = encodeURIComponent(prefixes + queryDelete)  
         try{
-            await axios.post(postLink + encodedDelete, null).then(response => {
-                //resolve(response.data.content)
-                console.log(response.data)
+            await axios.post(postLink + encodedDelete, null).then(()=> {
+                console.log("Eliminação das entradas do group bem sucedida")
               }).catch(e => {
                 console.log(e)
             })
-            //console.log('Response Band: ' + responseBand)
         }catch(e){
             throw(e)
         }
@@ -321,17 +303,13 @@ Bands.editar = async function(band){
             ${homepage == "" ? "" :`c:${idBand} c:homepage \"${corrigir.protect_special_char_other(homepage)}\".`}
             ${abstract == "" ? "" :`c:${idBand} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
-        console.log("sexto break");
-        var encodedBand = encodeURIComponent(prefixes + queryInsertion) 
-        console.log(queryInsertion)      
+        var encodedBand = encodeURIComponent(prefixes + queryInsertion)      
         try{
-            await axios.post(postLink + encodedBand, null).then(response => {
-                //resolve(response.data.content)
-                console.log(response.data)
+            await axios.post(postLink + encodedBand, null).then(()=> {
+                console.log("Substituição de entradas do group bem sucedida")
               }).catch(e => {
                 console.log(e)
             })
-            //console.log('Response Band: ' + responseBand)
         }catch(e){
             throw(e)
         }
@@ -343,8 +321,8 @@ Bands.editar = async function(band){
             let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
             try{
                 axios.post(postLink + encodedAlbum,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Substituição de albums do group bem sucedida")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -361,8 +339,8 @@ Bands.editar = async function(band){
             let encodedArtist = encodeURIComponent(prefixes + queryArtists)
             try{
                 axios.post(postLink + encodedArtist,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Substituição de artists do group bem sucedida")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -379,8 +357,8 @@ Bands.editar = async function(band){
             let encodedGenre = encodeURIComponent(prefixes + queryGenres)
             try{
                 axios.post(postLink + encodedGenre,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Substituição de genres do group bem sucedida")
                 })
                 .catch(function(response) {
                     console.log(response)

@@ -114,11 +114,8 @@ Artists.inserir = async function(artist){
     var encodedGetTotal = encodeURIComponent(prefixes + queryGetTotal)
     try{
         var response = await axios.get(getLink + encodedGetTotal)
-        console.log(JSON.stringify(response.data))
         var totalArtists = normalize(response.data)
-        console.log('Artist: ' + JSON.stringify(totalArtists))
         var idArtist = parseInt(totalArtists[0].count,10)
-        console.log('Id: ' + idArtist)
         var artistNome = typeof artist.artist.artistName == 'undefined' ? "" :  artist.artist.artistName
         var birthPlace = typeof artist.artist.birthPlace == 'undefined' ? "" : artist.artist.birthPlace
         var birthDate = typeof artist.artist.birthDate == 'undefined' ? "" : artist.artist.birthDate
@@ -128,7 +125,6 @@ Artists.inserir = async function(artist){
         var albums = artist.artist.albums 
         var groups = artist.artist.groups 
         var genres = artist.artist.genres 
-        console.log("Generos da piça:" + genres)
         var queryInsertion = `INSERT DATA {
             c:artist_${idArtist} c:name \"${corrigir.protect_special_char_nome(artistNome)}\".
             ${birthPlace == "" ? "" :`c:artist_${idArtist} c:birthPlaceName \"${corrigir.protect_special_char_other(birthPlace)}\".`}
@@ -137,16 +133,13 @@ Artists.inserir = async function(artist){
             ${gender == "" ? "" :`c:artist_${idArtist} c:gender \"${corrigir.protect_special_char_other(gender)}\".`}
             ${abstract == "" ? "" :`c:artist_${idArtist} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
-        var encodedArtist = encodeURIComponent(prefixes + queryInsertion) 
-        console.log(queryInsertion)      
+        var encodedArtist = encodeURIComponent(prefixes + queryInsertion)     
         try{
-            await axios.post(postLink + encodedArtist, null).then(response => {
-                //resolve(response.data.content)
-                console.log(response.data)
+            await axios.post(postLink + encodedArtist, null).then(() => {
+                console.log("Post do artist bem sucedido")
               }).catch(e => {
                 console.log(e)
             })
-            //console.log('Response Artist: ' + responseArtist)
         }catch(e){
             throw(e)
         }
@@ -158,8 +151,8 @@ Artists.inserir = async function(artist){
             let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
             try{
                 axios.post(postLink + encodedAlbum,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Post de albums do artist bem sucedido")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -176,8 +169,8 @@ Artists.inserir = async function(artist){
             let encodedGroup = encodeURIComponent(prefixes + queryGroups)
             try{
                 axios.post(postLink + encodedGroup,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Post de groups do artist bem sucedido")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -194,8 +187,8 @@ Artists.inserir = async function(artist){
             let encodedGenre = encodeURIComponent(prefixes + queryGenres)
             try{
                 axios.post(postLink + encodedGenre,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Post de genres do artist bem sucedido")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -215,7 +208,6 @@ Artists.editar = async function(artist){
     var groupsPreEdicao = artist.artist.groupsPreEdicao
     var albumsPreEdicao = artist.artist.albumsPreEdicao
     var genresPreEdicao = artist.artist.genresPreEdicao
-    console.log(artist.artist)
     for(let i = 0; i <albumsPreEdicao.length;i++){
         let queryAlbums = `DELETE DATA{
             c:${albumsPreEdicao[i]} c:wasCreatedBy c:${idArtist}.
@@ -224,8 +216,8 @@ Artists.editar = async function(artist){
         let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
         try{
             axios.post(postLink + encodedAlbum,null)
-            .then(function(response) {
-                console.log(response.data.content)
+            .then(function() {
+                console.log("Eliminação de albums do artist bem sucedida")
             })
             .catch(function(response) {
                 console.log(response)
@@ -242,8 +234,8 @@ Artists.editar = async function(artist){
         let encodedGroup = encodeURIComponent(prefixes + queryGroups)
         try{
             axios.post(postLink + encodedGroup,null)
-            .then(function(response) {
-                console.log(response.data.content)
+            .then(function() {
+                console.log("Eliminação de groups do artist bem sucedida")
             })
             .catch(function(response) {
                 console.log(response)
@@ -260,8 +252,8 @@ Artists.editar = async function(artist){
         let encodedGenre = encodeURIComponent(prefixes + queryGenres)
         try{
             axios.post(postLink + encodedGenre,null)
-            .then(function(response) {
-                console.log(response.data.content)
+            .then(function() {
+                console.log("Eliminação de genres do artist bem sucedida")
             })
             .catch(function(response) {
                 console.log(response)
@@ -271,7 +263,6 @@ Artists.editar = async function(artist){
         }
     }
     try{
-        console.log('Id: ' + idArtist)
         var queryDelete = `DELETE {
             c:${idArtist} c:name ?name.
             ${birthPlace == "" ? "" :`c:${idArtist} c:birthPlaceName ?birthplacename.`}
@@ -287,16 +278,13 @@ Artists.editar = async function(artist){
             ${gender == "" ? "" :`c:${idArtist} c:gender ?gender.`}
             ${abstract == "" ? "" :`c:${idArtist} c:abstract ?abstract.`}
         }`
-        var encodedDelete = encodeURIComponent(prefixes + queryDelete) 
-        console.log(queryDelete)      
+        var encodedDelete = encodeURIComponent(prefixes + queryDelete)       
         try{
-            await axios.post(postLink + encodedDelete, null).then(response => {
-                //resolve(response.data.content)
-                console.log(response.data)
+            await axios.post(postLink + encodedDelete, null).then(() => {
+                console.log("Eliminação das entradas do artist bem sucedida")
               }).catch(e => {
                 console.log(e)
             })
-            //console.log('Response Artist: ' + responseArtist)
         }catch(e){
             throw(e)
         }
@@ -309,7 +297,6 @@ Artists.editar = async function(artist){
         var albums = artist.artist.albums 
         var groups = artist.artist.groups 
         var genres = artist.artist.genres 
-        console.log("Generos da piça:" + genres)
         var queryInsertion = `INSERT DATA {
             c:${idArtist} c:name \"${corrigir.protect_special_char_nome(artistNome)}\".
             ${birthPlace == "" ? "" :`c:${idArtist} c:birthPlaceName \"${corrigir.protect_special_char_other(birthPlace)}\".`}
@@ -318,18 +305,14 @@ Artists.editar = async function(artist){
             ${gender == "" ? "" :`c:${idArtist} c:gender \"${corrigir.protect_special_char_other(gender)}\".`}
             ${abstract == "" ? "" :`c:${idArtist} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
-        console.log(queryInsertion)
-        console.log("AQUIIIIIIIII")
         var encodedArtist = encodeURIComponent(prefixes + queryInsertion) 
             
         try{
-            await axios.post(postLink + encodedArtist, null).then(response => {
-                //resolve(response.data.content)
-                console.log(response.data)
+            await axios.post(postLink + encodedArtist, null).then(() => {
+                console.log("Substituição das entradas do artist bem sucedida")
               }).catch(e => {
                 console.log(e)
             })
-            //console.log('Response Artist: ' + responseArtist)
         }catch(e){
             throw(e)
         }
@@ -341,8 +324,8 @@ Artists.editar = async function(artist){
             let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
             try{
                 axios.post(postLink + encodedAlbum,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Substituição dos albums do artist bem sucedida")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -359,8 +342,8 @@ Artists.editar = async function(artist){
             let encodedGroup = encodeURIComponent(prefixes + queryGroups)
             try{
                 axios.post(postLink + encodedGroup,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Substituição de groups do artist bem sucedida")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -369,7 +352,6 @@ Artists.editar = async function(artist){
                 throw(e)
             }
         }
-        console.log("Generos da piça:" + genres)
         for(let i = 0; i <genres.length;i++){
             let queryGenres = `INSERT DATA{
                 c:${idArtist} c:performs c:${genres[i]}.
@@ -378,8 +360,8 @@ Artists.editar = async function(artist){
             let encodedGenre = encodeURIComponent(prefixes + queryGenres)
             try{
                 axios.post(postLink + encodedGenre,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Substituição dos genres do artist bem sucedida")
                 })
                 .catch(function(response) {
                     console.log(response)

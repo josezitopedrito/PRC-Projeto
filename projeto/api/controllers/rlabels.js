@@ -86,11 +86,8 @@ RecordLabels.inserir = async function(label){
     var encodedGetTotal = encodeURIComponent(prefixes + queryGetTotal)
     try{
         var response = await axios.get(getLink + encodedGetTotal)
-        console.log(JSON.stringify(response.data))
         var totalRecordLabel = normalize(response.data)
-        console.log('Label: ' + JSON.stringify(totalRecordLabel))
         var idLabel = parseInt(totalRecordLabel[0].count,10)
-        console.log('Id: ' + idLabel)
         var labelNome = typeof label.label.labelName == 'undefined' ? "" : label.label.labelName
         var headquarters = typeof label.label.headquarters == 'undefined' ? "" : label.label.headquarters
         var foundingYear = typeof label.label.foundingYear == 'undefined' ? "" : label.label.foundingYear
@@ -104,16 +101,14 @@ RecordLabels.inserir = async function(label){
             ${founder == "" ? "" :`c:recordlabel_${idLabel} c:founderName \"${corrigir.protect_special_char_other(founder)}\".`}
             ${abstract == "" ? "" :`c:recordlabel_${idLabel} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
-        var encodedLabel = encodeURIComponent(prefixes + queryInsertion) 
-        console.log(queryInsertion)      
+        var encodedLabel = encodeURIComponent(prefixes + queryInsertion)    
         try{
-            await axios.post(postLink + encodedLabel, null).then(response => {
+            await axios.post(postLink + encodedLabel, null).then(() => {
                 //resolve(response.data.content)
-                console.log(response.data)
+                console.log("Post da record label bem sucedido")
               }).catch(e => {
                 console.log(e)
             })
-            //console.log('Response Label: ' + responseLabel)
         }catch(e){
             throw(e)
         }
@@ -125,8 +120,8 @@ RecordLabels.inserir = async function(label){
             let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
             try{
                 axios.post(postLink + encodedAlbum,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Post de albums da record label bem sucedido")
                 })
                 .catch(function(response) {
                     console.log(response)
@@ -152,8 +147,8 @@ RecordLabels.editar = async function(label){
         let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
         try{
             axios.post(postLink + encodedAlbum,null)
-            .then(function(response) {
-                console.log(response.data.content)
+            .then(function() {
+                console.log("Eliminação de albums da record label bem sucedido")
             })
             .catch(function(response) {
                 console.log(response)
@@ -163,7 +158,6 @@ RecordLabels.editar = async function(label){
         }
     }
     try{
-        console.log('Id: ' + idLabel)
         var queryDelete = `DELETE {
             c:${idLabel} c:name ?name.
             ${headquarters == "" ? "" :`c:${idLabel} c:headquarters ?headq.`}
@@ -177,16 +171,13 @@ RecordLabels.editar = async function(label){
             ${founder == "" ? "" :`c:${idLabel} c:founderName ?founder.`}
             ${abstract == "" ? "" :`c:${idLabel} c:abstract ?abstract.`}
         }`
-        var encodedDelete = encodeURIComponent(prefixes + queryDelete) 
-        console.log(queryInsertion)      
+        var encodedDelete = encodeURIComponent(prefixes + queryDelete)      
         try{
-            await axios.post(postLink + encodedDelete, null).then(response => {
-                //resolve(response.data.content)
-                console.log(response.data)
+            await axios.post(postLink + encodedDelete, null).then(() => {
+                console.log("Eliminação de entradas de record label bem sucedida")
               }).catch(e => {
                 console.log(e)
             })
-            //console.log('Response Label: ' + responseLabel)
         }catch(e){
             throw(e)
         }
@@ -203,16 +194,13 @@ RecordLabels.editar = async function(label){
             ${founder == "" ? "" :`c:${idLabel} c:founderName \"${corrigir.protect_special_char_other(founder)}\".`}
             ${abstract == "" ? "" :`c:${idLabel} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
-        var encodedLabel = encodeURIComponent(prefixes + queryInsertion) 
-        console.log(queryInsertion)      
+        var encodedLabel = encodeURIComponent(prefixes + queryInsertion)     
         try{
-            await axios.post(postLink + encodedLabel, null).then(response => {
-                //resolve(response.data.content)
-                console.log(response.data)
+            await axios.post(postLink + encodedLabel, null).then(() => {
+                console.log("Substituição de entradas da record label bem sucedida")
               }).catch(e => {
                 console.log(e)
             })
-            //console.log('Response Label: ' + responseLabel)
         }catch(e){
             throw(e)
         }
@@ -224,8 +212,8 @@ RecordLabels.editar = async function(label){
             let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
             try{
                 axios.post(postLink + encodedAlbum,null)
-                .then(function(response) {
-                    console.log(response.data.content)
+                .then(function() {
+                    console.log("Substituição de albums da record label bem sucedido")
                 })
                 .catch(function(response) {
                     console.log(response)
