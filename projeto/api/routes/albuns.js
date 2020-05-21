@@ -8,6 +8,11 @@ router.get('/', function(req, res, next) {
         .then(dados => res.jsonp(dados))
         .catch(error => res.jsonp(error))
 });
+router.get('/albumsByDate', function(req, res, next) {
+    Albuns.getListaOrdenada()
+        .then(dados => res.jsonp(dados))
+        .catch(error => res.jsonp(error))
+});
 router.get('/:id', function(req, res, next) {
     Albuns.getAlbum(req.params.id)
         .then(dados => res.jsonp(dados))

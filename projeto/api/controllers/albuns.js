@@ -36,6 +36,22 @@ Albuns.getLista = async function(){
         throw(e)
     } 
 }
+Albuns.getListaOrdenada = async function(){
+    var query = ` select ?id ?name ?date where {
+        ?id rdf:type c:Album.
+        ?id c:name ?name.
+        ?id c:releaseDate ?date
+    }ORDER BY DESC(?date)` 
+    var encoded = encodeURIComponent(prefixes + query)
+
+    try{
+        var response = await axios.get(getLink + encoded)
+        return normalize(response.data)
+    }
+    catch(e){
+        throw(e)
+    } 
+}
 
 Albuns.getAlbum = async function(idAlbum){
     var query = ` select ?name ?at ?rd ?rt ?abs where {
