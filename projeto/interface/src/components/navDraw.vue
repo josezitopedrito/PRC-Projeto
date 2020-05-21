@@ -8,7 +8,12 @@
             nav
             dense
           >
-            
+            <v-list-item link to="/novidades">
+              <v-list-item-icon>
+                <v-icon>mdi-import</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>What's new?</v-list-item-title>
+            </v-list-item>
             <v-list-item link to="/users">
               <v-list-item-icon>
                 <v-icon>mdi-import</v-icon>
