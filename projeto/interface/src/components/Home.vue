@@ -83,9 +83,11 @@ export default {
     min-height: 94%;
     background-size:cover;
     background-position:50% 50%;
+    
   }
   .table {
    background-color: transparent!important;
    opacity: 1;
+   margin-left: 50px;
  }
 </style>
