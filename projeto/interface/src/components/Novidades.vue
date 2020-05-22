@@ -5,7 +5,7 @@
                 <img :src="imagem"/>
                 <div class="centered" v-if="completeNewestAlbum"> The brand new album, {{completeNewestAlbum.album[0].name}}, is out now! </div>
             </div>
-            <div id="slideshow">
+            <div id="slideshow" @click="dialog = true">
                 <div>
                     <img src="@/assets/Sgt._Pepper's_Lonely_Hearts_Club_Band.jpg">
                     <div class="centered" > Choose the decade you want to look into! </div>
@@ -39,6 +39,37 @@
         <div id="main" v-else>
             <div class="loader"></div> 
         </div>
+        <v-dialog max-width="500px" v-model="dialog">
+            <h2>What decade do you wish to visit?</h2>
+            <v-list>
+                <v-list-item-group>
+                    <v-list-item to="/decadas?data=antesde50">
+                        <v-list-item-title>Before 1950</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item to="/decadas?data=50-60">
+                        <v-list-item-title>The 50's</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item to="/decadas?data=60-70">
+                        <v-list-item-title>The 60's</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item to="/decadas?data=70-80">
+                        <v-list-item-title>The 70's</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item to="/decadas?data=80-90">
+                        <v-list-item-title>The 80's</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item to="/decadas?data=90-00">
+                        <v-list-item-title>The 90's</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item to="/decadas?data=00-10">
+                        <v-list-item-title>The 2000's</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item to="/decadas?data=10-20">
+                        <v-list-item-title>The 2010's</v-list-item-title>
+                    </v-list-item>
+                </v-list-item-group>
+            </v-list>
+        </v-dialog>
     </div>
 </template>
 <script>
@@ -52,7 +83,8 @@ export default {
             completeNewestAlbum:{},
             lhost:'http://localhost:5001/api',
             url:'',
-            imagem:''
+            imagem:'',
+            dialog:false
         };
     },
     created:async function(){
@@ -206,6 +238,9 @@ export default {
         filter: blur(0px);
         transform: scale(1.1);
         transform-origin: 50% 50%;
+    }
+    h2{
+        background-color: aliceblue;
     }
     .centered{
         position: absolute;
