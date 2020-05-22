@@ -1,13 +1,49 @@
 <template>
     <div>
-        <div class="container" v-if="completeNewestAlbum.album" @click="clickFunc">
-            <img :src="imagem" />
-            <div class="centered" v-if="completeNewestAlbum"> The brand new album, {{completeNewestAlbum.album[0].name}}, is out now! </div>
+        <div id="loading" v-if="completeNewestAlbum.album">
+            <div class="containerleft" v-if="completeNewestAlbum.album" @click="clickFunc">
+                <img :src="imagem"/>
+                <div class="centered" v-if="completeNewestAlbum"> The brand new album, {{completeNewestAlbum.album[0].name}}, is out now! </div>
+            </div>
+            <div id="slideshow">
+                <div>
+                    <img src="@/assets/Sgt._Pepper's_Lonely_Hearts_Club_Band.jpg">
+                    <div class="centered" > Choose the decade you want to look into! </div>
+                </div>
+                <div>
+                    <img src="@/assets/Queen_A_Night_At_The_Opera.png">
+                    <div class="centered" > Choose the decade you want to look into! </div>
+                </div>
+                <div>
+                    <img src="@/assets/Michael_Jackson_-_Thriller.png">
+                    <div class="centered" > Choose the decade you want to look into! </div>
+                </div>
+                <div>
+                    <img src="@/assets/NirvanaNevermindalbumcover.jpg">
+                    <div class="centered" > Choose the decade you want to look into! </div>
+                </div>
+                <div>
+                    <img src="@/assets/220px-ArcadeFireFuneralCover.jpg">
+                    <div class="centered" > Choose the decade you want to look into! </div>
+                </div>
+            </div>
+            <div class="containerleft" @click="clickFuncAdd">
+                <img src="@/assets/silhouette-of-man-holding-guitar-on-plant-fields-at-daytime-89909.jpg">
+                <div class="centered" > Are you an artist? Have you just released an album? Help us by adding or editing your information! </div>
+            </div>
+            <div class="containerright" @click="clickFuncReg">
+                <img src="@/assets/te-nguyen-Wt7XT1R6sjU-unsplash.jpg">
+                <div class="centered" > Do you want to create an account and post information? Sign up now for free! </div>
+            </div>
+        </div>
+        <div id="main" v-else>
+            <div class="loader"></div> 
         </div>
     </div>
 </template>
 <script>
 import axios from 'axios'
+import $ from 'jquery'
 export default {
     name: 'Novidades',
     data() {
@@ -22,10 +58,31 @@ export default {
     created:async function(){
         this.onUpdate()
     },
+    mounted:async function(){
+        $("#slideshow > div:gt(0)").hide();
+        setInterval(function() {
+        $('#slideshow > div:first')
+            .fadeOut(1000)
+            .next()
+            .fadeIn(1000)
+            .end()
+            .appendTo('#slideshow');
+        }, 3000);
+    },
     methods: {
         clickFunc:async function() {
             if(this.newestAlbum[0]){
                 this.$router.push(`/albums/${this.newestAlbum[0].id.split('#')[1]}`);
+            }
+        },
+        clickFuncAdd:async function() {
+            if(this.newestAlbum[0]){
+                this.$router.push(`/adicao`);
+            }
+        },
+        clickFuncReg:async function() {
+            if(this.newestAlbum[0]){
+                this.$router.push(`/registo`);
             }
         },
         onUpdate:async function(){
@@ -94,21 +151,79 @@ export default {
 </script>
 
 <style scoped>
-    .container {
+    #main{
+        background-color: darkred;
+        background-size: cover;
+        top:0px;
+        bottom: 50px;
+        width: 100%;
+        position: absolute;
+    }
+    #loading{
+        background-color: darkred;
+        background-size: cover;
+        top:0px;
+        bottom: 50px;
+        width: 100%;
+        position: absolute;
+    }
+    .loader {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+        position:relative;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    .containerleft {
         position: relative;
-        text-align: start;
+        text-align: center;
         color: aliceblue;
+        float:left;
+        margin-left: 350px;
+    }
+    .containerright {
+        position: relative;
+        text-align: center;
+        color: aliceblue;
+        float:right;
+        margin-right: 320px;
     }
     img{
         height:400px;
         width:500px;
-        background-size: cover;
-        filter: blur(8px);
+        filter: blur(4px);
+    }
+    img:hover{
+        height:400px;
+        width:500px;
+        filter: blur(0px);
+        transform: scale(1.1);
+        transform-origin: 50% 50%;
     }
     .centered{
         position: absolute;
+        background-color:black;
         top: 50%;
-        left: 22%;
+        left: 50%;
         transform: translate(-50%, -50%);
+    }
+    #slideshow {
+        position: relative; 
+        margin-right: 580px;
+        width: 240px; 
+        height: 400px;
+        color: aliceblue;
+        float: right;
+        box-shadow: 0 0 20px rgba(0,0,0,0.4); 
+    }
+    #slideshow > div { 
+        position: absolute;
     }
 </style>
