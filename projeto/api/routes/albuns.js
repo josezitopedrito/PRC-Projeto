@@ -4,9 +4,22 @@ var Albuns = require('../controllers/albuns')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    Albuns.getLista()
-        .then(dados => res.jsonp(dados))
-        .catch(error => res.jsonp(error))
+    var i = false
+    for(var key in req.query) {
+        if(req.query.hasOwnProperty(key))
+            i = true;
+    }
+    console.log('ola')
+    console.log(req.query)
+    if(i == true){
+        Albuns.getLista(req.query.data)
+            .then(dados => res.jsonp(dados))
+            .catch(error => res.jsonp(error))
+    }else{
+        Albuns.getLista("all")
+            .then(dados => res.jsonp(dados))
+            .catch(error => res.jsonp(error))
+    }
 });
 router.get('/albumsByDate', function(req, res, next) {
     Albuns.getListaOrdenada()

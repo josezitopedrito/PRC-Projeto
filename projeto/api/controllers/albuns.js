@@ -21,11 +21,78 @@ function normalize(response) {
                     new Object()));
 };
 
-Albuns.getLista = async function(){
-    var query = ` select ?id ?name where {
-        ?id rdf:type c:Album.
-        ?id c:name ?name.
-    }` 
+Albuns.getLista = async function(value){
+    console.log(value)
+    var query = ''
+    if(value == 'all'){
+        query = ` select ?id ?name where {
+            ?id rdf:type c:Album.
+            ?id c:name ?name.
+        }`
+    }else if(value == 'antesde50'){
+        query = ` select ?id ?name where {
+            ?id rdf:type c:Album.
+            ?id c:name ?name.
+            ?id c:releaseDate ?date
+            filter(?date < "1950-01-01")
+        }`
+    }
+    else if(value == '50-60'){
+        query = ` select ?id ?name where {
+            ?id rdf:type c:Album.
+            ?id c:name ?name.
+            ?id c:releaseDate ?date
+            filter(?date > "1950-01-01" && ?date < "1960-01-01")
+        }`
+    }
+    else if(value == '60-70'){
+        query = ` select ?id ?name where {
+            ?id rdf:type c:Album.
+            ?id c:name ?name.
+            ?id c:releaseDate ?date
+            filter(?date > "1960-01-01" && ?date < "1970-01-01")
+        }`
+    }
+    else if(value == '70-80'){
+        query = ` select ?id ?name where {
+            ?id rdf:type c:Album.
+            ?id c:name ?name.
+            ?id c:releaseDate ?date
+            filter(?date > "1970-01-01" && ?date < "1980-01-01")
+        }`
+    }
+    else if(value == '80-90'){
+        query = ` select ?id ?name where {
+            ?id rdf:type c:Album.
+            ?id c:name ?name.
+            ?id c:releaseDate ?date
+            filter(?date > "1980-01-01" && ?date < "1990-01-01")
+        }`
+    }
+    else if(value == '90-00'){
+        query = ` select ?id ?name where {
+            ?id rdf:type c:Album.
+            ?id c:name ?name.
+            ?id c:releaseDate ?date
+            filter(?date > "1990-01-01" && ?date < "2000-01-01")
+        }`
+    }
+    else if(value == '00-10'){
+        query = ` select ?id ?name where {
+            ?id rdf:type c:Album.
+            ?id c:name ?name.
+            ?id c:releaseDate ?date
+            filter(?date > "2000-01-01" && ?date < "2010-01-01")
+        }`
+    }
+    else if(value == '10-20'){
+        query = ` select ?id ?name where {
+            ?id rdf:type c:Album.
+            ?id c:name ?name.
+            ?id c:releaseDate ?date
+            filter(?date > "2010-01-01")
+        }`
+    }
     var encoded = encodeURIComponent(prefixes + query)
 
     try{
