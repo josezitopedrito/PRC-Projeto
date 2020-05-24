@@ -27,7 +27,7 @@
                     <div class="centered" > Choose the decade you want to look into! </div>
                 </div>
             </div>
-            <div class="containerleft" @click="clickFuncAdd">
+            <div class="containerbottomleft" @click="clickFuncAdd">
                 <img src="@/assets/silhouette-of-man-holding-guitar-on-plant-fields-at-daytime-89909.jpg">
                 <div class="centered" > Are you an artist? Have you just released an album? Help us by adding or editing your information! </div>
             </div>
@@ -214,6 +214,14 @@ export default {
         100% { transform: rotate(360deg); }
     }
     .containerleft {
+        position: relative;
+        text-align: center;
+        color: aliceblue;
+        float:left;
+        height:400px;
+        margin-left: 350px;
+    }
+    .containerbottomleft {
         position: relative;
         text-align: center;
         color: aliceblue;

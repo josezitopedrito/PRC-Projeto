@@ -2,8 +2,10 @@
   <v-app>
     <v-content>
       <!-- A navDraw é so para ser permitida a users registados -->
-      <navDraw></navDraw>
-      <router-view></router-view>
+      <div id="App">
+        <navDraw></navDraw>
+        <router-view></router-view>
+      </div>
       <appFooter></appFooter>
     </v-content>
   </v-app>
@@ -25,3 +27,10 @@ export default {
   }),
 };
 </script>
+
+<style>
+
+#App {
+  margin-bottom: 80px;
+}
+</style>

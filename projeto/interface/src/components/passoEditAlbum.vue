@@ -68,9 +68,11 @@
                 <v-radio-group v-model="album.type" column>
                     <v-radio label="LP" value="LP"></v-radio>
                     <v-radio label="EP" value="EP"></v-radio>
-                    <v-radio label="Split" value="Split"></v-radio>
+                    <v-radio label="Soundtrack" value="Soundtrack"></v-radio>
                     <v-radio label="Compilation" value="Compilation"></v-radio>
                     <v-radio label="Live" value="Live"></v-radio>
+                    <v-radio label="Single" value="Single"></v-radio>
+                    <v-radio label="Cover" value="Cover"></v-radio>
                 </v-radio-group>
               </v-container>
               <v-text-field           
