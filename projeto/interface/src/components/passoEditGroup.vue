@@ -141,13 +141,13 @@
                 </v-data-table>
                 <v-btn class="blue white--text" @click.prevent="reset">Reset</v-btn>
               <v-btn ref="submit" class="green white--text" @click="saveAlbum();" v-if="position == 'albumGroup'">Submit</v-btn>
-              <v-btn ref="skip" @click="saveSkipAlbum();" class="orange white--text" :disabled="disableButton" v-if="position == 'albumGroup'">Saltar</v-btn>
+              <v-btn ref="skip" @click="saveSkipAlbum();" class="orange white--text" v-if="position == 'albumGroup'">Saltar</v-btn>
 
               <v-btn ref="submit" class="green white--text" @click="saveArtist();" v-if="position == 'groupArtist'">Submit</v-btn>
-              <v-btn ref="skip" @click="saveSkipArtist();" class="orange white--text" :disabled="disableButton" v-if="position == 'groupArtist'">Saltar</v-btn>
+              <v-btn ref="skip" @click="saveSkipArtist();" class="orange white--text" v-if="position == 'groupArtist'">Saltar</v-btn>
 
               <v-btn ref="submit" class="green white--text" @click="saveGenre();" v-if="position == 'groupGenre'">Submit</v-btn>
-              <v-btn ref="skip" @click="saveSkipGenre();" class="orange white--text" :disabled="disableButton" v-if="position == 'groupGenre'">Saltar</v-btn>
+              <v-btn ref="skip" @click="saveSkipGenre();" class="orange white--text" v-if="position == 'groupGenre'">Saltar</v-btn>
                 <div v-if="position == 'albumGroup' && album.albumGroup.length>0" style="overflow-y: scroll;height: 100px;width: 800px;">
                   <h3>Groups who created this album:</h3>
                   <ul v-for="n in album.albumGroup" :key="n">
@@ -393,7 +393,7 @@ export default {
       this.$emit('atualizaGroup', this.group)
     },
     saveSkip (){
-      this.skip = 1
+      this.group.skip = 1
       this.$emit('atualizaGroup', this.group)
     },
     addGroup(id){
@@ -411,21 +411,21 @@ export default {
       this.$emit('atualizaAlbum', this.album)
     },
     saveSkipAlbum (){
-      this.skip = 1
+      this.album.skip = 1
       this.$emit('atualizaAlbum', this.album)
     },
     saveArtist (){
       this.$emit('atualizaArtist', this.artist)
     },
     saveSkipArtist (){
-      this.skip = 1
+      this.artist.skip = 1
       this.$emit('atualizaArtist', this.artist)
     },
     saveGenre(){
       this.$emit('atualizaGenre', this.genre)
     },
     saveSkipGenre (){
-      this.skip = 1
+      this.genre.skip = 1
       this.$emit('atualizaGenre', this.genre)
     }
 

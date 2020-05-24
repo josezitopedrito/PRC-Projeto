@@ -73,8 +73,8 @@
                   v-model="producer.producerInfo"
               ></v-textarea>
               <v-btn class="blue white--text" @click.prevent="reset">Reset</v-btn>
-              <v-btn ref="submit" class="green white--text" @click="save();" v-bind:class="{disabled: disableButton}" :disabled="disableButton">Submit</v-btn>
-              <v-btn ref="skip" @click="saveSkip();" class="orange white--text" :disabled="disableButton">Saltar</v-btn>
+              <v-btn ref="submit" class="green white--text" @click="save();">Submit</v-btn>
+              <v-btn ref="skip" @click="saveSkip();" class="orange white--text">Saltar</v-btn>
             </v-container>
         </v-form>
         <v-form ref="form2" method="post" enctype="multipart/form-data" v-if="position == 'albumProducer'">
@@ -122,7 +122,7 @@
                 </v-data-table>
               <v-btn class="blue white--text" @click.prevent="reset">Reset</v-btn>
               <v-btn ref="submit" class="green white--text" @click="saveAlbum();">Submit</v-btn>
-              <v-btn ref="skip" @click="saveSkipAlbum();" class="orange white--text" :disabled="disableButton">Saltar</v-btn>
+              <v-btn ref="skip" @click="saveSkipAlbum();" class="orange white--text">Saltar</v-btn>
               <div v-if="album.albumProducer.length>0" style="overflow-y: scroll;height: 100px;width: 800px;">
                 <h3>Producers of this album:</h3>
                 <ul v-for="n in album.albumProducer" :key="n">
@@ -274,7 +274,7 @@ export default {
       this.$emit('atualizaProducer', this.producer)
     },
     saveSkip (){
-      this.skip = 1
+      this.producer.skip = 1
       this.$emit('atualizaProducer', this.producer)
     },
     addProducer(id){
@@ -284,7 +284,7 @@ export default {
       this.$emit('atualizaAlbum', this.album)
     },
     saveSkipAlbum (){
-      this.skip = 1
+      this.album.skip = 1
       this.$emit('atualizaAlbum', this.album)
     }
     

@@ -102,19 +102,19 @@
                 </div>
               <v-btn class="blue white--text" @click.prevent="reset">Reset</v-btn>
               <v-btn ref="submit" class="green white--text" @click="saveGroup();" v-if="position == 'groupGenre'">Submit</v-btn>
-              <v-btn ref="skip" @click="saveSkipGroup();" class="orange white--text" :disabled="disableButton" v-if="position == 'groupGenre'">Saltar</v-btn>
+              <v-btn ref="skip" @click="saveSkipGroup();" class="orange white--text" v-if="position == 'groupGenre'">Saltar</v-btn>
 
               <v-btn ref="submit" class="green white--text" @click="saveArtist();" v-if="position == 'genreArtist'">Submit</v-btn>
-              <v-btn ref="skip" @click="saveSkipArtist();" class="orange white--text" :disabled="disableButton" v-if="position == 'genreArtist'">Saltar</v-btn>
+              <v-btn ref="skip" @click="saveSkipArtist();" class="orange white--text" v-if="position == 'genreArtist'">Saltar</v-btn>
 
               <v-btn ref="submit" class="green white--text" @click="saveSuperGenre();" v-if="position == 'supergenreGenre'">Submit</v-btn>
-              <v-btn ref="skip" @click="saveSkipSuperGenre();" class="orange white--text" :disabled="disableButton" v-if="position == 'supergenreGenre'">Saltar</v-btn>
+              <v-btn ref="skip" @click="saveSkipSuperGenre();" class="orange white--text" v-if="position == 'supergenreGenre'">Saltar</v-btn>
 
               <v-btn ref="submit" class="green white--text" @click="saveSubGenre();" v-if="position == 'subgenreGenre'">Submit</v-btn>
-              <v-btn ref="skip" @click="saveSkipSubGenre();" class="orange white--text" :disabled="disableButton" v-if="position == 'subgenreGenre'">Saltar</v-btn>
+              <v-btn ref="skip" @click="saveSkipSubGenre();" class="orange white--text" v-if="position == 'subgenreGenre'">Saltar</v-btn>
 
               <v-btn ref="submit" class="green white--text" @click="saveFusionGenre();" v-if="position == 'fusiongenreGenre'">Submit</v-btn>
-              <v-btn ref="skip" @click="saveSkipFusionGenre();" class="orange white--text" :disabled="disableButton" v-if="position == 'fusiongenreGenre'">Saltar</v-btn>
+              <v-btn ref="skip" @click="saveSkipFusionGenre();" class="orange white--text" v-if="position == 'fusiongenreGenre'">Saltar</v-btn>
             </v-container>
         </v-form>
       </v-row>
@@ -295,7 +295,7 @@ export default {
       this.$emit('atualizaGenre', this.genre)
     },
     saveSkip (){
-      this.skip = 1
+      this.genre.skip = 1
       this.$emit('atualizaGenre', this.genre)
     },
     addGenre(id){
@@ -320,35 +320,35 @@ export default {
       this.$emit('atualizaArtist', this.artist)
     },
     saveSkipArtist (){
-      this.skip = 1
+      this.artist.skip = 1
       this.$emit('atualizaArtist', this.artist)
     },
     saveGroup (){
       this.$emit('atualizaGroup', this.group)
     },
     saveSkipGroup (){
-      this.skip = 1
+      this.group.skip = 1
       this.$emit('atualizaGroup', this.group)
     },
     saveSuperGenre (){
       this.$emit('atualizaGenre', this.genre)
     },
     saveSkipSuperGenre (){
-      this.skip = 1
+      this.genre.skip = 1
       this.$emit('atualizaGenre', this.genre)
     },
     saveSubGenre (){
       this.$emit('atualizaGenre', this.genre)
     },
     saveSkipSubGenre (){
-      this.skip = 1
+      this.genre.skip = 1
       this.$emit('atualizaGenre', this.genre)
     },
     saveFusionGenre (){
       this.$emit('atualizaGenre', this.genre)
     },
     saveSkipFusionGenre (){
-      this.skip = 1
+      this.genre.skip = 1
       this.$emit('atualizaGenre', this.genre)
     }
     

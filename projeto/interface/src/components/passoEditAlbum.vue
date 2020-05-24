@@ -141,16 +141,16 @@
                 </v-data-table>
                 <v-btn class="blue white--text" @click.prevent="reset">Reset</v-btn>
                 <v-btn ref="submit" class="green white--text" @click="saveGroup();" v-if="position == 'albumGroup'">Submit</v-btn>
-                <v-btn ref="skip" @click="saveSkipGroup();" class="orange white--text" :disabled="disableButton" v-if="position == 'albumGroup'">Saltar</v-btn>
+                <v-btn ref="skip" @click="saveSkipGroup();" class="orange white--text" v-if="position == 'albumGroup'">Saltar</v-btn>
 
                 <v-btn ref="submit" class="green white--text" @click="saveLabel();" v-if="position == 'albumLabel'">Submit</v-btn>
-                <v-btn ref="skip" @click="saveSkipLabel();" class="orange white--text" :disabled="disableButton" v-if="position == 'albumLabel'">Saltar</v-btn>
+                <v-btn ref="skip" @click="saveSkipLabel();" class="orange white--text" v-if="position == 'albumLabel'">Saltar</v-btn>
 
                 <v-btn ref="submit" class="green white--text" @click="saveArtist();" v-if="position == 'albumArtist'">Submit</v-btn>
-                <v-btn ref="skip" @click="saveSkipArtist();" class="orange white--text" :disabled="disableButton" v-if="position == 'albumArtist'">Saltar</v-btn>
+                <v-btn ref="skip" @click="saveSkipArtist();" class="orange white--text" v-if="position == 'albumArtist'">Saltar</v-btn>
 
                 <v-btn ref="submit" class="green white--text" @click="saveProducer();" v-if="position == 'albumProducer'">Submit</v-btn>
-                <v-btn ref="skip" @click="saveSkipProducer();" class="orange white--text" :disabled="disableButton" v-if="position == 'albumProducer'">Saltar</v-btn>
+                <v-btn ref="skip" @click="saveSkipProducer();" class="orange white--text" v-if="position == 'albumProducer'">Saltar</v-btn>
                 <div v-if="position == 'albumGroup' && group.albumGroup.length>0" style="overflow-y: scroll;height: 100px;width: 800px;">
                   <h3>Albums this musical group has created:</h3>
                   <ul v-for="n in group.albumGroup" :key="n">
@@ -427,7 +427,7 @@ export default {
       this.$emit('atualizaAlbum', this.album)
     },
     saveSkip (){
-      this.skip = 1
+      this.album.skip = 1
       this.$emit('atualizaAlbum', this.album)
     },
     addAlbum(id){
@@ -447,29 +447,29 @@ export default {
     saveArtist (){
       this.$emit('atualizaArtist', this.artist)
     },
-    saveSkiprtist (){
-      this.skip = 1
+    saveSkipArtist (){
+      this.artist.skip = 1
       this.$emit('atualizaArtist', this.artist)
     },
     saveGroup (){
       this.$emit('atualizaGroup', this.group)
     },
     saveSkipGroup (){
-      this.skip = 1
+      this.group.skip = 1
       this.$emit('atualizaGroup', this.group)
     },
     saveLabel (){
       this.$emit('atualizaLabel', this.label)
     },
     saveSkipLabel (){
-      this.skip = 1
+      this.label.skip = 1
       this.$emit('atualizaLabel', this.label)
     },
     saveProducer (){
       this.$emit('atualizaProducer', this.producer)
     },
     saveSkipProducer (){
-      this.skip = 1
+      this.producer.skip = 1
       this.$emit('atualizaProducer', this.producer)
     }
     

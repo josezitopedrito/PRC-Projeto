@@ -93,7 +93,7 @@
               </div>
               <v-btn class="blue white--text" @click.prevent="reset">Reset</v-btn>
               <v-btn ref="submit" class="green white--text" @click="saveAlbum();">Submit</v-btn>
-              <v-btn ref="skip" @click="saveSkipAlbum();" class="orange white--text" :disabled="disableButton">Saltar</v-btn>
+              <v-btn ref="skip" @click="saveSkipAlbum();" class="orange white--text">Saltar</v-btn>
             </v-container>
         </v-form>
       </v-row>
@@ -226,7 +226,7 @@ export default {
       this.$emit('atualizaLabel', this.label)
     },
     saveSkip (){
-      this.skip = 1
+      this.label.skip = 1
       this.$emit('atualizaLabel', this.label)
     },
     addLabel(id){
@@ -236,7 +236,7 @@ export default {
       this.$emit('atualizaAlbum', this.album)
     },
     saveSkipAlbum (){
-      this.skip = 1
+      this.album.skip = 1
       this.$emit('atualizaAlbum', this.album)
     }
     
