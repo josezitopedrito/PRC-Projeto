@@ -3,7 +3,11 @@
         <v-container fluid>
             <v-row justify="space-around">
             <v-col cols="5">
-                <h2 class="title">{{ album.album[0].name }}</h2>
+                <v-toolbar class="card" flat>
+                    <h2 class="title">{{ album.album[0].name }}</h2>
+                    <div class="spacer"></div>
+                    <v-btn>Add to Collection</v-btn>
+                </v-toolbar>
                 <v-img contain v-bind:src="imagem" aspect-ratio="1" max-width="600px"/>
             </v-col>
             <v-col cols="5">

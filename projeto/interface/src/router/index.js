@@ -140,6 +140,22 @@ Vue.use(VueRouter)
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Decades.vue')
+  },
+  {
+    path: '/userFavourites',
+    name: 'Os Meus Favoritos',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/UserFavourites.vue')
+  },
+  {
+    path: '/globalFavourites',
+    name: 'Os Mais Gostados',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/GlobalFavourites.vue')
   }
 ]
 
