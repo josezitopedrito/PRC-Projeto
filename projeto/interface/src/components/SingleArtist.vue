@@ -4,7 +4,9 @@
             <v-row justify="space-around">
             <v-col cols="5">
                 <h2 class="title">{{ artista.artist[0].name }}</h2>
-                <v-img v-bind:src="imagem" contain aspect-ratio="1.7" max-width="700px" />
+                <v-img v-if="imagem != ''" v-bind:src="imagem" contain aspect-ratio="1.7" max-width="700px" />
+                <v-img v-else-if="imagem == '' && artista.artist[0].g == 'female' " contain src="@/assets/images.jpeg" aspect-ratio="1" max-width="600px"/>
+                <v-img v-else src="@/assets/765-default-avatar.png" contain aspect-ratio="1.7" max-width="700px" />
             </v-col>
             <v-col cols="5">
                 <v-simple-table class="table" dense>
