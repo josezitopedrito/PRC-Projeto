@@ -3,6 +3,7 @@
         <v-navigation-drawer app
           permanent
           expand-on-hover
+          dark
         >
           <v-list
             nav
@@ -22,7 +23,7 @@
             </v-list-item>
             <v-list-group
               prepend-icon="mdi-folder-open"
-              value="true"
+              :value="false"
             >
               <template v-slot:activator>
                 <v-list-item-title>Alteração de conteúdo</v-list-item-title>
