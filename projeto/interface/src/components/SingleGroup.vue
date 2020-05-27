@@ -4,7 +4,8 @@
             <v-row justify="space-around">
             <v-col cols="5">
                 <h2 class="title">{{ group.band[0].name }}</h2>
-                <v-img contain v-bind:src="imagem" aspect-ratio="1.7" max-width="600px"/>
+                <v-img v-if="imagem != ''" contain v-bind:src="imagem" aspect-ratio="1.7" max-width="600px"/>
+                <v-img v-else contain src="@/assets/default_group_normal.png" aspect-ratio="1.7" max-width="600px"/>
             </v-col>
             <v-col cols="5">
                 <v-simple-table class="table" dense>
