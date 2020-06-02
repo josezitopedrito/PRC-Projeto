@@ -17,10 +17,19 @@ Vue.use(VueRouter)
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Artists.vue')
-  }
-  ,
+  },
   {
-    path: '/Groups',
+    path: '/registo',
+    name: 'Registo',
+    component: () => import('../views/Registo.vue')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/Login.vue')
+  },
+  {
+    path: '/groups',
     name: 'Musical Groups',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route

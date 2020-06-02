@@ -3,6 +3,43 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var cors = require('cors');
+var mongoose = require('mongoose')	
+		
+mongoose.connect('mongodb://127.0.0.1:27017/prcproject', {useNewUrlParser: true, useUnifiedTopology: true})	
+    .then(()=> console.log('Mongo ready: ' + mongoose.connection.readyState))	
+    .catch((erro)=> console.log('Mongo: erro na conexão: ' + erro))	
+  
+// Autentica??o com JWT -----------------------------	
+var passport = require('passport')	
+var JWTStrategy = require('passport-jwt').Strategy	
+var ExtractJWT = require('passport-jwt').ExtractJwt	
+  
+var extractFromQS = function(req){	
+  var token = null	
+  if(req.query && req.query.token) token = req.query.token	
+  return token	
+}	
+  
+var extractFromBody = function(req){	
+  var token = null	
+  if(req.body && req.body.token) token = req.body.token	
+  return token	
+}	
+  
+passport.use(new JWTStrategy({	
+  secretOrKey: 'linksh',	
+  jwtFromRequest: ExtractJWT.fromExtractors([extractFromQS, extractFromBody])	
+}, async (payload, done) => {	
+  try{	
+    return done(null, payload)	
+  }	
+  catch(error){	
+    return done(error)	
+  }	
+}))	
+//-------------------------------	
+
+
 
 var artistsRouter = require('./routes/artists');
 var producersRouter = require('./routes/producers');
@@ -10,6 +47,7 @@ var rlabelsRouter = require('./routes/rlabels');
 var genresRouter = require('./routes/genres');
 var bandsRouter = require('./routes/bands');
 var albunsRouter = require('./routes/albuns');
+var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -17,6 +55,8 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+//-- passport initialize	
+app.use(passport.initialize());
 app.use(cors())
 app.use(logger('dev'));
 app.use(express.json());
@@ -29,6 +69,7 @@ app.use('/api/recordLabels', rlabelsRouter);
 app.use('/api/genres', genresRouter);
 app.use('/api/groups', bandsRouter);
 app.use('/api/albums', albunsRouter);
+app.use('/api/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
