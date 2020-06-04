@@ -4,7 +4,7 @@ var Albuns = require('../controllers/albuns')
 const verify = require('./verifytoken')
 
 /* GET home page. */
-router.get('/', verify, function(req, res, next) {
+router.get('/', /*verify,*/ function(req, res, next) {
     var i = false
     for(var key in req.query) {
         if(req.query.hasOwnProperty(key))

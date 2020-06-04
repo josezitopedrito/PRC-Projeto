@@ -31,7 +31,7 @@
                         <v-list-item-title>Ver Perfil</v-list-item-title>
                     </v-list-item>
                     <v-list-item>
-                        <v-list-item-title>Sair</v-list-item-title>
+                        <v-btn color="error" @click="endLog">Sair</v-btn>
                     </v-list-item>
                 </v-list>
             </v-menu>
@@ -74,6 +74,12 @@
 
 export default {
   name: 'Home',
+  methods : {
+    endLog : async function (){
+      this.$store.commit("eliminarToken")
+      this.$router.go()
+    }
+  }
 }
 </script>
 <style scoped>

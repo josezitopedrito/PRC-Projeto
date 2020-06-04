@@ -16,6 +16,10 @@ export default new Vuex.Store({
     },
     guardaNomeUtilizador(state, user) {
       state.user = user;
+    },
+    eliminarToken(state){
+      state.user = {}
+      state.jwt = ''
     }
   },
   getters:{

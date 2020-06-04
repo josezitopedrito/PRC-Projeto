@@ -73,8 +73,7 @@ export default {
   },
   created: async function(){
     try{
-      console.log("store:" + this.$store.state.jwt)
-      let response = await axios.get(this.lhost + "/albums", /*{headers: { token: `${this.$store.state.jwt}` }}*/)
+      let response = await axios.get(this.lhost + "/albums"/*, {headers: { token: `${this.$store.state.jwt}` }}*/)
       this.albuns = response.data
     }catch(e){
       return e
