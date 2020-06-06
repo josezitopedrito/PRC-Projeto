@@ -9,12 +9,6 @@
             nav
             dense
           >
-            <v-list-item link to="/novidades">
-              <v-list-item-icon>
-                <v-icon>mdi-exclamation</v-icon>
-              </v-list-item-icon>
-              <v-list-item-title>What's new?</v-list-item-title>
-            </v-list-item>
             <v-list-item link to="/users">
               <v-list-item-icon>
                 <v-icon>mdi-import</v-icon>
@@ -52,12 +46,6 @@
                 <v-icon>mdi-text</v-icon>
               </v-list-item-icon>
               <v-list-item-title>Créditos</v-list-item-title>
-            </v-list-item>
-            <v-list-item link to="/">
-              <v-list-item-icon>
-                <v-icon>mdi-magnify</v-icon>
-              </v-list-item-icon>
-              <v-list-item-title>Voltar à página de consulta</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-navigation-drawer>

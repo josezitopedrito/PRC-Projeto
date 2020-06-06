@@ -3,37 +3,37 @@
         <div id="loading" v-if="completeNewestAlbum.album">
             <div class="containerleft" v-if="completeNewestAlbum.album" @click="clickFunc">
                 <img :src="imagem"/>
-                <div class="centered" v-if="completeNewestAlbum"> The brand new album, {{completeNewestAlbum.album[0].name}}, is out now! </div>
+                <div class="bottom" v-if="completeNewestAlbum"> The brand new album, {{completeNewestAlbum.album[0].name}}, is out now! </div>
             </div>
             <div id="slideshow" @click="dialog = true">
                 <div>
                     <img src="@/assets/Sgt._Pepper's_Lonely_Hearts_Club_Band.jpg">
-                    <div class="centered" > Choose the decade you want to look into! </div>
+                    <div class="bottom" > Choose the decade you want to look into! </div>
                 </div>
                 <div>
                     <img src="@/assets/Queen_A_Night_At_The_Opera.png">
-                    <div class="centered" > Choose the decade you want to look into! </div>
+                    <div class="bottom" > Choose the decade you want to look into! </div>
                 </div>
                 <div>
                     <img src="@/assets/Michael_Jackson_-_Thriller.png">
-                    <div class="centered" > Choose the decade you want to look into! </div>
+                    <div class="bottom" > Choose the decade you want to look into! </div>
                 </div>
                 <div>
                     <img src="@/assets/NirvanaNevermindalbumcover.jpg">
-                    <div class="centered" > Choose the decade you want to look into! </div>
+                    <div class="bottom" > Choose the decade you want to look into! </div>
                 </div>
                 <div>
                     <img src="@/assets/220px-ArcadeFireFuneralCover.jpg">
-                    <div class="centered" > Choose the decade you want to look into! </div>
+                    <div class="bottom" > Choose the decade you want to look into! </div>
                 </div>
             </div>
             <div class="containerbottomleft" @click="clickFuncAdd">
                 <img src="@/assets/silhouette-of-man-holding-guitar-on-plant-fields-at-daytime-89909.jpg">
-                <div class="centered" > Are you an artist? Have you just released an album? Help us by adding or editing your information! </div>
+                <div class="bottom2" > Are you an artist? Help us by adding or editing your information! </div>
             </div>
             <div class="containerright" @click="clickFuncReg">
                 <img src="@/assets/te-nguyen-Wt7XT1R6sjU-unsplash.jpg">
-                <div class="centered" > Do you want to create an account and post information? Sign up now for free! </div>
+                <div class="bottom2" > Do you want to create an account? Sign up now for free! </div>
             </div>
         </div>
         <div id="main" v-else>
@@ -250,12 +250,27 @@ export default {
     h2{
         background-color: aliceblue;
     }
-    .centered{
+    .bottom{
+        height:80px;
+        width: 570px;
+        text-align: center;
         position: absolute;
-        background-color:black;
+        background-color:darkred;
+        color:white;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, 210%);
+    }
+    .bottom2{
+        height:40px;
+        width: 570px;
+        text-align: center;
+        position: absolute;
+        background-color:darkred;
+        color:white;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 450%);
     }
     #slideshow {
         position: relative; 

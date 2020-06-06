@@ -151,12 +151,12 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "about" */ '../views/Decades.vue')
   },
   {
-    path: '/userFavourites',
-    name: 'Os Meus Favoritos',
+    path: '/perfil',
+    name: 'Perfil e Favoritos',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/UserFavourites.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/PerfilFavourites.vue')
   },
   {
     path: '/globalFavourites',
