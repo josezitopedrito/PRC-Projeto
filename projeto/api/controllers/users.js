@@ -43,6 +43,7 @@ module.exports.registo = async function (user){
             user._id = mongoose.Types.ObjectId()
             var novo = new User(user)
             novo.password=hash
+            novo.favs=[]
             novo.save()
             return {status:"inserido"}
         }
@@ -63,7 +64,8 @@ module.exports.login = async function (user){
                 userval.email = response.email
                 userval.username = response.username
                 userval.tipo = response.tipo
-                userval._id= response._id
+                userval._id = response._id
+                userval.favs = response.favs
                 //build jwt
                 const token = jwt.sign({_id: response._id}, 'prcproject')
                 return{token: token, user: userval}
@@ -77,6 +79,49 @@ module.exports.login = async function (user){
     } 
 }
 
+module.exports.login = async function (user){
+    console.log("loggin")
+    try{
+        var response= await User.findOne({email: user.email})
+        if (response){
+             var userval = {}
+             userval.email = response.email
+             userval.username = response.username
+             userval.tipo = response.tipo
+             userval._id = response._id
+             userval.favs = response.favs
+             User.deleteOne({email: user.email})
+             userval.favs.push(user.fav)
+             userval.save()
+             return{status:"inserido"}
+        }
+        else{
+            return{status:"ocorreu um erro"}
+        }
+    }catch(e){
+        throw(e)
+    } 
+}
+
+module.exports.myFavs = async function(){
+    console.log("favs")
+    try{
+        var response= await User.findOne({email: user.email})
+        if (response){
+            var favs = []
+            for (let i = 0;i < response.favs.length;i++){
+                favs[i] = response.favs[i]
+            }
+            return{favs:favs}
+        }
+        else{
+            return{favs:"ocorreu um erro"}
+        }
+    }
+    catch(e){
+        throw(e)
+    }
+}
 
 
 module.exports.eliminar = id => {

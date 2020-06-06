@@ -20,5 +20,15 @@ router.post('/registo', function(req, res, next) {
         .then(dados => res.jsonp(dados))
         .catch(error => res.jsonp(error))
 });
+router.get('/myFavs', function(req,res){
+    Users.myFavs()
+    .then(dados => res.jsonp(dados))
+    .catch(erro => res.status(500).jsonp(erro))
+});
+router.post('/newFav', function(req,res){
+    Users.newFav(req.body)
+    .then(dados => res.jsonp(dados))
+    .catch(erro => res.status(500).jsonp(erro))
+});
 
 module.exports = router;
