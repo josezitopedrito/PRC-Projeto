@@ -79,7 +79,7 @@ module.exports.login = async function (user){
     } 
 }
 
-module.exports.login = async function (user){
+module.exports.newFav = async function (user){
     console.log("loggin")
     try{
         var response= await User.findOne({email: user.email})
@@ -103,14 +103,35 @@ module.exports.login = async function (user){
     } 
 }
 
-module.exports.myFavs = async function(){
+module.exports.myFavs = async function(email){
     console.log("favs")
     try{
-        var response= await User.findOne({email: user.email})
+        var response= await User.findOne({email: email})
         if (response){
             var favs = []
             for (let i = 0;i < response.favs.length;i++){
                 favs[i] = response.favs[i]
+            }
+            return{favs:favs}
+        }
+        else{
+            return{favs:"ocorreu um erro"}
+        }
+    }
+    catch(e){
+        throw(e)
+    }
+}
+
+module.exports.elimFav = async function(res){
+    console.log("favs")
+    try{
+        var response = await User.findOne({email: res.user.email})
+        if (response){
+            for (let i = 0;i < response.favs.length;i++){
+                if(response.favs[i] == res.fav){
+                    response.favs.splice(i)
+                }
             }
             return{favs:favs}
         }
