@@ -25,6 +25,9 @@
                         <v-list-item link to="/novidades">
                             <v-list-item-title>What's new?</v-list-item-title>
                         </v-list-item>
+                        <v-list-item link to="/globalFavourites">
+                            <v-list-item-title>Global Favourites</v-list-item-title>
+                        </v-list-item>
                         <div v-if="$store.state.jwt == ''">
                             <v-list-item link to="/registo">
                                 <v-list-item-title>Register</v-list-item-title>
@@ -36,10 +39,10 @@
                         <!-- Para ver enquanto logged in -->
                         <div v-else>
                             <v-list-item link to="/perfil">
-                                <v-list-item-title>Ver Perfil</v-list-item-title>
+                                <v-list-item-title>See Profile</v-list-item-title>
                             </v-list-item>
                             <v-list-item @click="endLog">
-                                <v-list-item-title>Sair</v-list-item-title>
+                                <v-list-item-title>Leave Session</v-list-item-title>
                             </v-list-item>
                         </div>
                     </v-list>
