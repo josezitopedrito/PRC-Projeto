@@ -20,17 +20,17 @@ router.post('/registo', function(req, res, next) {
         .then(dados => res.jsonp(dados))
         .catch(error => res.jsonp(error))
 });
-router.get('/myFavs', function(req,res){
+router.get('/myFavs', verify, function(req,res){
     Users.myFavs(req.query.email)
     .then(dados => res.jsonp(dados))
     .catch(erro => res.status(500).jsonp(erro))
 });
-router.post('/newFav', function(req,res){
+router.post('/newFav', verify, function(req,res){
     Users.newFav(req.body)
     .then(dados => res.jsonp(dados))
     .catch(erro => res.status(500).jsonp(erro))
 });
-router.post('/elimFav', function(req,res){
+router.post('/elimFav', verify, function(req,res){
     Users.elimFav(req.body)
     .then(dados => res.jsonp(dados))
     .catch(erro => res.status(500).jsonp(erro))

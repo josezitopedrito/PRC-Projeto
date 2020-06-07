@@ -128,19 +128,19 @@ export default {
             confirm("Are you sure you want to delete this album from your favourites?") && await axios.post(this.lhost + '/users/elimFav',{
                             user:this.user,
                             fav:key
-                        }) && this.replaceFavs()
+                        },{headers: { token: `${this.$store.state.jwt}` }}) && this.replaceFavs()
         }catch(e){
             console.log(e)
         }
     },
     replaceFavs: async function(){
         this.nomesFavoritos=[] 
-        this.nomesFavoritos = await axios.get(this.lhost + '/users/myFavs')
+        this.nomesFavoritos = await axios.get(this.lhost + '/users/myFavs', {headers: { token: `${this.$store.state.jwt}` }})
         this.$store.commit('mudaFavUtilizador')
     },
     newFav:async function(id){
         try{
-            let response = await axios.get(this.lhost + "/albums"/*, {headers: { token: `${this.$store.state.jwt}` }}*/)
+            let response = await axios.get(this.lhost + "/albums")
             this.albuns = response.data
         }catch(e){
             return e
@@ -148,7 +148,7 @@ export default {
         confirm("Are you sure you want to add this album to your favourites?") && await axios.post(this.lhost + '/users/newFav',{
                     user:this.user,
                     fav:id
-                }) && this.replaceFavs() && (this.dialog = false)
+                },{headers: { token: `${this.$store.state.jwt}` }}) && this.replaceFavs() && (this.dialog = false)
     },
 
   }
