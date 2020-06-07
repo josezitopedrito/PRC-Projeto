@@ -85,7 +85,7 @@
                         small
                         class="mr-2"
                       >
-                        mdi-eye
+                        mdi-plus
                       </v-icon>
                       Add
                     </v-btn>

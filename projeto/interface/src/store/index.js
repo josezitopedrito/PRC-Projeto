@@ -17,6 +17,9 @@ export default new Vuex.Store({
     guardaNomeUtilizador(state, user) {
       state.user = user;
     },
+    mudaFavUtilizador(state,favs){
+      state.user.favs = favs
+    },
     eliminarToken(state){
       state.user = {}
       state.jwt = ''
