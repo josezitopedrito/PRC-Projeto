@@ -79,10 +79,10 @@ module.exports.login = async function (user){
     } 
 }
 
-module.exports.newFav = async function (user){
+module.exports.newFav = async function (cont){
     console.log("loggin")
     try{
-        var response= await User.findOne({email: user.email})
+        var response= await User.findOne({email: cont.user.email})
         if (response){
              var userval = {}
              userval.email = response.email
@@ -91,7 +91,7 @@ module.exports.newFav = async function (user){
              userval._id = response._id
              userval.favs = response.favs
              User.deleteOne({email: user.email})
-             userval.favs.push(user.fav)
+             userval.favs.push(cont.fav)
              userval.save()
              return{status:"inserido"}
         }

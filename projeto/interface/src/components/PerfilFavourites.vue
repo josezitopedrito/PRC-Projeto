@@ -54,7 +54,7 @@
         </v-row>
         </v-container>
         <v-dialog v-model="dialog">
-            <!-- <v-data-table
+            <v-data-table
                   class="table"
                   :headers="halbuns"
                   :items="albuns"
@@ -69,18 +69,24 @@
                     prevIcon: 'mdi-minus',
                     nextIcon: 'mdi-plus'
                   }"
-                >
-                  <template class="tile" v-slot:item.options="{ item }">
-                    <v-btn icon @click="newFav(item.id.split('#')[1])" >
-                      <v-icon
-                        small
-                        class="mr-2"
-                      >
-                        mdi-plus
-                      </v-icon>
-                      Add
-                    </v-btn>
-                  </template> -->
+            >
+                <template class="tile" v-slot:item.options="{ item }">
+                <v-btn icon @click="newFav(item.id.split('#')[1])" >
+                    <v-icon
+                    small
+                    class="mr-2"
+                    >
+                    mdi-plus
+                    </v-icon>
+                    Add
+                </v-btn>
+                </template>
+                <template v-slot:no-data>
+                <v-alert :value="true" color = "warning" icon = "warning">
+                    The album list is still loading. Wait a second
+                </v-alert> 
+                </template>
+            </v-data-table>
         </v-dialog>
     </div>
 </template>
@@ -91,9 +97,16 @@ export default {
   data(){
     return{
       info:{},
+      search:'',
+      halbuns:[
+       {text:"Name",sortable:true, value:'name',class:'subtitle-1'},
+      //  {text:"Artist/Group",sortable:true, value:'creator',class:'subtitle-1'},
+       {text:'Options',value:'options',sortable: false,class:'subtitle-1'}
+      ],
       lhost:'http://localhost:5001/api',
       nomesFavoritos:[],
-      dialog:false
+      dialog:false,
+      albuns:[]
     }
   },
   created: async function(){
@@ -125,7 +138,19 @@ export default {
         this.nomesFavoritos = await axios.get(this.lhost + '/users/myFavs')
         this.$store.commit('mudaFavUtilizador')
     },
-    //newFav:async function(){}
+    newFav:async function(id){
+        try{
+            let response = await axios.get(this.lhost + "/albums"/*, {headers: { token: `${this.$store.state.jwt}` }}*/)
+            this.albuns = response.data
+        }catch(e){
+            return e
+        }
+        confirm("Are you sure you want to add this album to your favourites?") && await axios.post(this.lhost + '/users/newFav',{
+                    user:this.user,
+                    fav:id
+                }) && this.replaceFavs() && (this.dialog = false)
+    },
+
   }
 }
 </script>
