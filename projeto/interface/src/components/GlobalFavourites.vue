@@ -2,23 +2,15 @@
   <div id="Albums">
   <v-card flat class="card">
     <v-card-title class="title">
-      Albuns
+      Favorite Artists
       <v-spacer></v-spacer>
-      <v-text-field
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="Search"
-        single-line
-        hide-details
-      ></v-text-field>
     </v-card-title>
     <v-card-text>
       <v-data-table
         class="table"
-        :headers="halbuns"
-        :items="albuns"
-        :search="search"
-        :sort-by="['Name','Number of votes','Options']"
+        :headers="hartists"
+        :items="artists"
+        :sort-by="['Artist Name','Number of votes','Options']"
         :sort-desc="[true,true,false]"
         multi-sort
         :footer-props="{
@@ -30,7 +22,47 @@
         }"
       >
         <template class="tile" v-slot:item.options="{ item }">
-          <v-btn icon :to="'/albums/' + item.id.split('#')[1]">
+          <v-btn icon :to="'/artists/' + item.artist.split('#')[1]">
+            <v-icon
+              small
+              class="mr-2"
+            >
+              mdi-eye
+            </v-icon>
+            Individual page
+          </v-btn>
+        </template>
+        <template v-slot:no-data>
+          <v-alert :value="true" color = "warning" icon = "warning">
+            The artist list is still loading. Wait a second
+          </v-alert> 
+        </template>
+      </v-data-table>
+    </v-card-text>
+  </v-card>
+  <v-card flat class="card">
+    <v-card-title class="title">
+      Favorite Albums
+      <v-spacer></v-spacer>
+    </v-card-title>
+    <v-card-text>
+      <v-data-table
+        class="table"
+        :headers="halbums"
+        :items="albums"
+        :sort-by="['Album Name','Number of votes','Options']"
+        :sort-desc="[true,true,false]"
+        multi-sort
+        :footer-props="{
+          showFirstLastPage: true,
+          firstIcon: 'mdi-arrow-collapse-left',
+          lastIcon: 'mdi-arrow-collapse-right',
+          prevIcon: 'mdi-minus',
+          nextIcon: 'mdi-plus'
+        }"
+      >
+        <template class="tile" v-slot:item.options="{ item }">
+          <v-btn icon :to="'/albums/' + item.album.split('#')[1]">
             <v-icon
               small
               class="mr-2"
@@ -47,10 +79,46 @@
         </template>
       </v-data-table>
     </v-card-text>
-    <v-toolbar class="card" flat>
-      <div class="spacer"></div>
-      <v-btn to="/" style="background-color:darkgrey;">Main Menu</v-btn>
-    </v-toolbar>
+  </v-card>
+  <v-card flat class="card">
+    <v-card-title class="title">
+      Favorite Groups
+      <v-spacer></v-spacer>
+    </v-card-title>
+    <v-card-text>
+      <v-data-table
+        class="table"
+        :headers="hgroups"
+        :items="groups"
+        :sort-by="['Group Name','Number of votes','Options']"
+        :sort-desc="[true,true,false]"
+        multi-sort
+        :footer-props="{
+          showFirstLastPage: true,
+          firstIcon: 'mdi-arrow-collapse-left',
+          lastIcon: 'mdi-arrow-collapse-right',
+          prevIcon: 'mdi-minus',
+          nextIcon: 'mdi-plus'
+        }"
+      >
+        <template class="tile" v-slot:item.options="{ item }">
+          <v-btn icon :to="'/groups/' + item.group.split('#')[1]">
+            <v-icon
+              small
+              class="mr-2"
+            >
+              mdi-eye
+            </v-icon>
+            Individual page
+          </v-btn>
+        </template>
+        <template v-slot:no-data>
+          <v-alert :value="true" color = "warning" icon = "warning">
+            The group list is still loading. Wait a second
+          </v-alert> 
+        </template>
+      </v-data-table>
+    </v-card-text>
   </v-card>
   </div>
 </template>
@@ -58,23 +126,37 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'Albums',
+  name: 'Global Favourites',
   data(){
     return{
       search:'',
-      halbuns:[
-       {text:"Name",sortable:true, value:'name',class:'subtitle-1'},
-       {text:'Number of votes',value:'votes',sortable: true,class:'subtitle-1'},
+      hartists:[
+       {text:"Artist Name",sortable:true, value:'name',class:'subtitle-1'},
+       {text:'Number of votes',value:'artistvotes',sortable: true,class:'subtitle-1'},
        {text:'Options',value:'options',sortable: false,class:'subtitle-1'}
       ],
-      albuns:[],
+      halbums:[
+       {text:"Album Name",sortable:true, value:'name',class:'subtitle-1'},
+       {text:'Number of votes',value:'albumvotes',sortable: true,class:'subtitle-1'},
+       {text:'Options',value:'options',sortable: false,class:'subtitle-1'}
+      ],
+      hgroups:[
+       {text:"Group Name",sortable:true, value:'name',class:'subtitle-1'},
+       {text:'Number of votes',value:'groupvotes',sortable: true,class:'subtitle-1'},
+       {text:'Options',value:'options',sortable: false,class:'subtitle-1'}
+      ],
+      artists:[],
+      albums:[],
+      groups:[],
       lhost:'http://localhost:5001/api'
     }
   },
   created: async function(){
     try{
-      let response = await axios.get(this.lhost + "/albums")
-      this.albuns = response.data
+      let response = await axios.get(this.lhost + "/albums/favoritos")
+      this.artists = response.data.artists
+      this.groups = response.data.groups
+      this.albums = response.data.albums
     }catch(e){
       return e
     }
@@ -99,8 +181,7 @@ a {
   color: #42b983;
 }
     #Albums {
-        background-image: url("../assets/black-vinyl-player-145707.jpg");
-        background-color: #cccccc;
+        background-color: indigo;
         min-height: 94%;
         background-size: cover;
         background-position:50% 50%;
@@ -116,9 +197,6 @@ a {
     }
     .title{
         color:aliceblue;
-    }
-    .table{
-        background-color: rgba(255,255,255,0.5);
     }
     .card {
       background-color: transparent!important;
