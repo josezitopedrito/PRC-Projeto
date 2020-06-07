@@ -25,9 +25,10 @@ Albuns.getLista = async function(value){
     console.log(value)
     var query = ''
     if(value == 'all'){
-        query = ` select ?id ?name where {
+        query = ` select ?id ?name ?votes where {
             ?id rdf:type c:Album.
             ?id c:name ?name.
+            ?id c:votes ?votes
         }`
     }else if(value == 'antesde50'){
         query = ` select ?id ?name where {
