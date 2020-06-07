@@ -205,6 +205,11 @@ Albuns.getFavoritos = async function(){
         ?artist c:created ?album.
         ?album c:votes ?votes
     } group by ?artist ?name order by DESC(?artistvotes) LIMIT 10`
+    var queryAlbums = ` select ?album ?name (sum(xsd:integer(?votes)) as ?albumvotes) where {
+        ?album a c:Album.
+        ?album c:name ?name.
+        ?album c:votes ?votes
+    } group by ?album ?name order by DESC(?albumvotes) LIMIT 10`
     var queryGroups = ` select ?group ?name (sum(xsd:integer(?votes)) as ?groupvotes) where {
         ?group a c:Group.
         ?group c:name ?name.
@@ -214,12 +219,14 @@ Albuns.getFavoritos = async function(){
     } group by ?group ?name order by DESC(?groupvotes) LIMIT 10`
 
     var encodedArtists = encodeURIComponent(prefixes + queryArtists)
+    var encodedAlbums = encodeURIComponent(prefixes + queryAlbums)
     var encodedGroups = encodeURIComponent(prefixes + queryGroups)
 
     try{
         var responseartists = await axios.get(getLink + encodedArtists)
+        var responsealbums = await axios.get(getLink + encodedAlbums)
         var responsegroups = await axios.get(getLink + encodedGroups)
-        return {artists:normalize(responseartists.data),groups:normalize(responsegroups.data)}
+        return {artists:normalize(responseartists.data),albums:normalize(responsealbums.data),groups:normalize(responsegroups.data)}
     }
     catch(e){
         throw(e)
