@@ -317,13 +317,3 @@ select ?artistName ?genreName where{
 }
 OFFSET 40000
 LIMIT 10000
-
-Queries no Music Brainz:
-
-Query para obter os links das capas dos albuns:
-
-SELECT ?albumName ?photoLink WHERE {
-  ?album rdf:type mo:Record.
-  ?album rdfs:label ?albumName.
-  ?album mo:image ?photoLink
-}
