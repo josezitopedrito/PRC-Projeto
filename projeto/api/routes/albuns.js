@@ -27,6 +27,11 @@ router.get('/albumsByDate', function(req, res, next) {
         .then(dados => res.jsonp(dados))
         .catch(error => res.jsonp(error))
 });
+router.get('/favoritos', function(req,res,next) {
+    Albuns.getFavoritos()
+        .then(dados => res.jsonp(dados))
+        .catch(error => res.jsonp(error))
+});
 router.get('/:id', function(req, res, next) {
     Albuns.getAlbum(req.params.id)
         .then(dados => res.jsonp(dados))
