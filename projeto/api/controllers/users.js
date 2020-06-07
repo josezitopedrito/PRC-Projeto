@@ -5,6 +5,25 @@ var path = require('path')
 var bcrypt = require('bcryptjs')
 var jwt = require('jsonwebtoken')
 
+var prefixes = `
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX owl: <http://www.w3.org/2002/07/owl#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX noInferences: <http://www.ontotext.com/explicit>
+    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+    PREFIX c: <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+`
+var getLink = "http://localhost:7200/repositories/PRC-PROJECT" + "?query=" 
+
+var postLink = "http://localhost:7200/repositories/PRC-PROJECT/statements" + "?update=" 
+
+function normalize(response) {
+    return response.results.bindings.map(obj =>
+        Object.entries(obj)
+            .reduce((new_obj, [k,v]) => (new_obj[k] = v.value, new_obj),
+                    new Object()));
+};
 
 module.exports.listar = () => {
     return User
@@ -80,20 +99,44 @@ module.exports.login = async function (user){
 }
 
 module.exports.newFav = async function (cont){
-    console.log("loggin")
+    console.log("new Fav")
     try{
         var response= await User.findOne({email: cont.user.email})
         if (response){
-             var userval = {}
-             userval.email = response.email
-             userval.username = response.username
-             userval.tipo = response.tipo
-             userval._id = response._id
-             userval.favs = response.favs
-             User.deleteOne({email: user.email})
-             userval.favs.push(cont.fav)
-             userval.save()
-             return{status:"inserido"}
+            var userval = {}
+            userval.email = response.email
+            userval.username = response.username
+            userval.tipo = response.tipo
+            userval._id = response._id
+            userval.favs = response.favs
+            User.deleteOne({email: user.email})
+            userval.favs.push(cont.fav)
+            userval.save()
+            var getVotes = `select ?vote where {
+                c:${cont.fav} c:votes ?vote.
+            }`
+            var encodedGet = encodeURIComponent(prefixes + getVotes)
+            var responseGet = await axios.get(getLink + encodedGet)
+            var normalizedResponseGet = normalize(responseGet.data)
+            var delVotes = `DELETE DATA {
+                c:${cont.fav} c:votes ${responseGet}.
+            }`
+            var encodedDel = encodeURIComponent(prefixes + delVotes)
+            await axios.post(postLink + encodedDel, null).then(() => {
+                console.log("Delete dos votos do album bem sucedido")
+              }).catch(e => {
+                console.log(e)
+            })
+            var insVotes = `INSERT DATA {
+                c:${cont.fav} c:votes ${normalizedResponseGet + 1}.
+            }`
+            var encodedIns = encodeURIComponent(prefixes + insVotes)
+            await axios.post(postLink + encodedIns, null).then(() => {
+                console.log("Insert dos votos do album bem sucedido")
+              }).catch(e => {
+                console.log(e)
+            })
+            return{status:"inserido"}
         }
         else{
             return{status:"ocorreu um erro"}
@@ -133,6 +176,30 @@ module.exports.elimFav = async function(res){
                     response.favs.splice(i)
                 }
             }
+            var getVotes = `select ?vote where {
+                c:${res.fav} c:votes ?vote.
+            }`
+            var encodedGet = encodeURIComponent(prefixes + getVotes)
+            var responseGet = await axios.get(getLink + encodedGet)
+            var normalizedResponseGet = normalize(responseGet.data)
+            var delVotes = `DELETE DATA {
+                c:${res.fav} c:votes ${responseGet}.
+            }`
+            var encodedDel = encodeURIComponent(prefixes + delVotes)
+            await axios.post(postLink + encodedDel, null).then(() => {
+                console.log("Delete dos votos do album bem sucedido")
+              }).catch(e => {
+                console.log(e)
+            })
+            var insVotes = `INSERT DATA {
+                c:${res.fav} c:votes ${normalizedResponseGet - 1}.
+            }`
+            var encodedIns = encodeURIComponent(prefixes + insVotes)
+            await axios.post(postLink + encodedIns, null).then(() => {
+                console.log("Insert dos votos do album bem sucedido")
+              }).catch(e => {
+                console.log(e)
+            })
             return{favs:favs}
         }
         else{
