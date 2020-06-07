@@ -9,6 +9,7 @@ var prefixes = `
     PREFIX noInferences: <http://www.ontotext.com/explicit>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
     PREFIX c: <http://www.semanticweb.org/prc/ontologies/2020/PRC_Project#>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 `
 var getLink = "http://localhost:7200/repositories/PRC-PROJECT" + "?query=" 
 
@@ -121,6 +122,7 @@ Albuns.getListaOrdenada = async function(){
     } 
 }
 
+
 Albuns.getAlbum = async function(idAlbum){
     var query = ` select ?name ?at ?rd ?rt ?abs where {
         c:${idAlbum} rdf:type c:Album.
@@ -194,6 +196,36 @@ Albuns.getAlbum = async function(idAlbum){
         throw(e)
     } 
 }
+
+Albuns.getFavoritos = async function(){
+    var queryArtists = ` select ?artist ?name (sum(xsd:integer(?votes)) as ?artistvotes) where {
+        ?artist a c:Artist.
+        ?artist c:name ?name.
+        ?album a c:Album.
+        ?artist c:created ?album.
+        ?album c:votes ?votes
+    } group by ?artist ?name order by DESC(?artistvotes) LIMIT 10`
+    var queryGroups = ` select ?group ?name (sum(xsd:integer(?votes)) as ?groupvotes) where {
+        ?group a c:Group.
+        ?group c:name ?name.
+        ?album a c:Album.
+        ?group c:created ?album.
+        ?album c:votes ?votes
+    } group by ?group ?name order by DESC(?groupvotes) LIMIT 10`
+
+    var encodedArtists = encodeURIComponent(prefixes + queryArtists)
+    var encodedGroups = encodeURIComponent(prefixes + queryGroups)
+
+    try{
+        var responseartists = await axios.get(getLink + encodedArtists)
+        var responsegroups = await axios.get(getLink + encodedGroups)
+        return {artists:normalize(responseartists.data),groups:normalize(responsegroups.data)}
+    }
+    catch(e){
+        throw(e)
+    } 
+}
+
 
 Albuns.inserir = async function(album){
     var queryGetTotal = `select ((count(?albuns)) as ?count) where{
