@@ -253,11 +253,12 @@ Albuns.inserir = async function(album){
         var labels = album.album.labels
         var producers = album.album.producers
         var queryInsertion = `INSERT DATA {
-            c:${idAlbum} c:name \"${corrigir.protect_special_char_nome(albumNome)}\".
-            ${albumType == "" ? "" :`c:${idAlbum} c:albumType \"${corrigir.protect_special_char_other(albumType)}\".`}
-            ${releaseDate == "" ? "" :`c:${idAlbum} c:releaseDate \"${corrigir.protect_special_char_other(releaseDate)}\".`}
-            ${runtime == "" ? "" :`c:${idAlbum} c:runtime \"${corrigir.protect_special_char_other(runtime)}\".`}
-            ${abstract == "" ? "" :`c:${idAlbum} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
+            c:album_${idAlbum} rdf:type c:Album.
+            c:album_${idAlbum} c:name \"${corrigir.protect_special_char_nome(albumNome)}\".
+            ${albumType == "" ? "" :`c:album_${idAlbum} c:albumType \"${corrigir.protect_special_char_other(albumType)}\".`}
+            ${releaseDate == "" ? "" :`c:album_${idAlbum} c:releaseDate \"${corrigir.protect_special_char_other(releaseDate)}\".`}
+            ${runtime == "" ? "" :`c:album_${idAlbum} c:runtime \"${corrigir.protect_special_char_other(runtime)}\".`}
+            ${abstract == "" ? "" :`c:album_${idAlbum} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
         }`
         var encodedAlbum = encodeURIComponent(prefixes + queryInsertion)     
         try{

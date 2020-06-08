@@ -126,7 +126,6 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'Global Favourites',
   data(){
     return{
       search:'',
@@ -145,6 +144,7 @@ export default {
        {text:'Number of votes',value:'groupvotes',sortable: true,class:'subtitle-1'},
        {text:'Options',value:'options',sortable: false,class:'subtitle-1'}
       ],
+      item:{artist:[""],group:[""],album:[""]},
       artists:[],
       albums:[],
       groups:[],
@@ -157,6 +157,7 @@ export default {
       this.artists = response.data.artists
       this.groups = response.data.groups
       this.albums = response.data.albums
+      alert(JSON.stringify(response))
     }catch(e){
       return e
     }

@@ -126,6 +126,7 @@ Artists.inserir = async function(artist){
         var groups = artist.artist.groups 
         var genres = artist.artist.genres 
         var queryInsertion = `INSERT DATA {
+            c:artist_${idArtist} rdf:type c:Artist.
             c:artist_${idArtist} c:name \"${corrigir.protect_special_char_nome(artistNome)}\".
             ${birthPlace == "" ? "" :`c:artist_${idArtist} c:birthPlaceName \"${corrigir.protect_special_char_other(birthPlace)}\".`}
             ${birthDate == "" ? "" :`c:artist_${idArtist} c:birthDate \"${corrigir.protect_special_char_other(birthDate)}\".`}

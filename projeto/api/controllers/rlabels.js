@@ -95,6 +95,7 @@ RecordLabels.inserir = async function(label){
         var abstract = typeof label.label.labelInfo == 'undefined' ? "" : label.label.labelInfo
         var albums = label.label.albums
         var queryInsertion = `INSERT DATA {
+            c:recordlabel_${idLabel} rdf:type c:RecordLabel.
             c:recordlabel_${idLabel} c:name \"${corrigir.protect_special_char_nome(labelNome)}\".
             ${headquarters == "" ? "" :`c:recordlabel_${idLabel} c:headquarters \"${corrigir.protect_special_char_other(headquarters)}\".`}
             ${foundingYear == "" ? "" :`c:recordlabel_${idLabel} c:foundingYear \"${corrigir.protect_special_char_other(foundingYear)}\".`}

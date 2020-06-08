@@ -124,6 +124,7 @@ Bands.inserir = async function(band){
         var albums = band.group.albums
         var genres = band.group.genres
         var queryInsertion = `INSERT DATA {
+            c:group_${idBand} rdf:type c:Group.
             c:group_${idBand} c:name \"${corrigir.protect_special_char_nome(groupNome)}\".
             ${hometown == "" ? "" :`c:group_${idBand} c:hometown \"${corrigir.protect_special_char_other(hometown)}\".`}
             ${formationDate == "" ? "" :`c:group_${idBand} c:startDate \"${corrigir.protect_special_char_other(formationDate)}\".`}

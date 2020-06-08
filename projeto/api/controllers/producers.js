@@ -87,6 +87,7 @@ Producers.inserir = async function(producer){
         var abstract = typeof producer.producer.producerInfo == 'undefined' ? "" : producer.producer.producerInfo
         var albums = producer.producer.albums
         var queryInsertion = `INSERT DATA {
+            c:producer_${idProducer} rdf:type c:Producer.
             c:producer_${idProducer} c:name \"${corrigir.protect_special_char_nome(producerNome)}\".
             ${firstActiveYear == "" ? "" :`c:producer_${idProducer} c:startingYear \"${corrigir.protect_special_char_other(firstActiveYear)}\".`}
             ${abstract == "" ? "" :`c:producer_${idProducer} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}

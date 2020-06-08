@@ -407,7 +407,7 @@
                 if(this.total == this.model + 1 || album.skip == 1){
                     await axios.post(this.lhost + '/albums/editar',{
                         album:this.album
-                    }).then(() => {
+                    },{headers: { token: `${this.$store.state.jwt}` }}).then(() => {
                         this.cancela();
                     }).catch(e => {
                         console.log(e)
@@ -436,7 +436,7 @@
                 if(this.total == this.model + 1 || artist.skip == 1){
                     await axios.post(this.lhost + '/artists/editar',{
                         artist:this.artist
-                    }).then(() => {
+                    },{headers: { token: `${this.$store.state.jwt}` }}).then(() => {
                         this.cancela();
                     }).catch(e => {
                         console.log(e)
@@ -465,7 +465,7 @@
                 if(this.total == this.model + 1 || group.skip == 1){
                     await axios.post(this.lhost + '/groups/editar',{
                         group:this.group
-                    }).then(() => {
+                    },{headers: { token: `${this.$store.state.jwt}` }}).then(() => {
                         this.cancela();
                     }).catch(e => {
                         console.log(e)
@@ -493,7 +493,7 @@
                 if(this.total == this.model + 1 || genre.skip == 1){
                     await axios.post(this.lhost + '/genres/editar',{
                         genre:this.genre
-                    }).then(() => {
+                    },{headers: { token: `${this.$store.state.jwt}` }}).then(() => {
                         this.cancela();
                     }).catch(e => {
                         console.log(e)
@@ -516,7 +516,7 @@
                 if(this.total == this.model + 1 || label.skip == 1){
                     await axios.post(this.lhost + '/recordLabels/editar',{
                         label:this.label
-                    }).then(() => {
+                    },{headers: { token: `${this.$store.state.jwt}` }}).then(() => {
                         this.cancela();
                     }).catch(e => {
                         console.log(e)
@@ -537,7 +537,7 @@
                 if(this.total == this.model + 1 || producer.skip == 1){
                     await axios.post(this.lhost + '/producers/editar',{
                         producer:this.producer
-                    }).then(() => {
+                    },{headers: { token: `${this.$store.state.jwt}` }}).then(() => {
                         this.cancela();
                     }).catch(e => {
                         console.log(e)

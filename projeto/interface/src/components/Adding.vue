@@ -141,7 +141,8 @@
                             <passoGenre v-if="m == 6 && renderComponent" :obj="genre" :position="fusiongenreGenre" @atualizaGenre=atualizaGenre($event)></passoGenre>
                         </v-window-item>
                     </v-window>
-                    
+                    <div id=space>
+                    </div>
                 </v-card>
             </v-expand-transition>
         </v-sheet>
@@ -349,7 +350,7 @@
                 if(this.total == this.model + 1 || album.skip == 1){
                     confirm('Are you sure you want to save this album?') && (await axios.post(this.lhost + '/albums/inserir',{
                         album:this.album
-                    }) && this.cancela())
+                    },{headers: { token: `${this.$store.state.jwt}` }}) && this.cancela())
                 }else{
                     this.next()
                 }
@@ -368,7 +369,7 @@
                 if(this.total == this.model + 1 || artist.skip == 1){
                     confirm('Are you sure you want to save this artist?') && (await axios.post(this.lhost + '/artists/inserir',{
                         artist:this.artist
-                    }) && this.cancela())
+                    },{headers: { token: `${this.$store.state.jwt}` }}) && this.cancela())
                 }else{
                     this.next()
                 }
@@ -387,7 +388,7 @@
                 if(this.total == this.model + 1 || group.skip == 1){
                     confirm('Are you sure you want to save this group?') && (await axios.post(this.lhost + '/groups/inserir',{
                         group:this.group
-                    }) && this.cancela())
+                    },{headers: { token: `${this.$store.state.jwt}` }}) && this.cancela())
                 }else{
                     this.next()
                 }
@@ -403,7 +404,7 @@
                 if(this.total == this.model + 1 || genre.skip == 1){
                     confirm('Are you sure you want to save this genre?') && (await axios.post(this.lhost + '/genres/inserir',{
                         genre:this.genre
-                    }) && this.cancela())
+                    },{headers: { token: `${this.$store.state.jwt}` }}) && this.cancela())
                 }else{
                     this.next()
                 }
@@ -418,7 +419,7 @@
                 if(this.total == this.model + 1 || label.skip == 1){
                     confirm('Are you sure you want to save this label?') && (await axios.post(this.lhost + '/recordLabels/inserir',{
                         label:this.label
-                    }) && this.cancela())
+                    },{headers: { token: `${this.$store.state.jwt}` }}) && this.cancela())
                 }else{
                     this.next()
                 }
@@ -431,7 +432,7 @@
                 if(this.total == this.model + 1 || producer.skip == 1){
                     confirm('Are you sure you want to save this producer?') && (await axios.post(this.lhost + '/producers/inserir',{
                         producer:this.producer
-                    }) && this.cancela())
+                    },{headers: { token: `${this.$store.state.jwt}` }}) && this.cancela())
                 }else{
                     this.next()
                 }
@@ -451,5 +452,9 @@
             margin: 20px auto;
             max-width: 800px;
   }
+
+#space {
+    height:50px;
+}
 
 </style>
