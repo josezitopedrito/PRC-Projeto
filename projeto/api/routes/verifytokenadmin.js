@@ -2,9 +2,13 @@ const jwt = require('jsonwebtoken')
 
 module.exports = function(req, res, next){
     const token = req.header('token')
-    console.log("here:" + token)
+    const type = req.header('type')
     if(!token){
         console.log("no token found")
+        return res.status(401).send('Access Denied')
+    }
+    if(type != 'Admin'){
+        console.log("not an admin")
         return res.status(401).send('Access Denied')
     }
     try{

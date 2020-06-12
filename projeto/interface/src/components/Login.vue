@@ -1,8 +1,8 @@
 <template>
   <div>
     <div id="form">
-      <h3>Ainda não possui uma conta?</h3>
-      <v-btn depressed link :to="`/registo`">Registe-se aqui</v-btn>
+      <h3>Would you like to sign up?</h3>
+      <v-btn depressed link :to="`/registo`">Register here</v-btn>
       <v-form ref="form" method="login">
         <v-container>
           <v-text-field
@@ -17,10 +17,7 @@
             required            
             ></v-text-field>
           <br>
-          <v-btn class="red white--text" @click="postLogin">Entrar</v-btn>
-          <v-row>
-            <v-checkbox :label="`Manter sessão iniciada`"></v-checkbox>
-          </v-row>
+          <v-btn class="red white--text" @click="postLogin">Enter</v-btn>
 
         </v-container>
       </v-form>
@@ -28,20 +25,8 @@
     <div class="centered" >
 
       <ul>
-        <li class="centered_tab" >
-          <v-btn text>Recuperar palavra passe</v-btn>
-        </li>
         <li class="centered_tab">
-          <v-btn text>Créditos</v-btn>
-        </li>
-        <li class="centered_tab">
-          <v-btn text>Saber Mais</v-btn>
-        </li>
-        <li class="centered_tab">
-          <v-btn text>Termos</v-btn>
-        </li>
-        <li class="centered_tab">
-          <v-btn text>Privacidade</v-btn>
+          <v-btn link :to="`/credits`" text>Credits</v-btn>
         </li>
       </ul>
 
@@ -52,7 +37,7 @@
     >
       <v-card>
         <v-card-text>
-          Email ou password inválidos, por favor tente de novo.
+          Invalid email or password, try again.
         </v-card-text>
 
         <v-card-actions>
@@ -63,7 +48,7 @@
             @click="dialog = false"
             :to="`/login`"
           >
-            Fechar janela
+            Close window
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -93,9 +78,8 @@ export default {
             this.dialog = !this.dialog
           }
           else if(data.data.user && (data.data.token!=undefined)){
-            console.log("aaa")
-            console.log('token ->' + data.data.token)
-            console.log('user ->' + data.data.user._id)
+            // console.log('token ->' + data.data.token)
+            // console.log('user ->' + data.data.user._id)
             this.$store.commit("guardaTokenUtilizador", data.data.token)
             this.$store.commit("guardaNomeUtilizador", data.data.user)
             this.$router.push( {path:`/`})

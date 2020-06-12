@@ -1,7 +1,9 @@
 var User = require('../models/users')
+var Requests = require('../models/requests')
 const mongoose = require('mongoose')
 var fs = require('fs')
 var path = require('path')
+var axios = require('axios')
 var bcrypt = require('bcryptjs')
 var jwt = require('jsonwebtoken')
 
@@ -58,6 +60,8 @@ module.exports.registo = async function (user){
             return{status:"O Email fornecido já foi registado."}
         }
         else{
+            console.log("email:" +user.email)
+            await Requests.deleteOne({email:user.email})
             var hash = bcrypt.hashSync(user.password, 10);
             user._id = mongoose.Types.ObjectId()
             var novo = new User(user)
@@ -100,26 +104,40 @@ module.exports.login = async function (user){
 
 module.exports.newFav = async function (cont){
     console.log("new Fav")
+    console.log(JSON.stringify(cont))
     try{
-        var response= await User.findOne({email: cont.user.email})
+        let response= await User.findOne({email: cont.user.email})
         if (response){
             var userval = {}
             userval.email = response.email
+            userval.password = response.password
             userval.username = response.username
             userval.tipo = response.tipo
             userval._id = response._id
-            userval.favs = response.favs
-            User.deleteOne({email: user.email})
-            userval.favs.push(cont.fav)
-            userval.save()
-            var getVotes = `select ?vote where {
-                c:${cont.fav} c:votes ?vote.
-            }`
-            var encodedGet = encodeURIComponent(prefixes + getVotes)
+            let arr = response.favs
+            User.deleteOne({email: cont.user.email}).exec()
+            arr.push(cont.fav)
+            userval.favs = []
+            for(let i=0;i<arr.length;i++){
+                if(!userval.favs.includes(arr[i])){
+                    userval.favs.push(arr[i])
+                }
+            }
+            
+            var user = new User(userval)
+            user.save()
+            if(arr.length == userval.favs){
+                return{status:"já é favorito"}
+            }
+            let getVotes = `select ?vote where {
+                                c:${cont.fav} c:votes ?vote.
+                            }`
+            let encodedGet = encodeURIComponent(prefixes + getVotes)
             var responseGet = await axios.get(getLink + encodedGet)
-            var normalizedResponseGet = normalize(responseGet.data)
+            var normalizedResponseGet = parseInt(normalize(responseGet.data)[0].vote,10)
+           
             var delVotes = `DELETE DATA {
-                c:${cont.fav} c:votes ${responseGet}.
+                c:${cont.fav} c:votes \"${normalizedResponseGet}\".
             }`
             var encodedDel = encodeURIComponent(prefixes + delVotes)
             await axios.post(postLink + encodedDel, null).then(() => {
@@ -127,16 +145,18 @@ module.exports.newFav = async function (cont){
               }).catch(e => {
                 console.log(e)
             })
+            console.log("val:" + normalizedResponseGet)
             var insVotes = `INSERT DATA {
-                c:${cont.fav} c:votes ${normalizedResponseGet + 1}.
+                c:${cont.fav} c:votes \"${normalizedResponseGet + 1}\".
             }`
+            console.log(insVotes)
             var encodedIns = encodeURIComponent(prefixes + insVotes)
             await axios.post(postLink + encodedIns, null).then(() => {
                 console.log("Insert dos votos do album bem sucedido")
               }).catch(e => {
                 console.log(e)
             })
-            return{status:"inserido"}
+            return {status:"inserido"}
         }
         else{
             return{status:"ocorreu um erro"}
@@ -153,7 +173,7 @@ module.exports.myFavs = async function(email){
         if (response){
             var favs = []
             for (let i = 0;i < response.favs.length;i++){
-                favs[i] = response.favs[i]
+                favs.push(response.favs[i])
             }
             return{favs:favs}
         }

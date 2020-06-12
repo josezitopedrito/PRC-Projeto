@@ -27,13 +27,22 @@
                     <div class="bottom" > Choose the decade you want to look into! </div>
                 </div>
             </div>
-            <div class="containerbottomleft" @click="clickFuncAdd">
+            <div v-if="$store.state.jwt == ''" class="containerbottomleft" @click="clickFuncGFav">
+                <img src="@/assets/silhouette-of-man-holding-guitar-on-plant-fields-at-daytime-89909.jpg">
+                <div class="bottom2" > Check out the user's favourite albums! </div>
+            </div>
+            <div v-else class="containerbottomleft" @click="clickFuncAdd">
                 <img src="@/assets/silhouette-of-man-holding-guitar-on-plant-fields-at-daytime-89909.jpg">
                 <div class="bottom2" > Are you an artist? Help us by adding or editing your information! </div>
             </div>
-            <div class="containerright" @click="clickFuncReg">
+
+            <div v-if="$store.state.jwt == ''" class="containerright" @click="clickFuncReg">
                 <img src="@/assets/te-nguyen-Wt7XT1R6sjU-unsplash.jpg">
                 <div class="bottom2" > Do you want to create an account? Sign up now for free! </div>
+            </div>
+            <div v-else class="containerright" @click="clickFuncFav">
+                <img src="@/assets/te-nguyen-Wt7XT1R6sjU-unsplash.jpg">
+                <div class="bottom2" > Check the albums you've liked the most! </div>
             </div>
         </div>
         <div id="main" v-else>
@@ -76,7 +85,6 @@
 import axios from 'axios'
 import $ from 'jquery'
 export default {
-    name: 'Novidades',
     data() {
         return {
             newestAlbum:{},
@@ -112,9 +120,19 @@ export default {
                 this.$router.push(`/adicao`);
             }
         },
+        clickFuncGFav:async function() {
+            if(this.newestAlbum[0]){
+                this.$router.push(`/globalFavourites`);
+            }
+        },
         clickFuncReg:async function() {
             if(this.newestAlbum[0]){
                 this.$router.push(`/registo`);
+            }
+        },
+        clickFuncFav:async function() {
+            if(this.newestAlbum[0]){
+                this.$router.push(`/perfil`);
             }
         },
         onUpdate:async function(){

@@ -1,93 +1,97 @@
 <template>
     <div id="PerfilFavorites">
-        <v-container fluid>
-            <v-row justify="space-around">
-            <v-col cols="5">
-                <v-toolbar class="card" flat>
-                    <h2 class="title">Profile</h2>
-                </v-toolbar>
-                <v-img contain v-bind:src="imagem" aspect-ratio="1" max-width="600px"/>
-            </v-col>
-            <v-col cols="5">
-                <v-simple-table class="table" dense>
-                    <template v-slot:default>
-                        <tbody>
-                            <tr>
-                                <td class="text-left">Username</td>
-                                <td>
-                                    <v-layout justify-center>
-                                        {{ $store.state.user.username }}
-                                    </v-layout>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Email</td>
-                                <td>
-                                    <v-layout justify-center>
-                                        {{ $store.state.user.email}}
-                                    </v-layout>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Type of Account</td>
-                                <td>
-                                    <v-layout justify-center>
-                                        {{ $store.state.user.tipo}}
-                                    </v-layout>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Favourites</td>
-                                <td>
-                                    <v-layout justify-center>
-                                        <ul v-for="n in nomesFavoritos" :key="n">
-                                            <li>{{n}}<v-icon large @click="elimFav(n)">mdi-delete</v-icon></li>
-                                        </ul>
-                                        <v-btn @click="dialog=true">Do you wish to add another favourite?</v-btn>
-                                    </v-layout>
-                                </td>
-                            </tr>
-                        </tbody>
+        <div v-if="profileComplete == true">
+            <v-container fluid>
+                <v-row justify="space-around">
+                <v-col cols="5">
+                    <v-toolbar class="card" flat>
+                        <h2 class="title">Profile</h2>
+                    </v-toolbar>
+                </v-col>
+                <v-col cols="5">
+                    <v-simple-table class="table" dense>
+                        <template v-slot:default>
+                            <tbody>
+                                <tr>
+                                    <td class="text-left">Username</td>
+                                    <td>
+                                        <v-layout justify-center>
+                                            {{ $store.state.user.username }}
+                                        </v-layout>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">Email</td>
+                                    <td>
+                                        <v-layout justify-center>
+                                            {{ $store.state.user.email}}
+                                        </v-layout>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">Type of Account</td>
+                                    <td>
+                                        <v-layout justify-center>
+                                            {{ $store.state.user.tipo}}
+                                        </v-layout>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">Favourites</td>
+                                    <td>
+                                        <v-layout justify-center>
+                                            <ul v-for="n in nomesFavoritos" :key="n">
+                                                <li>{{n}}<v-icon large @click="elimFav(n)">mdi-delete</v-icon></li>
+                                            </ul>
+                                            <v-btn @click="dialog=true">Do you wish to add another favourite?</v-btn>
+                                        </v-layout>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </template>
+                    </v-simple-table>
+                </v-col>
+            </v-row>
+            </v-container>
+            <v-dialog v-model="dialog">
+                <v-data-table
+                    class="table"
+                    :headers="halbuns"
+                    :items="albuns"
+                    :search="search"
+                    :sort-by="['Name','Options']"
+                    :sort-desc="[true,false]"
+                    multi-sort
+                    :footer-props="{
+                        showFirstLastPage: true,
+                        firstIcon: 'mdi-arrow-collapse-left',
+                        lastIcon: 'mdi-arrow-collapse-right',
+                        prevIcon: 'mdi-minus',
+                        nextIcon: 'mdi-plus'
+                    }"
+                >
+                    <template class="tile" v-slot:item.options="{ item }">
+                    <v-btn icon @click="newFav(item.id.split('#')[1])" >
+                        <v-icon
+                        small
+                        class="mr-2"
+                        >
+                        mdi-plus
+                        </v-icon>
+                        Add
+                    </v-btn>
                     </template>
-                </v-simple-table>
-            </v-col>
-        </v-row>
-        </v-container>
-        <v-dialog v-model="dialog">
-            <v-data-table
-                  class="table"
-                  :headers="halbuns"
-                  :items="albuns"
-                  :search="search"
-                  :sort-by="['Nome','Artist/Group','Options']"
-                  :sort-desc="[true,true,false]"
-                  multi-sort
-                  :footer-props="{
-                    showFirstLastPage: true,
-                    firstIcon: 'mdi-arrow-collapse-left',
-                    lastIcon: 'mdi-arrow-collapse-right',
-                    prevIcon: 'mdi-minus',
-                    nextIcon: 'mdi-plus'
-                  }"
-            >
-                <template class="tile" v-slot:item.options="{ item }">
-                <v-btn icon @click="newFav(item.id.split('#')[1])" >
-                    <v-icon
-                    small
-                    class="mr-2"
-                    >
-                    mdi-plus
-                    </v-icon>
-                    Add
-                </v-btn>
-                </template>
-                <template v-slot:no-data>
-                <v-alert :value="true" color = "warning" icon = "warning">
-                    The album list is still loading. Wait a second
-                </v-alert> 
-                </template>
-            </v-data-table>
-        </v-dialog>
+                    <template v-slot:no-data>
+                    <v-alert :value="true" color = "warning" icon = "warning">
+                        The album list is still loading. Wait a second
+                    </v-alert> 
+                    </template>
+                </v-data-table>
+            </v-dialog>
+        </div>
+        <div id="main" v-else>
+            <div class="loader"></div> 
+        </div>
     </div>
 </template>
 
@@ -96,6 +100,7 @@ import axios from 'axios'
 export default {
   data(){
     return{
+      profileComplete:false,
       info:{},
       search:'',
       halbuns:[
@@ -111,11 +116,19 @@ export default {
   },
   created: async function(){
     try{
-      for(let i = 0; i < this.$store.state.user.favs.length;i++){
-        let response = await axios.get(this.lhost + '/albums/' + this.$store.state.user.favs[i])
-        this.info[this.$store.state.user.favs[i]] = response.data.album[0].name
-        this.nomesFavoritos[i] = response.data.album[0].name
+            let response = await axios.get(this.lhost + "/albums")
+            this.albuns = response.data
+        }catch(e){
+            return e
+        }
+    try{
+      let response = await axios.post(this.lhost + '/users/myFavs',{email:this.$store.state.user.email},{headers: { token: `${this.$store.state.jwt}` }})
+      for(let i = 0; i < response.data.favs.length;i++){
+        let responseAlbum = await axios.get(this.lhost + '/albums/' + response.data.favs[i])
+        this.info[response.data.favs[i]] = responseAlbum.data.album[0].name
+        this.nomesFavoritos.push(responseAlbum.data.album[0].name)
       }
+      this.profileComplete = true
     }catch(e){
       console.log(e)
       return e
@@ -128,29 +141,55 @@ export default {
             confirm("Are you sure you want to delete this album from your favourites?") && await axios.post(this.lhost + '/users/elimFav',{
                             user:this.user,
                             fav:key
-                        },{headers: { token: `${this.$store.state.jwt}` }}) && this.replaceFavs()
+                        },{headers: { token: `${this.$store.state.jwt}` }}) && this.replaceFavs(this.$store.state.user.email)
         }catch(e){
             console.log(e)
         }
     },
-    replaceFavs: async function(){
-        this.nomesFavoritos=[] 
-        this.nomesFavoritos = await axios.get(this.lhost + '/users/myFavs', {headers: { token: `${this.$store.state.jwt}` }})
+    replaceFavs: async function(email){
+        this.nomesFavoritos=[]
+        this.info = {}
+        let response = await axios.post(this.lhost + '/users/myFavs',{email:email},{headers: { token: `${this.$store.state.jwt}` }})
+        for(let i = 0; i < response.data.favs.length;i++){
+            let responseAlbum = await axios.get(this.lhost + '/albums/' + response.data.favs[i])
+            this.info[response.data.favs[i]] = responseAlbum.data.album[0].name
+            this.nomesFavoritos.push(responseAlbum.data.album[0].name)
+        }
         this.$store.commit('mudaFavUtilizador')
     },
     newFav:async function(id){
-        try{
-            let response = await axios.get(this.lhost + "/albums")
-            this.albuns = response.data
-        }catch(e){
-            return e
-        }
         confirm("Are you sure you want to add this album to your favourites?") && await axios.post(this.lhost + '/users/newFav',{
-                    user:this.user,
+                    user:this.$store.state.user,
                     fav:id
-                },{headers: { token: `${this.$store.state.jwt}` }}) && this.replaceFavs() && (this.dialog = false)
+                },{headers: { token: `${this.$store.state.jwt}` }}) && this.replaceFavs(this.$store.state.user.email) && (this.dialog = false)
     },
 
   }
 }
 </script>
+
+<style scoped>
+#main{
+        /* background-color: darkred; */
+        background-size: cover;
+        top:0px;
+        bottom: 50px;
+        width: 100%;
+        position: absolute;
+    }
+
+.loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    position:relative;
+}
+
+@keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>

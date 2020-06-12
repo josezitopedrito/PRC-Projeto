@@ -47,10 +47,6 @@
         </template>
       </v-data-table>
     </v-card-text>
-    <v-toolbar class="card" flat>
-      <div class="spacer"></div>
-      <v-btn to="/" style="background-color:darkgrey;">Main Menu</v-btn>
-    </v-toolbar>
   </v-card>
   </div>
 </template>

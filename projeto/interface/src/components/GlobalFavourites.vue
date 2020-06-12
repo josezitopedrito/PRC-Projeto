@@ -157,7 +157,6 @@ export default {
       this.artists = response.data.artists
       this.groups = response.data.groups
       this.albums = response.data.albums
-      alert(JSON.stringify(response))
     }catch(e){
       return e
     }

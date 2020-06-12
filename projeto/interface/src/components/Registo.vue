@@ -1,9 +1,6 @@
 <template>
   <div id="registar">
       <v-card height="100%" width="100%">
-        <v-card-title>
-          <!-- <h1>Página de Registo</h1> -->
-        </v-card-title>
         <v-card-actions>
             <v-row
             class="fill-height"
@@ -11,9 +8,9 @@
             justify="center"
             >
             <div>
-                <h1>Página de Registo</h1>
-                <h3>Já possui uma conta?</h3>
-                <v-btn depressed link :to="`/login`">Faça o login</v-btn>
+                <h1>Registration Page</h1>
+                <h3>Do you already have an account?</h3>
+                <v-btn depressed link :to="`/login`">Login Here</v-btn>
                 <v-alert v-if="message.length > 0" type="warning">
                   {{ message }}
                 </v-alert>
@@ -37,7 +34,7 @@
                             required                     
                         ></v-text-field>
                         <v-container fluid>
-                        <label>Tipo</label>
+                        <label>Type</label>
                         <v-radio-group v-model="pedido.tipo" column >
                             <v-radio label="Admin" value="Admin"></v-radio>
                             <v-radio label="Leitor" value="Leitor"></v-radio>
@@ -45,7 +42,7 @@
                         </v-container>
                         <br>
                         <v-btn class="blue white--text" @click.prevent="reset">Reset</v-btn>
-                        <v-btn ref="submit" class="green white--text" @click="post()" v-bind:class="{disabled: disableButton}" :disabled="disableButton" >Submeter</v-btn>
+                        <v-btn ref="submit" class="green white--text" @click="post()" v-bind:class="{disabled: disableButton}" :disabled="disableButton" >Submit</v-btn>
                     </v-container>
                 </v-form>
                 </div>

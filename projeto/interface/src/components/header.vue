@@ -3,7 +3,7 @@
         <v-app-bar app fixed color="black">
             <v-toolbar color="black">
                 <v-btn color='black' class="white--text" href="/">
-                    Voltar ao início
+                    Home
                 </v-btn>
                 <div class="spacer"></div>
                 <v-menu>
@@ -41,7 +41,7 @@
                             <v-list-item link to="/perfil">
                                 <v-list-item-title>See Profile</v-list-item-title>
                             </v-list-item>
-                            <v-list-item @click="endLog">
+                            <v-list-item @click="endLog" link to="/">
                                 <v-list-item-title>Leave Session</v-list-item-title>
                             </v-list-item>
                         </div>
@@ -56,8 +56,7 @@
 export default {
     methods : {
         endLog : async function (){
-        this.$store.commit("eliminarToken")
-        this.$router.go()
+            this.$store.commit("eliminarToken")
         }
   }
 }
