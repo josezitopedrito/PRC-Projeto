@@ -36,20 +36,23 @@
                                         </v-layout>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="text-left">Favourites</td>
-                                    <td>
-                                        <v-layout justify-center>
-                                            <ul v-for="n in nomesFavoritos" :key="n">
-                                                <li>{{n}}<v-icon large @click="elimFav(n)">mdi-delete</v-icon></li>
-                                            </ul>
-                                            <v-btn @click="dialog=true">Do you wish to add another favourite?</v-btn>
-                                        </v-layout>
-                                    </td>
-                                </tr>
                             </tbody>
                         </template>
                     </v-simple-table>
+                    <div>
+                        <v-simple-table>
+                            <tr>
+                                <th class="text-left">Favourites</th>
+                            </tr>
+                            <tr v-for="n in nomesFavoritos" :key="n">
+                                <td>
+                                    <p>{{n}}<v-icon large @click="elimFav(n)">mdi-delete</v-icon></p>
+                                    
+                                </td>     
+                            </tr>
+                        </v-simple-table>
+                        <v-btn @click="dialog=true">Do you wish to add another favourite?</v-btn>
+                    </div>
                 </v-col>
             </v-row>
             </v-container>
@@ -125,7 +128,9 @@ export default {
       let response = await axios.post(this.lhost + '/users/myFavs',{email:this.$store.state.user.email},{headers: { token: `${this.$store.state.jwt}` }})
       for(let i = 0; i < response.data.favs.length;i++){
         let responseAlbum = await axios.get(this.lhost + '/albums/' + response.data.favs[i])
+        
         this.info[response.data.favs[i]] = responseAlbum.data.album[0].name
+        
         this.nomesFavoritos.push(responseAlbum.data.album[0].name)
       }
       this.profileComplete = true
@@ -139,29 +144,31 @@ export default {
         let key = Object.keys(this.info).find(key => this.info[key] === n)
         try{
             confirm("Are you sure you want to delete this album from your favourites?") && await axios.post(this.lhost + '/users/elimFav',{
-                            user:this.user,
+                            user:this.$store.state.user,
                             fav:key
-                        },{headers: { token: `${this.$store.state.jwt}` }}) && this.replaceFavs(this.$store.state.user.email)
+                        },{headers: { token: `${this.$store.state.jwt}` }}) && this.removeFavs(this.$store.state.user.email,key)
         }catch(e){
             console.log(e)
         }
     },
-    replaceFavs: async function(email){
-        this.nomesFavoritos=[]
-        this.info = {}
-        let response = await axios.post(this.lhost + '/users/myFavs',{email:email},{headers: { token: `${this.$store.state.jwt}` }})
-        for(let i = 0; i < response.data.favs.length;i++){
-            let responseAlbum = await axios.get(this.lhost + '/albums/' + response.data.favs[i])
-            this.info[response.data.favs[i]] = responseAlbum.data.album[0].name
-            this.nomesFavoritos.push(responseAlbum.data.album[0].name)
-        }
+    replaceFavs: async function(email,idfav){
+        let responseAlbum = await axios.get(this.lhost + '/albums/' + idfav)
+        this.info[idfav] = responseAlbum.data.album[0].name
+        this.nomesFavoritos.push(responseAlbum.data.album[0].name)
+        this.$store.commit('mudaFavUtilizador')
+    },
+    removeFavs: async function(email,idfav){
+        let name = this.info[idfav]
+        delete this.info[idfav]
+        let index = this.nomesFavoritos.indexOf(name)
+        this.nomesFavoritos.splice(index)
         this.$store.commit('mudaFavUtilizador')
     },
     newFav:async function(id){
         confirm("Are you sure you want to add this album to your favourites?") && await axios.post(this.lhost + '/users/newFav',{
                     user:this.$store.state.user,
                     fav:id
-                },{headers: { token: `${this.$store.state.jwt}` }}) && this.replaceFavs(this.$store.state.user.email) && (this.dialog = false)
+                },{headers: { token: `${this.$store.state.jwt}` }}) && this.replaceFavs(this.$store.state.user.email,id) && (this.dialog = false) 
     },
 
   }

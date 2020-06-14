@@ -6,7 +6,12 @@
                 <v-toolbar class="card" flat>
                     <h2 class="title">{{ album.album[0].name }}</h2>
                     <div class="spacer"></div>
-                    <v-btn>Add to Collection</v-btn>
+                    <div v-if="$store.state.jwt != '' && fav==false">
+                        <v-btn @click="newFav(idalbum)">Add to Favorites</v-btn>
+                    </div>
+                    <div v-if="$store.state.jwt != '' && fav==true">
+                        <v-btn @click="elimFav(idalbum)">Remove from Favorites</v-btn>
+                    </div>
                 </v-toolbar>
                 <v-img contain v-bind:src="imagem" aspect-ratio="1" max-width="600px"/>
             </v-col>
@@ -114,12 +119,14 @@ export default {
   name: 'Album',
   data(){
     return{
+      idalbum: this.$route.path.split("/")[2],
       bandas:[],
       artistas:[],
       album:{album:[{}],recordLabel:{},producer:{}},
       lhost:'http://localhost:5001/api',
       url:'',
-      imagem:''
+      imagem:'',
+      fav:false
     }
   },
   methods:{
@@ -129,13 +136,38 @@ export default {
         }else{
             return 'nothing'
         }
-    }
+    },
+    elimFav: async function(id){
+        try{
+            confirm("Are you sure you want to delete this album from your favourites?") && await axios.post(this.lhost + '/users/elimFav',{
+                            user:this.$store.state.user,
+                            fav:id
+                        },{headers: { token: `${this.$store.state.jwt}` }}) && (this.fav = false)
+        }catch(e){
+            console.log(e)
+        }
+    },
+    newFav:async function(id){
+        confirm("Are you sure you want to add this album to your favourites?") && await axios.post(this.lhost + '/users/newFav',{
+                    user:this.$store.state.user,
+                    fav:id
+                },{headers: { token: `${this.$store.state.jwt}` }}) && (this.fav = true)
+    },
 
 },
 created: async function(){
     try{
       let response = await axios.get(this.lhost + this.$route.path)
       this.album = response.data
+      if( this.$store.state.jwt != ''){
+          let responseFav = await axios.post(this.lhost + '/users/myFavs',{email:this.$store.state.user.email},{headers: { token: `${this.$store.state.jwt}` }})
+          for(let i = 0; i < responseFav.data.favs.length;i++){
+                if(responseFav.data.favs[i] == this.idalbum){
+                    this.fav = true
+                    break;
+                }
+            }
+      }
       if(response.data.band.length > 0){
           this.bandas = this.bandas.concat(response.data.band)
       } 
