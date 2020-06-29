@@ -201,7 +201,7 @@ module.exports.elimFav = async function(res){
             userval.favs = []
             for (let i = 0;i < response.favs.length;i++){
                 if(response.favs[i] != res.fav){
-                    userval.favs.push(i)
+                    userval.favs.push(response.favs[i])
                 }
             }
             console.log("pila1")

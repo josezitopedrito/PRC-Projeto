@@ -1,62 +1,68 @@
 <template>
     <div id="PerfilFavorites">
         <div v-if="profileComplete == true">
-            <v-container fluid>
-                <v-row justify="space-around">
-                <v-col cols="5">
-                    <v-toolbar class="card" flat>
-                        <h2 class="title">Profile</h2>
-                    </v-toolbar>
-                </v-col>
-                <v-col cols="5">
-                    <v-simple-table class="table" dense>
-                        <template v-slot:default>
-                            <tbody>
-                                <tr>
-                                    <td class="text-left">Username</td>
-                                    <td>
-                                        <v-layout justify-center>
-                                            {{ $store.state.user.username }}
-                                        </v-layout>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-left">Email</td>
-                                    <td>
-                                        <v-layout justify-center>
-                                            {{ $store.state.user.email}}
-                                        </v-layout>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-left">Type of Account</td>
-                                    <td>
-                                        <v-layout justify-center>
-                                            {{ $store.state.user.tipo}}
-                                        </v-layout>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </template>
-                    </v-simple-table>
-                    <div>
-                        <v-simple-table>
-                            <tr>
-                                <th class="text-left">Favourites</th>
-                            </tr>
-                            <tr v-for="n in nomesFavoritos" :key="n">
-                                <td>
-                                    <p>{{n}}<v-icon large @click="elimFav(n)">mdi-delete</v-icon></p>
-                                    
-                                </td>     
-                            </tr>
+            <v-container id="content" fluid fill-height>
+                <v-row align-center>
+                    <v-col>
+                        <v-toolbar id="contenttoolbar" class="card" flat>
+                            <h2 class="title">Profile</h2>
+                        </v-toolbar>
+                        <v-simple-table class="table" dense>
+                            <template v-slot:default>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-left">Username</td>
+                                        <td>
+                                            <v-layout justify-center>
+                                                {{ $store.state.user.username }}
+                                            </v-layout>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left">Email</td>
+                                        <td>
+                                            <v-layout justify-center>
+                                                {{ $store.state.user.email}}
+                                            </v-layout>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left">Type of Account</td>
+                                        <td>
+                                            <v-layout justify-center>
+                                                {{ $store.state.user.tipo}}
+                                            </v-layout>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </template>
                         </v-simple-table>
+                        <div style="overflow:auto; max-height:500px;">
+                            <v-simple-table>
+                                <tr>
+                                    <th class="text-left">Favourites</th>
+                                </tr>
+                                <tr v-for="n in nomesFavoritos" :key="n">
+                                    <td>
+                                        <p>{{n}}<v-icon large @click="elimFav(n)">mdi-delete</v-icon></p>
+                                        
+                                    </td>     
+                                </tr>
+                            </v-simple-table>
+                        </div>
                         <v-btn @click="dialog=true">Do you wish to add another favourite?</v-btn>
-                    </div>
-                </v-col>
-            </v-row>
+                    </v-col>
+                </v-row>
             </v-container>
-            <v-dialog v-model="dialog">
+            <v-dialog v-model="dialog" max-width="1000px">
+                <v-toolbar class="card" flat>
+                    <v-text-field
+                        v-model="search"
+                        append-icon="mdi-magnify"
+                        label="Search"
+                        single-line
+                    ></v-text-field>
+                </v-toolbar>
                 <v-data-table
                     class="table"
                     :headers="halbuns"
@@ -165,6 +171,11 @@ export default {
         this.$store.commit('mudaFavUtilizador')
     },
     newFav:async function(id){
+        let keys = Object.keys(this.info)
+        if(keys.includes(id)){
+            alert("This album is already a favourite!")
+            return;
+        }
         confirm("Are you sure you want to add this album to your favourites?") && await axios.post(this.lhost + '/users/newFav',{
                     user:this.$store.state.user,
                     fav:id
@@ -176,13 +187,24 @@ export default {
 </script>
 
 <style scoped>
+
+#PerfilFavorites{
+    background-color: beige;
+    background-size: cover;
+    top:0px;
+    bottom: 50px;
+    width: 100%;
+    position: absolute;
+}
+
 #main{
-        /* background-color: darkred; */
+        background-color: beige;
         background-size: cover;
         top:0px;
         bottom: 50px;
         width: 100%;
         position: absolute;
+        
     }
 
 .loader {
@@ -199,4 +221,22 @@ export default {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
+
+#content {
+    /* background-color: beige; */
+    max-width: 850px;
+}
+
+#contenttoolbar{
+    /* background-color: beige; */
+}
+
+/* .v-data-table{
+    background-color:beige;
+} */
+
+.v-text-field{
+    background-color: white;
+}
+
 </style>
