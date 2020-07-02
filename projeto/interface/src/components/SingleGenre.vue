@@ -44,23 +44,27 @@
                         </tr>
                         <tr v-if="genre.Band[0]">
                             <td class="text-left">Musical Group</td>
-                            <td>
-                                <v-layout justify-center>
-                                    <v-list class="tile" v-for="band in genre.Band" :key="band.band">
-                                        <v-list-item link :to="'/groups/' + band.band.split('#')[1]">{{ band.bandName }}</v-list-item>
-                                    </v-list>
-                                </v-layout>
-                            </td>
+                            <div style="width:1700px; overflow:auto">
+                                <td>
+                                    <v-layout justify-center >
+                                        <v-list class="tile" v-for="band in genre.Band" :key="band.band">
+                                            <v-list-item link :to="'/groups/' + band.band.split('#')[1]">{{ band.bandName }}</v-list-item>
+                                        </v-list>
+                                    </v-layout>
+                                </td>
+                            </div>
                         </tr>
                         <tr v-if="genre.Artist[0]">
                             <td class="text-left">Artists</td>
-                            <td>
-                                <v-layout justify-center>
-                                    <v-list class="tile" v-for="artist in genre.Artist" :key="artist.artist">
-                                        <v-list-item link :to="'/artists/' + artist.artist.split('#')[1]">{{ artist.artistName }}</v-list-item>
-                                    </v-list>
-                                </v-layout>
-                            </td>
+                            <div style="width:1700px; overflow:auto">
+                                <td>
+                                    <v-layout justify-center>
+                                        <v-list class="tile" v-for="artist in genre.Artist" :key="artist.artist">
+                                            <v-list-item link :to="'/artists/' + artist.artist.split('#')[1]">{{ artist.artistName }}</v-list-item>
+                                        </v-list>
+                                    </v-layout>
+                                </td>
+                            </div>
                         </tr>
                         <tr>
                             <td class="text-left">Genre information</td>
