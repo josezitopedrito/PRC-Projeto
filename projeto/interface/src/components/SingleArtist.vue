@@ -8,7 +8,7 @@
                 <v-img v-else-if="imagem == '' && artista.artist[0].g == 'female' " contain src="@/assets/images.jpeg" aspect-ratio="1" max-width="600px"/>
                 <v-img v-else src="@/assets/765-default-avatar.png" contain aspect-ratio="1.7" max-width="700px" />
             </v-col>
-            <v-col cols="5">
+            <v-col cols="7">
                 <v-simple-table class="table" dense>
                     <template v-slot:default>
                         <tbody>
@@ -53,24 +53,28 @@
                                 </td>
                             </tr>
                             <tr v-if="artista.band[0]">
-                                <td class="text-left">Musical Group belonged to</td>
-                                <td>
-                                    <v-layout justify-center>
-                                        <v-list class="tile" v-for="band in artista.band" :key="band.band">
-                                            <v-list-item link :to="'/groups/' + band.band.split('#')[1]">{{ band.bandName }}</v-list-item>
-                                        </v-list>
-                                    </v-layout>
-                                </td>
+                                <td class="text-left">Musical Groups</td>
+                                <div style="width:930px; overflow:auto">
+                                    <td>
+                                        <v-layout justify-center>
+                                            <v-list class="tile" v-for="band in artista.band" :key="band.band">
+                                                <v-list-item link :to="'/groups/' + band.band.split('#')[1]">{{ band.bandName }}</v-list-item>
+                                            </v-list>
+                                        </v-layout>
+                                    </td>
+                                </div>
                             </tr>
                             <tr v-if="artista.album[0]">
                                 <td class="text-left">Solo Albums</td>
-                                <td>
-                                    <v-layout justify-center>
-                                        <v-list class="tile" v-for="album in artista.album" :key="album.album">
-                                            <v-list-item link :to="'/albums/' + album.album.split('#')[1]">{{ album.albumName }}</v-list-item>
-                                        </v-list>
-                                    </v-layout>
-                                </td>
+                                <div style="width:930px; overflow:auto">
+                                    <td>
+                                        <v-layout justify-center>
+                                            <v-list class="tile" v-for="album in artista.album" :key="album.album">
+                                                <v-list-item link :to="'/albums/' + album.album.split('#')[1]">{{ album.albumName }}</v-list-item>
+                                            </v-list>
+                                        </v-layout>
+                                    </td>
+                                </div>
                             </tr>
                             <tr v-if="artista.genre[0]">
                                 <td class="text-left">Genres</td>
