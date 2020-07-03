@@ -44,7 +44,7 @@
                         </tr>
                         <tr v-if="genre.Band[0]">
                             <td class="text-left">Musical Group</td>
-                            <div style="height:240px; overflow-y:auto">
+                            <div style="height:200px; overflow-y:auto">
                                 <td style="width:1650px;">
                                     <v-item-group>
                                         <v-row>
@@ -58,7 +58,7 @@
                         </tr>
                         <tr v-if="genre.Artist[0]">
                             <td class="text-left">Artists</td>
-                            <div style="height:240px; overflow-y:auto">
+                            <div style="height:200px; overflow-y:auto">
                                 <td style="width:1650px">
                                     <v-item-group>
                                         <v-row>

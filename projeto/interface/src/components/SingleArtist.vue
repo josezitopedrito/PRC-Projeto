@@ -16,7 +16,7 @@
                                 <td class="text-left">Name</td>
                                 <td>
                                     <v-layout justify-center>
-                                        {{ artista.artist[0].name }}
+                                        <h3>{{ artista.artist[0].name }}</h3>
                                     </v-layout>
                                 </td>
                             </tr>
@@ -54,37 +54,45 @@
                             </tr>
                             <tr v-if="artista.band[0]">
                                 <td class="text-left">Musical Groups</td>
-                                <div style="width:930px; overflow:auto">
-                                    <td>
-                                        <v-layout justify-center>
-                                            <v-list class="tile" v-for="band in artista.band" :key="band.band">
-                                                <v-list-item link :to="'/groups/' + band.band.split('#')[1]">{{ band.bandName }}</v-list-item>
-                                            </v-list>
-                                        </v-layout>
+                                <div style="height:200px; overflow-y:auto">
+                                    <td style="width:900px">
+                                        <v-item-group>
+                                            <v-row>
+                                                <v-col class="tile" v-for="band in artista.band" :key="band.band" cols="12" md="2">
+                                                    <v-list-item link :to="'/groups/' + band.band.split('#')[1]">{{ band.bandName }}</v-list-item>
+                                                </v-col>
+                                            </v-row>
+                                        </v-item-group>
                                     </td>
                                 </div>
                             </tr>
                             <tr v-if="artista.album[0]">
                                 <td class="text-left">Solo Albums</td>
-                                <div style="width:930px; overflow:auto">
-                                    <td>
-                                        <v-layout justify-center>
-                                            <v-list class="tile" v-for="album in artista.album" :key="album.album">
-                                                <v-list-item link :to="'/albums/' + album.album.split('#')[1]">{{ album.albumName }}</v-list-item>
-                                            </v-list>
-                                        </v-layout>
+                                <div style="height:200px; overflow-y:auto">
+                                    <td style="width:900px">
+                                        <v-item-group>
+                                            <v-row>
+                                                <v-col class="tile" v-for="album in artista.album" :key="album.album" cols="12" md="2">
+                                                    <v-list-item link :to="'/albums/' + album.album.split('#')[1]">{{ album.albumName }}</v-list-item>
+                                                </v-col>
+                                            </v-row>
+                                        </v-item-group>
                                     </td>
                                 </div>
                             </tr>
                             <tr v-if="artista.genre[0]">
                                 <td class="text-left">Genres</td>
-                                <td>
-                                    <v-layout justify-center>
-                                        <v-list class="tile" v-for="genre in artista.genre" :key="genre.genre">
-                                            <v-list-item link :to="'/genres/' + genre.genre.split('#')[1]">{{ genre.genreName }}</v-list-item>
-                                        </v-list>
-                                    </v-layout>
-                                </td>
+                                <div style="height:200px; overflow-y:auto">
+                                    <td style="width:900px">
+                                        <v-item-group>
+                                            <v-row>
+                                                <v-col class="tile" v-for="genre in artista.genre" :key="genre.genre" cols="12" md="2">
+                                                    <v-list-item link :to="'/genres/' + genre.genre.split('#')[1]">{{ genre.genreName }}</v-list-item>
+                                                </v-col>
+                                            </v-row>
+                                        </v-item-group>
+                                    </td>
+                                </div>
                             </tr>
                             <tr>
                                 <td class="text-left">Artist Information</td>
@@ -100,7 +108,7 @@
             </v-col>
             </v-row>
         </v-container>
-        <v-toolbar class="card" flat>
+        <v-toolbar class="card mb-11" flat>
             <v-btn to="/artists" style="background-color:darkgrey;">Artist List</v-btn>
             <div class="spacer"></div>
             <v-btn to="/" style="background-color:darkgrey;">Main Menu</v-btn>

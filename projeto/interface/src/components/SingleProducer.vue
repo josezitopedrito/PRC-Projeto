@@ -8,7 +8,7 @@
                             <td class="text-left">Name</td>
                             <td>
                                 <v-layout justify-center>
-                                    {{ label.Producer[0].name }}
+                                    <h1>{{ label.Producer[0].name }}</h1>
                                 </v-layout>
                             </td>
                         </tr>
@@ -22,13 +22,15 @@
                         </tr>
                         <tr v-if="label.album[0]">
                             <td class="text-left">Albums produced</td>
-                            <div style="width:1700px; overflow:auto">
-                                <td>
-                                    <v-layout justify-center>
-                                        <v-list class="tile" v-for="album in label.album" :key="album.album">
-                                            <v-list-item link :to="'/albums/' + album.album.split('#')[1]">{{ album.albumName }}</v-list-item>
-                                        </v-list>
-                                    </v-layout>
+                            <div style="height:200px; overflow-y:auto">
+                                <td style="width:1650px">
+                                    <v-item-group>
+                                        <v-row>
+                                            <v-col class="tile" v-for="album in label.album" :key="album.album" cols="12" md="1">
+                                                <v-list-item link :to="'/albums/' + album.album.split('#')[1]">{{ album.albumName }}</v-list-item>
+                                            </v-col>
+                                        </v-row>
+                                    </v-item-group>
                                 </td>
                             </div>
                         </tr>
@@ -44,7 +46,7 @@
                 </template>
             </v-simple-table>
         </v-container>
-        <v-toolbar class="card" flat>
+        <v-toolbar class="card mb-11" flat>
             <v-btn to="/producers" style="background-color:darkgrey;">Producer List</v-btn>
             <div class="spacer"></div>
             <v-btn to="/" style="background-color:darkgrey;">Main Menu</v-btn>
