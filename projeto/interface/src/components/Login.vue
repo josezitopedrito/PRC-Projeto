@@ -33,18 +33,21 @@
     </div>
     <v-dialog
       v-model="dialog"
-      max-width="290"
+      width="400px"
+      content-class="dialogue"
     >
-      <v-card>
-        <v-card-text>
-          Invalid email or password, try again.
-        </v-card-text>
+      <v-card >
+        <div>
+            <v-card-text>
+              Invalid email or password, try again.
+            </v-card-text>
+        </div>
 
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
-            color="green darken-1"
-            text
+            color="red darken-1"
+            dark
             @click="dialog = false"
             :to="`/login`"
           >
@@ -73,7 +76,7 @@ export default {
         password: this.password
       }).then(data => {
           console.log(data)
-          if (data.data.error){
+          if (data.data.status){
             this.$refs.form.reset()
             this.dialog = !this.dialog
           }
@@ -108,6 +111,9 @@ export default {
   .centered {
       text-align: center;
       width: 100%;
+  }
+  .dialogue{
+    background-color:white;
   }
 
   .centered_tab {

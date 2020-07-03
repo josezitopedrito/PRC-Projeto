@@ -9,22 +9,22 @@
           class="table"
         >
           <v-list-item link to="/albums">
-            <v-list-item-title>Albums</v-list-item-title>
+            <h2>Albums</h2>
           </v-list-item>
           <v-list-item link to="/artists">
-            <v-list-item-title>Artists</v-list-item-title>
+            <h2>Artists</h2>
           </v-list-item>
-          <v-list-item link to="/groups">
-            <v-list-item-title>Musical groups</v-list-item-title>
+          <v-list-item link to="/groups" >
+            <h2>Musical groups</h2>
           </v-list-item>
           <v-list-item link to="/genres">
-            <v-list-item-title>Musical genres</v-list-item-title>
+            <h2>Musical genres</h2>
           </v-list-item>
           <v-list-item link to="/producers">
-            <v-list-item-title>Producers</v-list-item-title>
+            <h2>Producers</h2>
           </v-list-item>
           <v-list-item link to="/recordLabels">
-            <v-list-item-title>Record Labels</v-list-item-title>
+            <h2>Record Labels</h2>
           </v-list-item>
         </v-list>
       </v-card-actions>

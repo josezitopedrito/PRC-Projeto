@@ -181,7 +181,7 @@ a {
   color: #42b983;
 }
     #Albums {
-        background-color: indigo;
+        background-color: grey;
         min-height: 94%;
         background-size: cover;
         background-position:50% 50%;
