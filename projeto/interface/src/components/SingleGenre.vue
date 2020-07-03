@@ -44,8 +44,8 @@
                         </tr>
                         <tr v-if="genre.Band[0]">
                             <td class="text-left">Musical Group</td>
-                            <div style="width:1700px; height:240px; overflow-y:auto">
-                                <td>
+                            <div style="height:240px; overflow-y:auto">
+                                <td style="width:1650px;">
                                     <v-item-group>
                                         <v-row>
                                             <v-col v-for="band in genre.Band" :key="band.band" cols="12" md="1">
@@ -58,8 +58,8 @@
                         </tr>
                         <tr v-if="genre.Artist[0]">
                             <td class="text-left">Artists</td>
-                            <div style="width:1700px; height:240px; overflow-y:auto">
-                                <td>
+                            <div style="height:240px; overflow-y:auto">
+                                <td style="width:1650px">
                                     <v-item-group>
                                         <v-row>
                                             <v-col v-for="artist in genre.Artist" :key="artist.artist" cols="12" md="1">
@@ -82,7 +82,7 @@
                 </template>
             </v-simple-table>
         </v-container>
-        <v-toolbar class="card" flat>
+        <v-toolbar class="card mb-11" flat>
             <v-btn to="/genres" style="background-color:darkgrey;">Genre List</v-btn>
             <div class="spacer"></div>
             <v-btn to="/" style="background-color:darkgrey;">Main Menu</v-btn>
