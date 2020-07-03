@@ -8,7 +8,7 @@
                             <td class="text-left">Name</td>
                             <td>
                                 <v-layout justify-center>
-                                    {{ genre.Genre[0].name }}
+                                    <h1>{{ genre.Genre[0].name }}</h1>
                                 </v-layout>
                             </td>
                         </tr>
@@ -44,25 +44,29 @@
                         </tr>
                         <tr v-if="genre.Band[0]">
                             <td class="text-left">Musical Group</td>
-                            <div style="width:1700px; overflow:auto">
+                            <div style="width:1700px; height:240px; overflow-y:auto">
                                 <td>
-                                    <v-layout justify-center >
-                                        <v-list class="tile" v-for="band in genre.Band" :key="band.band">
-                                            <v-list-item link :to="'/groups/' + band.band.split('#')[1]">{{ band.bandName }}</v-list-item>
-                                        </v-list>
-                                    </v-layout>
+                                    <v-item-group>
+                                        <v-row>
+                                            <v-col v-for="band in genre.Band" :key="band.band" cols="12" md="1">
+                                                <v-list-item link :to="'/groups/' + band.band.split('#')[1]">{{ band.bandName }}</v-list-item>
+                                            </v-col>
+                                        </v-row>
+                                    </v-item-group>
                                 </td>
                             </div>
                         </tr>
                         <tr v-if="genre.Artist[0]">
                             <td class="text-left">Artists</td>
-                            <div style="width:1700px; overflow:auto">
+                            <div style="width:1700px; height:240px; overflow-y:auto">
                                 <td>
-                                    <v-layout justify-center>
-                                        <v-list class="tile" v-for="artist in genre.Artist" :key="artist.artist">
-                                            <v-list-item link :to="'/artists/' + artist.artist.split('#')[1]">{{ artist.artistName }}</v-list-item>
-                                        </v-list>
-                                    </v-layout>
+                                    <v-item-group>
+                                        <v-row>
+                                            <v-col v-for="artist in genre.Artist" :key="artist.artist" cols="12" md="1">
+                                                <v-list-item link :to="'/artists/' + artist.artist.split('#')[1]">{{ artist.artistName }}</v-list-item>
+                                            </v-col>
+                                        </v-row>
+                                    </v-item-group>
                                 </td>
                             </div>
                         </tr>
