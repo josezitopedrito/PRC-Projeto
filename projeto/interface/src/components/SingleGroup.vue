@@ -7,7 +7,7 @@
                 <v-img v-if="imagem != ''" contain v-bind:src="imagem" aspect-ratio="1.7" max-width="600px"/>
                 <v-img v-else contain src="@/assets/default_group_normal.png" aspect-ratio="1.7" max-width="600px"/>
             </v-col>
-            <v-col cols="5">
+            <v-col cols="7">
                 <v-simple-table class="table" dense>
                     <template v-slot:default>
                         <tbody>
@@ -63,23 +63,27 @@
                             </tr>
                             <tr v-if="group.album[0]">
                                 <td class="text-left">Albums</td>
-                                <td>
-                                    <v-layout justify-center>
-                                        <v-list class="tile" v-for="album in group.album" :key="album.album">
-                                            <v-list-item link :to="'/albums/' + album.album.split('#')[1]">{{ album.albumName }}</v-list-item>
-                                        </v-list>
-                                    </v-layout>
-                                </td>
+                                <div style="width:930px; overflow:auto">
+                                    <td>
+                                        <v-layout justify-center>
+                                            <v-list class="tile" v-for="album in group.album" :key="album.album">
+                                                <v-list-item link :to="'/albums/' + album.album.split('#')[1]">{{ album.albumName }}</v-list-item>
+                                            </v-list>
+                                        </v-layout>
+                                    </td>
+                                </div>
                             </tr>
                             <tr v-if="group.genre[0]">
                                 <td class="text-left">Genres</td>
-                                <td>
-                                    <v-layout justify-center>
-                                        <v-list class="tile" v-for="genre in group.genre" :key="genre.genre">
-                                            <v-list-item link :to="'/genres/' + genre.genre.split('#')[1]">{{ genre.genreName }}</v-list-item>
-                                        </v-list>
-                                    </v-layout>
-                                </td>
+                                <div style="width:930px; overflow:auto">
+                                    <td>
+                                        <v-layout justify-center>
+                                            <v-list class="tile" v-for="genre in group.genre" :key="genre.genre">
+                                                <v-list-item link :to="'/genres/' + genre.genre.split('#')[1]">{{ genre.genreName }}</v-list-item>
+                                            </v-list>
+                                        </v-layout>
+                                    </td>
+                                </div>
                             </tr>
                             <tr>
                                 <td class="text-left">Group information</td>

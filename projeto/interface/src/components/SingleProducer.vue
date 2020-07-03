@@ -22,13 +22,15 @@
                         </tr>
                         <tr v-if="label.album[0]">
                             <td class="text-left">Albums produced</td>
-                            <td>
-                                <v-layout justify-center>
-                                    <v-list class="tile" v-for="album in label.album" :key="album.album">
-                                        <v-list-item link :to="'/albums/' + album.album.split('#')[1]">{{ album.albumName }}</v-list-item>
-                                    </v-list>
-                                </v-layout>
-                            </td>
+                            <div style="width:1700px; overflow:auto">
+                                <td>
+                                    <v-layout justify-center>
+                                        <v-list class="tile" v-for="album in label.album" :key="album.album">
+                                            <v-list-item link :to="'/albums/' + album.album.split('#')[1]">{{ album.albumName }}</v-list-item>
+                                        </v-list>
+                                    </v-layout>
+                                </td>
+                            </div>
                         </tr>
                         <tr>
                             <td class="text-left">Producer information</td>

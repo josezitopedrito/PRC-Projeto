@@ -15,10 +15,10 @@
                                 dark
                                 v-on="{ ...tooltip, ...menu }"
                                 >
-                                    <v-icon>mdi-acount</v-icon>
+                                    <v-icon>mdi-account</v-icon>
                                 </v-btn>
                             </template>
-                        <span>Im A ToolTip</span>
+                        <span>Options</span>
                         </v-tooltip>
                     </template>
                     <v-list>

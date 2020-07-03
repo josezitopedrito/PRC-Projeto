@@ -15,7 +15,7 @@
                 </v-toolbar>
                 <v-img contain v-bind:src="imagem" aspect-ratio="1" max-width="600px"/>
             </v-col>
-            <v-col cols="5">
+            <v-col cols="7">
                 <v-simple-table class="table" dense>
                     <template v-slot:default>
                         <tbody>
@@ -53,44 +53,52 @@
                             </tr>
                             <tr v-if="bandas.length>0">
                                 <td class="text-left">Musical Group</td>
-                                <td>
-                                    <v-layout justify-center>
-                                        <v-list class="tile" v-for="band in album.band" :key="band.band">
-                                            <v-list-item link :to="'/groups/' + band.band.split('#')[1]"
-                                            >{{ band.bandName }}</v-list-item>
-                                        </v-list>
-                                    </v-layout>
-                                </td>
+                                <div style="width:930px; overflow:auto">
+                                    <td>
+                                        <v-layout justify-center>
+                                            <v-list class="tile" v-for="band in album.band" :key="band.band">
+                                                <v-list-item link :to="'/groups/' + band.band.split('#')[1]"
+                                                >{{ band.bandName }}</v-list-item>
+                                            </v-list>
+                                        </v-layout>
+                                    </td>
+                                </div>
                             </tr>
                             <tr v-if="artistas.length>0">
                                 <td class="text-left">Artist</td>
-                                <td>
-                                    <v-layout justify-center>
-                                        <v-list class="tile" v-for="artist in album.artist" :key="artist.artist">
-                                            <v-list-item link :to="'/artists/' + artist.artist.split('#')[1]">{{ artist.artistName }}</v-list-item>
-                                        </v-list>
-                                    </v-layout>
-                                </td>
+                                <div style="width:930px; overflow:auto">
+                                    <td>
+                                        <v-layout justify-center>
+                                            <v-list class="tile" v-for="artist in album.artist" :key="artist.artist">
+                                                <v-list-item link :to="'/artists/' + artist.artist.split('#')[1]">{{ artist.artistName }}</v-list-item>
+                                            </v-list>
+                                        </v-layout>
+                                    </td>
+                                </div>
                             </tr>
                             <tr v-if="album.recordLabel.length>0">
                                 <td class="text-left">Record Label</td>
-                                <td>
-                                    <v-layout justify-center>
-                                        <v-list class="tile" v-for="label in album.recordLabel" :key="label.rlabel">
-                                            <v-list-item link :to="'/recordLabels/' + label.rlabel.split('#')[1]">{{ label.rlabelName}}</v-list-item>
-                                        </v-list>
-                                    </v-layout>
-                                </td>
+                                <div style="width:930px; overflow:auto">
+                                    <td>
+                                        <v-layout justify-center>
+                                            <v-list class="tile" v-for="label in album.recordLabel" :key="label.rlabel">
+                                                <v-list-item link :to="'/recordLabels/' + label.rlabel.split('#')[1]">{{ label.rlabelName}}</v-list-item>
+                                            </v-list>
+                                        </v-layout>
+                                    </td>
+                                </div>
                             </tr>
                             <tr v-if="album.producer.length > 0" >
-                                <td class="text-left">Produced by</td>
-                                <td>
-                                    <v-layout justify-center>
-                                        <v-list class="tile" v-for="producer in album.producer" :key="producer.producer">
-                                            <v-list-item link :to="'/producers/' + producer.producer.split('#')[1]">{{ producer.producerName }}</v-list-item>
-                                        </v-list>
-                                    </v-layout>
-                                </td>
+                                <td class="text-left">Producers</td>
+                                <div style="width:930px; overflow:auto;">
+                                    <td>
+                                        <v-layout justify-center>
+                                            <v-list class="tile" v-for="producer in album.producer" :key="producer.producer" :style="{'align-items':'center'}">
+                                                <v-list-item link :to="'/producers/' + producer.producer.split('#')[1]">{{ producer.producerName }}</v-list-item>
+                                            </v-list>
+                                        </v-layout>
+                                    </td>
+                                </div>
                             </tr>
                             <tr>
                                 <td class="text-left">Album information</td>
