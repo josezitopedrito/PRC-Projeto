@@ -62,10 +62,8 @@ module.exports.registo = async function (user){
         else{
             console.log("email:" +user.email)
             await Requests.deleteOne({email:user.email})
-            var hash = bcrypt.hashSync(user.password, 10);
             user._id = mongoose.Types.ObjectId()
             var novo = new User(user)
-            novo.password=hash
             novo.favs=[]
             novo.save()
             return {status:"inserido"}
