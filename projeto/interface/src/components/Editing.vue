@@ -60,7 +60,7 @@
                         <v-window-item
                             v-for="m in 6" :key="m"
                         >
-                            <h1>Album Insertion</h1>
+                            <h1>Album Editing</h1>
                             <passoEditAlbum v-if="m == 1 && renderComponent" :obj="album" :position="first" @atualizaAlbum=atualizaAlbum($event)></passoEditAlbum>                           
                             <passoEditAlbum v-if="m == 2 && renderComponent" :obj="album" :position="second" @atualizaAlbum=atualizaAlbum($event)></passoEditAlbum>                           
                             <passoEditArtist v-if="m == 3 && renderComponent" :obj="album" :position="albumArtist" @atualizaAlbum=atualizaAlbum($event)></passoEditArtist>
@@ -88,7 +88,7 @@
                         <v-window-item                            
                             v-for="m in 5" :key="m"
                         >
-                            <h1>Artist Insertion</h1>
+                            <h1>Artist Editing</h1>
                             <!-- :folio="info" @cancela=cancela() -->
                             <passoEditArtist v-if="m == 1 && renderComponent" :obj="artist" :position="first" @atualizaArtist=atualizaArtist($event)></passoEditArtist>
                             <passoEditArtist v-if="m == 2 && renderComponent" :obj="artist" :position="second" @atualizaArtist=atualizaArtist($event)></passoEditArtist>
@@ -101,7 +101,7 @@
                         <v-window-item
                             v-for="m in 5" :key="m"
                         >
-                            <h1>Group Insertion</h1>
+                            <h1>Group Editing</h1>
                             <!-- :folio="info" @cancela=cancela() -->
                             <passoEditGroup v-if="m == 1 && renderComponent" :obj="group" :position="first" @atualizaGroup=atualizaGroup($event)></passoEditGroup>
                             <passoEditGroup v-if="m == 2 && renderComponent" :obj="group" :position="second" @atualizaGroup=atualizaGroup($event)></passoEditGroup>
@@ -114,7 +114,7 @@
                         <v-window-item
                             v-for="m in 3" :key="m"
                         >
-                            <h1>Label Insertion</h1>
+                            <h1>Label Editing</h1>
                             <!-- :folio="info" @cancela=cancela() -->
                             <passoEditLabel v-if="m == 1 && renderComponent" :obj="label" :position="first" @atualizaLabel=atualizaLabel($event)></passoEditLabel>
                             <passoEditLabel v-if="m == 2 && renderComponent" :obj="label" :position="second" @atualizaLabel=atualizaLabel($event)></passoEditLabel>
@@ -125,7 +125,7 @@
                         <v-window-item
                             v-for="m in 3" :key="m"
                         >
-                            <h1>Producer Insertion</h1>
+                            <h1>Producer Editing</h1>
                             <!-- :folio="info" :fileInfo="passoEditProducerinfo" @submeterFolio=submeterFolio() @cancela=cancela() -->
                             <passoEditProducer v-if="m == 1 && renderComponent" :obj="producer" :position="first" @atualizaProducer=atualizaProducer($event)></passoEditProducer>
                             <passoEditProducer v-if="m == 2 && renderComponent" :obj="producer" :position="second" @atualizaProducer=atualizaProducer($event)></passoEditProducer>
@@ -136,7 +136,7 @@
                         <v-window-item
                             v-for="m in 7" :key="m"
                         >
-                            <h1>Genre Insertion</h1>
+                            <h1>Genre Editing</h1>
                             <!-- :folio="info" @cancela=cancela() -->
                             <passoEditGenre v-if="m == 1 && renderComponent" :obj="genre" :position="first" @atualizaGenre=atualizaGenre($event)></passoEditGenre>
                             <passoEditGenre v-if="m == 2 && renderComponent" :obj="genre" :position="second" @atualizaGenre=atualizaGenre($event)></passoEditGenre>
