@@ -45,10 +45,7 @@
                   label="Information on the Artist"
                   v-model="artist.artistInfo"
               ></v-textarea>
-              <v-row align="center">
-                  <label>Artist Photo</label>
-                  <v-file-input show-size label="Foto" v-model="artist.foto"></v-file-input>
-              </v-row>
+            
               <v-btn class="blue white--text" @click.prevent="reset">Reset</v-btn>
               <v-btn ref="submit" class="green white--text" @click="save();" v-bind:class="{disabled: disableButton}" :disabled="disableButton">Submit</v-btn>
               <v-btn ref="skip" @click="saveSkip();" class="orange white--text" :disabled="disableButton">Saltar</v-btn>
