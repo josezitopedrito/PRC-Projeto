@@ -147,7 +147,7 @@
                             <passoEditGenre v-if="m == 7 && renderComponent" :obj="genre" :position="fusiongenreGenre" @atualizaGenre=atualizaGenre($event)></passoEditGenre>
                         </v-window-item>
                     </v-window>
-                    
+                    <div id="space"></div>
                 </v-card>
             </v-expand-transition>
         </v-sheet>
@@ -561,4 +561,8 @@
             margin: 20px auto;
             max-width: 800px;
   }
+
+#space{
+    height:50px
+}
 </style>

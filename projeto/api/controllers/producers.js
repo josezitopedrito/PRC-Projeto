@@ -104,8 +104,8 @@ Producers.inserir = async function(producer){
         }
         for(let i = 0; i <albums.length;i++){
             let queryAlbums = `INSERT DATA{
-                c:${albums[i]} c:wasRecordedBy c:producer_${idProducer}.
-                c:producer_${idProducer} c:recorded c:${albums[i]}.
+                c:${albums[i]} c:wasProducedBy c:producer_${idProducer}.
+                c:producer_${idProducer} c:produced c:${albums[i]}.
             }`
             let encodedAlbum = encodeURIComponent(prefixes + queryAlbums)
             try{
