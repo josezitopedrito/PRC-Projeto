@@ -259,6 +259,7 @@ Albuns.inserir = async function(album){
             ${releaseDate == "" ? "" :`c:album_${idAlbum} c:releaseDate \"${corrigir.protect_special_char_other(releaseDate)}\".`}
             ${runtime == "" ? "" :`c:album_${idAlbum} c:runtime \"${corrigir.protect_special_char_other(runtime)}\".`}
             ${abstract == "" ? "" :`c:album_${idAlbum} c:abstract \"${corrigir.protect_special_char_abstract(abstract)}\".`}
+            c:album_${idAlbum} c:votes 0.
         }`
         var encodedAlbum = encodeURIComponent(prefixes + queryInsertion)     
         try{
