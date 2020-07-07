@@ -87,10 +87,6 @@
                   label="Information on the Group"
                   v-model="group.groupInfo"
               ></v-textarea>
-              <v-row align="center">
-                  <label>Group Photo</label>
-                  <v-file-input show-size label="Foto" v-model="group.foto"></v-file-input>
-              </v-row>
               <v-btn class="blue white--text" @click.prevent="reset">Reset</v-btn>
               <v-btn ref="submit" class="green white--text" @click="save();" v-bind:class="{disabled: disableButton}" :disabled="disableButton">Submit</v-btn>
               <v-btn ref="skip" @click="saveSkip();" class="orange white--text" :disabled="disableButton">Saltar</v-btn>
