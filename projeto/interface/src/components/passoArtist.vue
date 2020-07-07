@@ -21,9 +21,9 @@
               <v-container fluid>
                 <label>Artist Gender</label>
                 <v-radio-group v-model="artist.gender" column>
-                    <v-radio label="Male" value="Male"></v-radio>
-                    <v-radio label="Female" value="Female"></v-radio>
-                    <v-radio label="Other" value="Other"></v-radio>
+                    <v-radio label="Male" value="male"></v-radio>
+                    <v-radio label="Female" value="female"></v-radio>
+                    <v-radio label="Other" value="other"></v-radio>
                 </v-radio-group>
               </v-container>
               <v-text-field           
