@@ -11,7 +11,7 @@ A aplicação desenvolvida para este projeto foi denominada de Music Sharing e t
   <li>users.json: pequeno povoamento que contém informação de utilizadores fictícios para ser importado pelo MongoDB. </li>
 </ul>
 
-Foi também elaborado um pequeno <a href="https://github.com/josezitopedrito/PRC-Projeto/blob/master/projeto/PRC.pdf">relatório</a> que descreve de forma muito sucinta as funcionalidades da aplicação e como esta foi efetuada.
+Foi também elaborado um pequeno <a href="https://github.com/josezitopedrito/PRC-Projeto/blob/master/projeto/PRC.pdf">relatório</a> que descreve de forma muito sucinta as funcionalidades da aplicação, como esta foi efetuada e a ontologia por detrás desta mesma aplicação.
 
 As tecnologias principais que esta aplicação utiliza são:
 <ul>
