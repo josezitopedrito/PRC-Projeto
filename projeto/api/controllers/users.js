@@ -202,12 +202,9 @@ module.exports.elimFav = async function(res){
                     userval.favs.push(response.favs[i])
                 }
             }
-            console.log("pila1")
             User.deleteOne({email: res.user.email}).exec()
-            console.log("pila1.5")
             var user = new User(userval)
             user.save()
-            console.log("pila2")
 
             var getVotes = `select ?vote where {
                 c:${res.fav} c:votes ?vote.
@@ -218,7 +215,6 @@ module.exports.elimFav = async function(res){
             var delVotes = `DELETE DATA {
                 c:${res.fav} c:votes \"${normalizedResponseGet}\".
             }`
-            console.log("pila3")
             var encodedDel = encodeURIComponent(prefixes + delVotes)
             await axios.post(postLink + encodedDel, null).then(() => {
                 console.log("Delete dos votos do album bem sucedido")
@@ -228,7 +224,6 @@ module.exports.elimFav = async function(res){
             var insVotes = `INSERT DATA {
                 c:${res.fav} c:votes \"${normalizedResponseGet - 1}\".
             }`
-            console.log("pila4")
             var encodedIns = encodeURIComponent(prefixes + insVotes)
             await axios.post(postLink + encodedIns, null).then(() => {
                 console.log("Insert dos votos do album bem sucedido")
